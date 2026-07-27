@@ -1,0 +1,18 @@
+# Training Pipeline Configuration
+
+cross_validation:
+  n_splits: 5
+  shuffle: true
+  random_state: 42
+
+optimizer:
+  name: "adam"
+  learning_rate: 0.001
+  weight_decay: 1e-4
+
+early_stopping:
+  patience: 15
+  min_delta: 0.001
+
+batch_size: 64
+epochs: 100

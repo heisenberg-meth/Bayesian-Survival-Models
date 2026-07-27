@@ -1,0 +1,29 @@
+# Model Hyperparameters and Defaults
+
+cox_ph:
+  penalizer: 0.1
+  l1_ratio: 0.0
+
+random_survival_forest:
+  n_estimators: 100
+  min_samples_split: 10
+  min_samples_leaf: 5
+  max_depth: 8
+  random_state: 42
+
+deepsurv:
+  hidden_dims: [64, 32]
+  dropout: 0.2
+  activation: "relu"
+  batch_norm: true
+  learning_rate: 0.001
+
+bayesian_cox:
+  beta_prior_mean: 0.0
+  beta_prior_sd: 10.0
+  baseline_prior: "gamma"
+  mcmc:
+    draws: 2000
+    tune: 1000
+    chains: 4
+    target_accept: 0.95

@@ -1,0 +1,51 @@
+# Dataset Specifications and Schema Registry
+
+gbsg2:
+  name: "GBSG2"
+  raw_file: "data/raw/gbsg2.csv"
+  processed_file: "data/processed/gbsg2_processed.csv"
+  duration_col: "time"
+  event_col: "cens"
+  categorical_features:
+    - "horTh"
+    - "menostat"
+  numeric_features:
+    - "age"
+    - "tsize"
+    - "pnode"
+    - "progrec"
+    - "estrec"
+
+whas500:
+  name: "WHAS500"
+  raw_file: "data/raw/whas500.csv"
+  processed_file: "data/processed/whas500_processed.csv"
+  duration_col: "lenfol"
+  event_col: "fstat"
+  categorical_features:
+    - "gender"
+    - "cvd"
+    - "afb"
+    - "sho"
+    - "chf"
+  numeric_features:
+    - "age"
+    - "hr"
+    - "sysbp"
+    - "diasbp"
+    - "bmi"
+
+metabric:
+  name: "METABRIC"
+  raw_file: "data/raw/metabric.csv"
+  processed_file: "data/processed/metabric_processed.csv"
+  duration_col: "duration"
+  event_col: "event"
+  categorical_features:
+    - "tumour_stage"
+    - "chemotherapy"
+    - "hormone_therapy"
+    - "PAM50Subtype"
+  numeric_features:
+    - "age"
+    - "lymph_nodes_positive"
