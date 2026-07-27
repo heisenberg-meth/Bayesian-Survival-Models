@@ -1,0 +1,29 @@
+# Baseline Cox Proportional Hazards Experiment Configuration
+experiment_name: "cox_baseline"
+description: "Standard classical Cox Proportional Hazards model baseline evaluation."
+
+dataset:
+  name: "gbsg2"
+  preprocessing:
+    standardize_numeric: true
+    encode_categorical: true
+    test_size: 0.2
+    random_state: 42
+
+model:
+  type: "cox_ph"
+  parameters:
+    penalizer: 0.1
+    l1_ratio: 0.0
+
+training:
+  batch_size: 64
+  epochs: 100
+  optimizer: "adam"
+  learning_rate: 0.001
+
+evaluation:
+  metrics:
+    - "c_index"
+    - "brier_score"
+    - "ibs"

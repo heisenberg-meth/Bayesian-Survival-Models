@@ -1,0 +1,35 @@
+# METABRIC Dataset Bayesian Survival Model Experiment
+experiment_name: "bayesian_cox_metabric"
+description: "Bayesian Cox Proportional Hazards and DeepSurv comparison on METABRIC high-dimensional clinical dataset."
+
+dataset:
+  name: "metabric"
+  path: "data/raw/metabric.csv"
+  duration_col: "duration"
+  event_col: "event"
+  features:
+    clinical:
+      - "age"
+      - "tumour_stage"
+      - "lymph_nodes_positive"
+      - "chemotherapy"
+      - "hormone_therapy"
+
+model:
+  type: "bayesian_cox"
+  priors:
+    beta_prior_mean: 0.0
+    beta_prior_sd: 2.5
+    baseline_hazard_prior: "spline"
+  sampler:
+    draws: 3000
+    tune: 1500
+    chains: 4
+    target_accept: 0.98
+
+evaluation:
+  metrics:
+    - "c_index"
+    - "brier_score"
+    - "integrated_brier_score"
+    - "calibration"

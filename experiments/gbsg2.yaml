@@ -1,0 +1,38 @@
+# GBSG2 Dataset Bayesian Survival Model Experiment
+experiment_name: "bayesian_cox_gbsg2"
+description: "Bayesian Cox Proportional Hazards evaluation on German Breast Cancer Study Group 2 dataset."
+
+dataset:
+  name: "gbsg2"
+  path: "data/raw/gbsg2.csv"
+  duration_col: "time"
+  event_col: "cens"
+  features:
+    - "horTh"
+    - "age"
+    - "menostat"
+    - "tsize"
+    - "pnode"
+    - "progrec"
+    - "estrec"
+
+model:
+  type: "bayesian_cox"
+  priors:
+    beta_prior_mean: 0.0
+    beta_prior_sd: 10.0
+    baseline_hazard_prior: "gamma"
+  sampler:
+    draws: 2000
+    tune: 1000
+    chains: 4
+    target_accept: 0.95
+
+evaluation:
+  metrics:
+    - "c_index"
+    - "brier_score"
+    - "integrated_brier_score"
+  diagnostics:
+    - "rhat"
+    - "ess"

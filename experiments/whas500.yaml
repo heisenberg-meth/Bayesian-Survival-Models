@@ -1,0 +1,35 @@
+# WHAS500 Dataset Bayesian Survival Model Experiment
+experiment_name: "bayesian_cox_whas500"
+description: "Bayesian Cox Proportional Hazards evaluation on Worcester Heart Attack Study 500 dataset."
+
+dataset:
+  name: "whas500"
+  path: "data/raw/whas500.csv"
+  duration_col: "lenfol"
+  event_col: "fstat"
+  features:
+    - "age"
+    - "gender"
+    - "hr"
+    - "sysbp"
+    - "diasbp"
+    - "bmi"
+    - "cvd"
+
+model:
+  type: "bayesian_cox"
+  priors:
+    beta_prior_mean: 0.0
+    beta_prior_sd: 5.0
+    baseline_hazard_prior: "gamma"
+  sampler:
+    draws: 2000
+    tune: 1000
+    chains: 4
+    target_accept: 0.95
+
+evaluation:
+  metrics:
+    - "c_index"
+    - "brier_score"
+    - "integrated_brier_score"
