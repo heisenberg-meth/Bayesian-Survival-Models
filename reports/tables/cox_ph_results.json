@@ -1,0 +1,735 @@
+{
+  "gbsg2": {
+    "summary": [
+      {
+        "feature": "horTh_yes",
+        "coef (beta)": 0.7372986551350523,
+        "exp(coef) HR": 2.090281310271147,
+        "se(coef)": 0.4336573478217149,
+        "95% CI Lower": 0.8934456748743751,
+        "95% CI Upper": 4.890365557685659,
+        "z": 1.7001871612196697,
+        "p": 0.0890957264372445
+      },
+      {
+        "feature": "age_x_horTh",
+        "coef (beta)": -0.34057262976663255,
+        "exp(coef) HR": 0.7113628585629891,
+        "se(coef)": 0.2213227989374874,
+        "95% CI Lower": 0.4609962752739838,
+        "95% CI Upper": 1.0977032650473244,
+        "z": -1.5388050006670448,
+        "p": 0.12385190869732732
+      },
+      {
+        "feature": "menostat_Pre",
+        "coef (beta)": 0.16884953403283726,
+        "exp(coef) HR": 1.1839419825456012,
+        "se(coef)": 0.1408883800499289,
+        "95% CI Lower": 0.8982636194806708,
+        "95% CI Upper": 1.5604757753012524,
+        "z": 1.1984631661816205,
+        "p": 0.23073675430724583
+      },
+      {
+        "feature": "age",
+        "coef (beta)": 0.11179988903268519,
+        "exp(coef) HR": 1.1182890563481416,
+        "se(coef)": 0.0950351204308103,
+        "95% CI Lower": 0.9282362981223469,
+        "95% CI Upper": 1.3472543748587436,
+        "z": 1.1764060331157298,
+        "p": 0.23943266203305935
+      },
+      {
+        "feature": "estrec",
+        "coef (beta)": 0.062383590148536575,
+        "exp(coef) HR": 1.0643705484883503,
+        "se(coef)": 0.11226286078101493,
+        "95% CI Lower": 0.854147300554429,
+        "95% CI Upper": 1.3263340687888774,
+        "z": 0.5556921471137714,
+        "p": 0.5784213258495023
+      },
+      {
+        "feature": "tsize",
+        "coef (beta)": 0.032379924779769094,
+        "exp(coef) HR": 1.032909858818621,
+        "se(coef)": 0.0720616860149285,
+        "95% CI Lower": 0.8968550897974941,
+        "95% CI Upper": 1.1896044172371316,
+        "z": 0.4493362086069035,
+        "p": 0.6531891414218896
+      },
+      {
+        "feature": "log_progrec",
+        "coef (beta)": 0.04798226255508958,
+        "exp(coef) HR": 1.0491520458828125,
+        "se(coef)": 0.11883078828805724,
+        "95% CI Lower": 0.8311657192823008,
+        "95% CI Upper": 1.3243087267007914,
+        "z": 0.40378645337920316,
+        "p": 0.6863697589249802
+      },
+      {
+        "feature": "progrec",
+        "coef (beta)": -0.035602139973549024,
+        "exp(coef) HR": 0.9650241616536405,
+        "se(coef)": 0.1259073335475088,
+        "95% CI Lower": 0.7539867276414415,
+        "95% CI Upper": 1.235130007511456,
+        "z": -0.2827646251448508,
+        "p": 0.7773572731241043
+      },
+      {
+        "feature": "log_estrec",
+        "coef (beta)": -0.029711498518845674,
+        "exp(coef) HR": 0.9707255489127979,
+        "se(coef)": 0.12203968197799483,
+        "95% CI Lower": 0.7642125855404358,
+        "95% CI Upper": 1.2330444553535735,
+        "z": -0.24345768554364966,
+        "p": 0.807650861105895
+      },
+      {
+        "feature": "log_pnode",
+        "coef (beta)": -0.04110005281410962,
+        "exp(coef) HR": 0.9597331011463393,
+        "se(coef)": 0.17153831964492794,
+        "95% CI Lower": 0.6856999351147148,
+        "95% CI Upper": 1.3432808992199705,
+        "z": -0.23959691863126437,
+        "p": 0.8106427537826559
+      },
+      {
+        "feature": "pnode",
+        "coef (beta)": -0.0036796614727112567,
+        "exp(coef) HR": 0.9963271001854854,
+        "se(coef)": 0.17885173278554836,
+        "95% CI Lower": 0.7017142158783404,
+        "95% CI Upper": 1.4146324359718,
+        "z": -0.02057380946442014,
+        "p": 0.9835856330629558
+      }
+    ],
+    "ph_assumption": [
+      {
+        "feature": "age",
+        "rho": -0.0624,
+        "p_value": 0.3624,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "tsize",
+        "rho": 0.0522,
+        "p_value": 0.4463,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "pnode",
+        "rho": 0.0067,
+        "p_value": 0.9227,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "progrec",
+        "rho": 0.0574,
+        "p_value": 0.4026,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "estrec",
+        "rho": 0.133,
+        "p_value": 0.0515,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "log_pnode",
+        "rho": -0.029,
+        "p_value": 0.6725,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "log_progrec",
+        "rho": 0.0206,
+        "p_value": 0.7639,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "log_estrec",
+        "rho": 0.0828,
+        "p_value": 0.2269,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "age_x_horTh",
+        "rho": 0.0788,
+        "p_value": 0.2496,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "horTh_yes",
+        "rho": 0.1113,
+        "p_value": 0.1036,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "menostat_Pre",
+        "rho": 0.126,
+        "p_value": 0.0652,
+        "ph_satisfied": true
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.482,
+      "c_index_se": 0.0103,
+      "brier_scores": {
+        "bs_time_255.0": 0.0927,
+        "bs_time_617.0": 0.1477,
+        "bs_time_1418.0": 0.1461
+      },
+      "integrated_brier_score": 0.1386
+    },
+    "cv_results": {
+      "dataset_name": "gbsg2",
+      "n_splits": 5,
+      "mean_c_index": 0.4485,
+      "std_c_index": 0.0592,
+      "fold_c_indices": [
+        0.432,
+        0.5068,
+        0.5129,
+        0.3787,
+        0.4121
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.432,
+          "c_index_se": 0.0109,
+          "integrated_brier_score": 0.1333
+        },
+        {
+          "fold": 2,
+          "c_index": 0.5068,
+          "c_index_se": 0.0107,
+          "integrated_brier_score": 0.1499
+        },
+        {
+          "fold": 3,
+          "c_index": 0.5129,
+          "c_index_se": 0.0122,
+          "integrated_brier_score": 0.1185
+        },
+        {
+          "fold": 4,
+          "c_index": 0.3787,
+          "c_index_se": 0.0098,
+          "integrated_brier_score": 0.1883
+        },
+        {
+          "fold": 5,
+          "c_index": 0.4121,
+          "c_index_se": 0.0111,
+          "integrated_brier_score": 0.1615
+        }
+      ],
+      "mean_integrated_brier_score": 0.1503,
+      "std_integrated_brier_score": 0.0268
+    }
+  },
+  "whas500": {
+    "summary": [
+      {
+        "feature": "hr",
+        "coef (beta)": 0.17797476380858962,
+        "exp(coef) HR": 1.1947951687747604,
+        "se(coef)": 0.09017583341868075,
+        "95% CI Lower": 1.001230887228601,
+        "95% CI Upper": 1.4257805202942895,
+        "z": 1.9736414631430566,
+        "p": 0.0484225255638191
+      },
+      {
+        "feature": "chf_1",
+        "coef (beta)": 0.8766287458270458,
+        "exp(coef) HR": 2.4027856357036925,
+        "se(coef)": 0.6384372279304695,
+        "95% CI Lower": 0.6874898446857608,
+        "95% CI Upper": 8.397765953594421,
+        "z": 1.3730852579958213,
+        "p": 0.16972584344570807
+      },
+      {
+        "feature": "afb_1",
+        "coef (beta)": -0.37091769326135604,
+        "exp(coef) HR": 0.6901007391625205,
+        "se(coef)": 0.27017714207558147,
+        "95% CI Lower": 0.40638069279630995,
+        "95% CI Upper": 1.1719036820269466,
+        "z": -1.3728685203043292,
+        "p": 0.16979322448804646
+      },
+      {
+        "feature": "age_x_gender",
+        "coef (beta)": 0.30655934246651717,
+        "exp(coef) HR": 1.3587420961922212,
+        "se(coef)": 0.283828704274965,
+        "95% CI Lower": 0.7789994665401839,
+        "95% CI Upper": 2.369937545868137,
+        "z": 1.0800857624658406,
+        "p": 0.2801039913200425
+      },
+      {
+        "feature": "sysbp",
+        "coef (beta)": -0.09154109825373208,
+        "exp(coef) HR": 0.9125238122461717,
+        "se(coef)": 0.08626027493782588,
+        "95% CI Lower": 0.7705804344510049,
+        "95% CI Upper": 1.0806136136969764,
+        "z": -1.0612196439173476,
+        "p": 0.28859009407380354
+      },
+      {
+        "feature": "age_x_chf",
+        "coef (beta)": -0.25680788405938815,
+        "exp(coef) HR": 0.7735168044001337,
+        "se(coef)": 0.25229245929525246,
+        "95% CI Lower": 0.4717523542532068,
+        "95% CI Upper": 1.2683100387205488,
+        "z": -1.0178975811514501,
+        "p": 0.30872663127101707
+      },
+      {
+        "feature": "sho_1",
+        "coef (beta)": -0.4060332367380406,
+        "exp(coef) HR": 0.6662880218164238,
+        "se(coef)": 0.40210160156579555,
+        "95% CI Lower": 0.30296064214912144,
+        "95% CI Upper": 1.4653379556725719,
+        "z": -1.009777715773663,
+        "p": 0.31260179885802897
+      },
+      {
+        "feature": "age",
+        "coef (beta)": -0.10905589079034325,
+        "exp(coef) HR": 0.896680299927045,
+        "se(coef)": 0.11784294254434263,
+        "95% CI Lower": 0.7117503520649009,
+        "95% CI Upper": 1.129659518881333,
+        "z": -0.9254342129933413,
+        "p": 0.35474008919449096
+      },
+      {
+        "feature": "gender_1",
+        "coef (beta)": -0.5090393491646377,
+        "exp(coef) HR": 0.6010727225641123,
+        "se(coef)": 0.5650716002804687,
+        "95% CI Lower": 0.1985767337159686,
+        "95% CI Upper": 1.8193894674861457,
+        "z": -0.9008404402415201,
+        "p": 0.36767316235206327
+      },
+      {
+        "feature": "diasbp",
+        "coef (beta)": -0.018500122390827777,
+        "exp(coef) HR": 0.9816699544443858,
+        "se(coef)": 0.08688994387102793,
+        "95% CI Lower": 0.8279484273233857,
+        "95% CI Upper": 1.1639322784563289,
+        "z": -0.21291442446191233,
+        "p": 0.8313937112430436
+      },
+      {
+        "feature": "cvd_1",
+        "coef (beta)": 0.03707346224612746,
+        "exp(coef) HR": 1.037769254898387,
+        "se(coef)": 0.19973723483969272,
+        "95% CI Lower": 0.7015861925668271,
+        "95% CI Upper": 1.5350430749957653,
+        "z": 0.18561117197743468,
+        "p": 0.8527496918425967
+      },
+      {
+        "feature": "bmi",
+        "coef (beta)": -0.015664620267896272,
+        "exp(coef) HR": 0.9844574317655355,
+        "se(coef)": 0.08457539429108771,
+        "95% CI Lower": 0.8340746326156441,
+        "95% CI Upper": 1.1619540950659721,
+        "z": -0.18521486537777762,
+        "p": 0.8530605099261002
+      }
+    ],
+    "ph_assumption": [
+      {
+        "feature": "age",
+        "rho": 0.0263,
+        "p_value": 0.7501,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "hr",
+        "rho": 0.1143,
+        "p_value": 0.1651,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "sysbp",
+        "rho": 0.1039,
+        "p_value": 0.2074,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "diasbp",
+        "rho": -0.1465,
+        "p_value": 0.0746,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "bmi",
+        "rho": -0.0465,
+        "p_value": 0.5737,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "age_x_chf",
+        "rho": 0.1455,
+        "p_value": 0.0767,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "age_x_gender",
+        "rho": -0.0818,
+        "p_value": 0.321,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "gender_1",
+        "rho": -0.074,
+        "p_value": 0.3699,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "cvd_1",
+        "rho": -0.1587,
+        "p_value": 0.0532,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "afb_1",
+        "rho": -0.1099,
+        "p_value": 0.1823,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "sho_1",
+        "rho": 0.1411,
+        "p_value": 0.0861,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "chf_1",
+        "rho": 0.1641,
+        "p_value": 0.0456,
+        "ph_satisfied": false
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.4685,
+      "c_index_se": 0.0142,
+      "brier_scores": {
+        "bs_time_265.0": 0.0933,
+        "bs_time_522.0": 0.1705,
+        "bs_time_1010.0": 0.1684
+      },
+      "integrated_brier_score": 0.1565
+    },
+    "cv_results": {
+      "dataset_name": "whas500",
+      "n_splits": 5,
+      "mean_c_index": 0.5129,
+      "std_c_index": 0.0501,
+      "fold_c_indices": [
+        0.4688,
+        0.5369,
+        0.5267,
+        0.5765,
+        0.4557
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.4688,
+          "c_index_se": 0.0146,
+          "integrated_brier_score": 0.1575
+        },
+        {
+          "fold": 2,
+          "c_index": 0.5369,
+          "c_index_se": 0.0167,
+          "integrated_brier_score": 0.1225
+        },
+        {
+          "fold": 3,
+          "c_index": 0.5267,
+          "c_index_se": 0.015,
+          "integrated_brier_score": 0.1516
+        },
+        {
+          "fold": 4,
+          "c_index": 0.5765,
+          "c_index_se": 0.0149,
+          "integrated_brier_score": 0.165
+        },
+        {
+          "fold": 5,
+          "c_index": 0.4557,
+          "c_index_se": 0.0159,
+          "integrated_brier_score": 0.1582
+        }
+      ],
+      "mean_integrated_brier_score": 0.151,
+      "std_integrated_brier_score": 0.0166
+    }
+  },
+  "metabric": {
+    "summary": [
+      {
+        "feature": "PAM50Subtype_Her2",
+        "coef (beta)": 0.17686192170564372,
+        "exp(coef) HR": 1.1934662899598412,
+        "se(coef)": 0.1128825523918197,
+        "95% CI Lower": 0.9565828452103317,
+        "95% CI Upper": 1.4890103793961742,
+        "z": 1.5667781951966249,
+        "p": 0.1171665458004667
+      },
+      {
+        "feature": "log_lymph_nodes",
+        "coef (beta)": -0.12986946742723376,
+        "exp(coef) HR": 0.8782100584574446,
+        "se(coef)": 0.09262844462095639,
+        "95% CI Lower": 0.7324053079399034,
+        "95% CI Upper": 1.0530411213774442,
+        "z": -1.4020473727986136,
+        "p": 0.16090110084041798
+      },
+      {
+        "feature": "lymph_nodes_positive",
+        "coef (beta)": 0.12198621952270561,
+        "exp(coef) HR": 1.1297385333368415,
+        "se(coef)": 0.09251172936469715,
+        "95% CI Lower": 0.942389347220287,
+        "95% CI Upper": 1.354333171815593,
+        "z": 1.3186027367601674,
+        "p": 0.18730195829572027
+      },
+      {
+        "feature": "PAM50Subtype_Normal",
+        "coef (beta)": 0.14171132299930805,
+        "exp(coef) HR": 1.1522439741870647,
+        "se(coef)": 0.11509118619158666,
+        "95% CI Lower": 0.9195531789826692,
+        "95% CI Upper": 1.4438166344215573,
+        "z": 1.2312960504500159,
+        "p": 0.21821215853060538
+      },
+      {
+        "feature": "chemotherapy_1",
+        "coef (beta)": 0.07485588638706797,
+        "exp(coef) HR": 1.077728824297932,
+        "se(coef)": 0.07808159237833018,
+        "95% CI Lower": 0.924794216679153,
+        "95% CI Upper": 1.2559544575153545,
+        "z": 0.9586880096446723,
+        "p": 0.33771594064939103
+      },
+      {
+        "feature": "PAM50Subtype_LumB",
+        "coef (beta)": 0.06942404223800328,
+        "exp(coef) HR": 1.0718906396984156,
+        "se(coef)": 0.11268473325430098,
+        "95% CI Lower": 0.8594711378031744,
+        "95% CI Upper": 1.336809920586533,
+        "z": 0.6160909311586225,
+        "p": 0.5378345071452795
+      },
+      {
+        "feature": "hormone_therapy_1",
+        "coef (beta)": -0.0363634816592745,
+        "exp(coef) HR": 0.96428972814454,
+        "se(coef)": 0.07415487346178265,
+        "95% CI Lower": 0.8338455933396839,
+        "95% CI Upper": 1.1151401257406124,
+        "z": -0.49037210855757474,
+        "p": 0.6238706096230922
+      },
+      {
+        "feature": "tumour_stage",
+        "coef (beta)": -0.049648229298375535,
+        "exp(coef) HR": 0.9515640980034918,
+        "se(coef)": 0.10975020083256813,
+        "95% CI Lower": 0.7673911582516032,
+        "95% CI Upper": 1.1799383181221417,
+        "z": -0.4523748377838278,
+        "p": 0.6509989707470332
+      },
+      {
+        "feature": "PAM50Subtype_LumA",
+        "coef (beta)": 0.0494369157233713,
+        "exp(coef) HR": 1.050679308779962,
+        "se(coef)": 0.11681311894237134,
+        "95% CI Lower": 0.8356739136731933,
+        "95% CI Upper": 1.3210021179745128,
+        "z": 0.4232137295106429,
+        "p": 0.6721393305913168
+      },
+      {
+        "feature": "age_x_stage",
+        "coef (beta)": 0.0459551144344136,
+        "exp(coef) HR": 1.0470274134845523,
+        "se(coef)": 0.1571879283750518,
+        "95% CI Lower": 0.7694085122911036,
+        "95% CI Upper": 1.4248170992074782,
+        "z": 0.2923577841471661,
+        "p": 0.7700130822223314
+      },
+      {
+        "feature": "age",
+        "coef (beta)": -0.014453040026569351,
+        "exp(coef) HR": 0.9856509037858551,
+        "se(coef)": 0.10745796893983436,
+        "95% CI Lower": 0.7984597982765156,
+        "95% CI Upper": 1.2167271367085521,
+        "z": -0.13449947145996774,
+        "p": 0.8930076290062101
+      }
+    ],
+    "ph_assumption": [
+      {
+        "feature": "age",
+        "rho": -0.0239,
+        "p_value": 0.5076,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "lymph_nodes_positive",
+        "rho": 0.0083,
+        "p_value": 0.8189,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "log_lymph_nodes",
+        "rho": 0.0039,
+        "p_value": 0.9146,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "age_x_stage",
+        "rho": -0.0146,
+        "p_value": 0.6862,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "tumour_stage",
+        "rho": 0.0033,
+        "p_value": 0.9272,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "chemotherapy_1",
+        "rho": 0.0294,
+        "p_value": 0.4139,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "hormone_therapy_1",
+        "rho": -0.03,
+        "p_value": 0.4059,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "PAM50Subtype_Her2",
+        "rho": -0.0446,
+        "p_value": 0.2154,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "PAM50Subtype_LumA",
+        "rho": 0.0063,
+        "p_value": 0.8602,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "PAM50Subtype_LumB",
+        "rho": -0.0357,
+        "p_value": 0.3217,
+        "ph_satisfied": true
+      },
+      {
+        "feature": "PAM50Subtype_Normal",
+        "rho": 0.0586,
+        "p_value": 0.1036,
+        "ph_satisfied": true
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.5129,
+      "c_index_se": 0.0032,
+      "brier_scores": {
+        "bs_time_41.8": 0.1276,
+        "bs_time_95.1": 0.1846,
+        "bs_time_172.6": 0.1647
+      },
+      "integrated_brier_score": 0.1671
+    },
+    "cv_results": {
+      "dataset_name": "metabric",
+      "n_splits": 5,
+      "mean_c_index": 0.489,
+      "std_c_index": 0.0267,
+      "fold_c_indices": [
+        0.5021,
+        0.4858,
+        0.4724,
+        0.4578,
+        0.5268
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.5021,
+          "c_index_se": 0.0036,
+          "integrated_brier_score": 0.162
+        },
+        {
+          "fold": 2,
+          "c_index": 0.4858,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.1728
+        },
+        {
+          "fold": 3,
+          "c_index": 0.4724,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.1714
+        },
+        {
+          "fold": 4,
+          "c_index": 0.4578,
+          "c_index_se": 0.0034,
+          "integrated_brier_score": 0.1802
+        },
+        {
+          "fold": 5,
+          "c_index": 0.5268,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.1614
+        }
+      ],
+      "mean_integrated_brier_score": 0.1696,
+      "std_integrated_brier_score": 0.0079
+    }
+  }
+}

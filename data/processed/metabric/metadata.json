@@ -1,0 +1,82 @@
+{
+  "dataset_name": "metabric",
+  "random_state": 42,
+  "target_time_col": "time",
+  "target_event_col": "event",
+  "num_features": 11,
+  "feature_names": [
+    "age",
+    "lymph_nodes_positive",
+    "log_lymph_nodes",
+    "age_x_stage",
+    "tumour_stage",
+    "chemotherapy_1",
+    "hormone_therapy_1",
+    "PAM50Subtype_Her2",
+    "PAM50Subtype_LumA",
+    "PAM50Subtype_LumB",
+    "PAM50Subtype_Normal"
+  ],
+  "train_samples": 1332,
+  "val_samples": 285,
+  "test_samples": 287,
+  "train_censoring_rate": 42.04,
+  "val_censoring_rate": 42.11,
+  "test_censoring_rate": 41.81,
+  "scaling_params": {
+    "age": {
+      "mean": 54.926426426426424,
+      "std": 20.457369681788585
+    },
+    "lymph_nodes_positive": {
+      "mean": 1.9594594594594594,
+      "std": 2.43900972792252
+    },
+    "log_lymph_nodes": {
+      "mean": 0.8185905081674443,
+      "std": 0.7137382889698444
+    },
+    "age_x_stage": {
+      "mean": 119.23573573573573,
+      "std": 67.77221305035187
+    },
+    "tumour_stage": {
+      "mean": 1.1486486486486487,
+      "std": 0.8003415722566019
+    }
+  },
+  "encoding_maps": {
+    "tumour_stage": {
+      "1": 0,
+      "2": 1,
+      "3": 2,
+      "4": 3
+    },
+    "chemotherapy": [
+      "1"
+    ],
+    "hormone_therapy": [
+      "1"
+    ],
+    "PAM50Subtype": [
+      "Her2",
+      "LumA",
+      "LumB",
+      "Normal"
+    ]
+  },
+  "validation_report": {
+    "dataset_name": "metabric",
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": {
+      "total_rows": 1904,
+      "total_cols": 8,
+      "valid_rows": 1904,
+      "event_count": 1104,
+      "censored_count": 800,
+      "censoring_rate": 42.02
+    }
+  }
+}

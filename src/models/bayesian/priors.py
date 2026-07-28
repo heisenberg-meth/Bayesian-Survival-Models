@@ -1,7 +1,8 @@
 """
 Prior specifications for Bayesian Survival Models.
 """
-from typing import Dict, Any, Optional
+from typing import Any
+
 
 class PriorSpecification:
     """Configures prior distributions for regression coefficients and baseline hazard."""
@@ -20,7 +21,7 @@ class PriorSpecification:
         self.alpha = alpha
         self.beta = beta
 
-    def get_config(self) -> Dict[str, Any]:
+    def get_config(self) -> dict[str, Any]:
         return {
             "beta_mean": self.beta_mean,
             "beta_sd": self.beta_sd,

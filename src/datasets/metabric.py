@@ -2,15 +2,15 @@
 Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) Dataset Loader.
 """
 
-from typing import Tuple, List, Dict, Any, Optional
-import os
+from typing import Any
+
 from .base import BaseDataset
 
 
 class METABRICDataset(BaseDataset):
     """METABRIC Survival Dataset."""
 
-    def __init__(self, data_path: Optional[str] = "data/raw/metabric.csv"):
+    def __init__(self, data_path: str | None = "data/raw/metabric.csv"):
         super().__init__(data_path=data_path)
         self._duration_col = "duration"
         self._event_col = "event"
@@ -22,7 +22,7 @@ class METABRICDataset(BaseDataset):
         self.validate_schema()
         return self
 
-    def get_features_and_target(self) -> Tuple[List[Dict[str, Any]], List[float], List[int]]:
+    def get_features_and_target(self) -> tuple[list[dict[str, Any]], list[float], list[int]]:
         """Returns features list of dicts, duration list, event list."""
         if not self._data:
             self.load()

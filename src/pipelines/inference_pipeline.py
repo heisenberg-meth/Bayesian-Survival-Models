@@ -1,8 +1,8 @@
 """
 Inference Pipeline for Patient Survival Curves Prediction.
 """
-from typing import Dict, Any
 import numpy as np
+
 
 class InferencePipeline:
     """Orchestrates predictions and survival curve generation on unseen data."""

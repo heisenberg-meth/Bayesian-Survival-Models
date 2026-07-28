@@ -1,17 +1,17 @@
 """
-Bayesian Cox Proportional Hazards Model Subpackage.
+Bayesian Survival Models Package (PyMC MCMC).
 """
 
+from .diagnostics import MCMCDiagnostics
+from .likelihood import CoxPartialLikelihood
 from .model import BayesianCoxModel
 from .priors import PriorSpecification
-from .likelihood import CoxPartialLikelihood
 from .sampler import MCMCSampler
-from .diagnostics import MCMCDiagnostics
 
 __all__ = [
     "BayesianCoxModel",
-    "PriorSpecification",
     "CoxPartialLikelihood",
-    "MCMCSampler",
     "MCMCDiagnostics",
+    "MCMCSampler",
+    "PriorSpecification",
 ]

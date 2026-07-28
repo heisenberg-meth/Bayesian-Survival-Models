@@ -3,6 +3,7 @@ Log-likelihood computations for Cox Proportional Hazards model under right censo
 """
 import numpy as np
 
+
 class CoxPartialLikelihood:
     """Computes Cox partial log-likelihood and risk sets."""
 

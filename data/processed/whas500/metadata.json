@@ -1,0 +1,88 @@
+{
+  "dataset_name": "whas500",
+  "random_state": 42,
+  "target_time_col": "time",
+  "target_event_col": "event",
+  "num_features": 12,
+  "feature_names": [
+    "age",
+    "hr",
+    "sysbp",
+    "diasbp",
+    "bmi",
+    "age_x_chf",
+    "age_x_gender",
+    "gender_1",
+    "cvd_1",
+    "afb_1",
+    "sho_1",
+    "chf_1"
+  ],
+  "train_samples": 349,
+  "val_samples": 74,
+  "test_samples": 77,
+  "train_censoring_rate": 57.31,
+  "val_censoring_rate": 58.11,
+  "test_censoring_rate": 57.14,
+  "scaling_params": {
+    "age": {
+      "mean": 64.57306590257879,
+      "std": 19.46581049473432
+    },
+    "hr": {
+      "mean": 107.36103151862464,
+      "std": 42.90963875149133
+    },
+    "sysbp": {
+      "mean": 148.93123209169053,
+      "std": 39.87719473188258
+    },
+    "diasbp": {
+      "mean": 85.50143266475645,
+      "std": 25.737247108930887
+    },
+    "bmi": {
+      "mean": 26.95100286532951,
+      "std": 4.921099350648926
+    },
+    "age_x_chf": {
+      "mean": 11.166189111747851,
+      "std": 25.929743773503358
+    },
+    "age_x_gender": {
+      "mean": 24.088825214899714,
+      "std": 33.468729890936494
+    }
+  },
+  "encoding_maps": {
+    "gender": [
+      "1"
+    ],
+    "cvd": [
+      "1"
+    ],
+    "afb": [
+      "1"
+    ],
+    "sho": [
+      "1"
+    ],
+    "chf": [
+      "1"
+    ]
+  },
+  "validation_report": {
+    "dataset_name": "whas500",
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": {
+      "total_rows": 500,
+      "total_cols": 12,
+      "valid_rows": 500,
+      "event_count": 213,
+      "censored_count": 287,
+      "censoring_rate": 57.4
+    }
+  }
+}

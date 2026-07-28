@@ -2,15 +2,15 @@
 Worcester Heart Attack Study (WHAS500) Dataset Loader.
 """
 
-from typing import Tuple, List, Dict, Any, Optional
-import os
+from typing import Any
+
 from .base import BaseDataset
 
 
 class WHAS500Dataset(BaseDataset):
     """WHAS500 Survival Dataset."""
 
-    def __init__(self, data_path: Optional[str] = "data/raw/whas500.csv"):
+    def __init__(self, data_path: str | None = "data/raw/whas500.csv"):
         super().__init__(data_path=data_path)
         self._duration_col = "lenfol"
         self._event_col = "fstat"
@@ -22,7 +22,7 @@ class WHAS500Dataset(BaseDataset):
         self.validate_schema()
         return self
 
-    def get_features_and_target(self) -> Tuple[List[Dict[str, Any]], List[float], List[int]]:
+    def get_features_and_target(self) -> tuple[list[dict[str, Any]], list[float], list[int]]:
         """Returns features list of dicts, duration list, event list."""
         if not self._data:
             self.load()

@@ -1,7 +1,8 @@
 """
 MCMC Sampler interface for Bayesian Survival Models.
 """
-from typing import Dict, Any
+from typing import Any
+
 
 class MCMCSampler:
     """Manages MCMC execution and trace generation."""
@@ -12,7 +13,7 @@ class MCMCSampler:
         self.chains = chains
         self.target_accept = target_accept
 
-    def sample(self, model_spec: Any) -> Dict[str, Any]:
+    def sample(self, model_spec: Any) -> dict[str, Any]:
         """Runs sampler over model specification."""
         return {
             "draws": self.draws,

@@ -3,6 +3,7 @@ Concordance and Pairwise Ranking Losses for Survival Models.
 """
 from typing import Any
 
+
 class SurvivalRankingLoss:
     """Pairwise ranking loss for survival time alignment."""
 

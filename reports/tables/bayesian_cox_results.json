@@ -1,0 +1,543 @@
+{
+  "gbsg2": {
+    "posterior_summary": [
+      {
+        "feature": "log_estrec",
+        "coef (beta_mean)": -0.008866867457632125,
+        "exp(coef) HR Mean": 1.2214035738341065,
+        "exp(coef) HR Median": 1.0319267120565967,
+        "HR SD": 0.9235797565113734,
+        "95% Credible Lower": 0.284897575626264,
+        "95% Credible Upper": 3.2704708353654777,
+        "Prob(HR > 1)": 0.5125
+      },
+      {
+        "feature": "estrec",
+        "coef (beta_mean)": -0.03317138117326653,
+        "exp(coef) HR Mean": 1.1957140754245363,
+        "exp(coef) HR Median": 0.9446258435178463,
+        "HR SD": 0.8431020574879103,
+        "95% Credible Lower": 0.25589816151300654,
+        "95% Credible Upper": 3.3394125484194856,
+        "Prob(HR > 1)": 0.465
+      },
+      {
+        "feature": "log_progrec",
+        "coef (beta_mean)": -0.05509940786660696,
+        "exp(coef) HR Mean": 1.1871253915296485,
+        "exp(coef) HR Median": 0.9438144584207145,
+        "HR SD": 0.9013070836823377,
+        "95% Credible Lower": 0.24079466719932363,
+        "95% Credible Upper": 3.8157129554725158,
+        "Prob(HR > 1)": 0.4575
+      },
+      {
+        "feature": "age",
+        "coef (beta_mean)": -0.04360648995802482,
+        "exp(coef) HR Mean": 1.142067681337234,
+        "exp(coef) HR Median": 0.9260603584723912,
+        "HR SD": 0.7863828396694781,
+        "95% Credible Lower": 0.33817932235135223,
+        "95% Credible Upper": 3.23050122492451,
+        "Prob(HR > 1)": 0.445
+      },
+      {
+        "feature": "tsize",
+        "coef (beta_mean)": -0.06151140287893979,
+        "exp(coef) HR Mean": 1.139659821577227,
+        "exp(coef) HR Median": 0.903612679979688,
+        "HR SD": 0.7948474375368715,
+        "95% Credible Lower": 0.26010030503969395,
+        "95% Credible Upper": 3.0607279363973907,
+        "Prob(HR > 1)": 0.435
+      },
+      {
+        "feature": "age_x_horTh",
+        "coef (beta_mean)": -0.06870860010803792,
+        "exp(coef) HR Mean": 1.138086550679565,
+        "exp(coef) HR Median": 0.9337921474456915,
+        "HR SD": 0.7858583099685481,
+        "95% Credible Lower": 0.2737257382716938,
+        "95% Credible Upper": 3.1190020782896104,
+        "Prob(HR > 1)": 0.4475
+      },
+      {
+        "feature": "progrec",
+        "coef (beta_mean)": -0.07605938756056611,
+        "exp(coef) HR Mean": 1.124262942469785,
+        "exp(coef) HR Median": 0.9329197241218483,
+        "HR SD": 0.7411243625583186,
+        "95% Credible Lower": 0.2912575657094155,
+        "95% Credible Upper": 3.1114572768207336,
+        "Prob(HR > 1)": 0.4575
+      },
+      {
+        "feature": "log_pnode",
+        "coef (beta_mean)": -0.08732662910299531,
+        "exp(coef) HR Mean": 1.1043243789748585,
+        "exp(coef) HR Median": 0.9010080710384699,
+        "HR SD": 0.7359250976012163,
+        "95% Credible Lower": 0.24662432020842903,
+        "95% Credible Upper": 3.1584986260638024,
+        "Prob(HR > 1)": 0.43
+      },
+      {
+        "feature": "pnode",
+        "coef (beta_mean)": -0.13729737867865632,
+        "exp(coef) HR Mean": 1.058411313199879,
+        "exp(coef) HR Median": 0.9155070100076274,
+        "HR SD": 0.6921294357259846,
+        "95% Credible Lower": 0.20683889495170021,
+        "95% Credible Upper": 2.726113210011917,
+        "Prob(HR > 1)": 0.4425
+      },
+      {
+        "feature": "horTh_yes",
+        "coef (beta_mean)": -0.1695924896978331,
+        "exp(coef) HR Mean": 1.0507103300258926,
+        "exp(coef) HR Median": 0.8445091188410314,
+        "HR SD": 0.8137274695646805,
+        "95% Credible Lower": 0.23608043128404663,
+        "95% Credible Upper": 3.30160251345743,
+        "Prob(HR > 1)": 0.3975
+      },
+      {
+        "feature": "menostat_Pre",
+        "coef (beta_mean)": -0.20279337892109178,
+        "exp(coef) HR Mean": 1.0362769954076925,
+        "exp(coef) HR Median": 0.8464424532016668,
+        "HR SD": 0.7565223001294451,
+        "95% Credible Lower": 0.2094412250938816,
+        "95% Credible Upper": 2.8799046751518245,
+        "Prob(HR > 1)": 0.4125
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.5248,
+      "c_index_se": 0.0103,
+      "brier_scores": {
+        "bs_time_255.0": 0.6679,
+        "bs_time_617.0": 0.4696,
+        "bs_time_1418.0": 0.2408
+      },
+      "integrated_brier_score": 0.4217
+    },
+    "cv_results": {
+      "dataset_name": "gbsg2",
+      "n_splits": 5,
+      "mean_c_index": 0.5053,
+      "std_c_index": 0.0577,
+      "fold_c_indices": [
+        0.5777,
+        0.4941,
+        0.4691,
+        0.4366,
+        0.5489
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.5777,
+          "c_index_se": 0.0109,
+          "integrated_brier_score": 0.49
+        },
+        {
+          "fold": 2,
+          "c_index": 0.4941,
+          "c_index_se": 0.0107,
+          "integrated_brier_score": 0.4521
+        },
+        {
+          "fold": 3,
+          "c_index": 0.4691,
+          "c_index_se": 0.0122,
+          "integrated_brier_score": 0.4722
+        },
+        {
+          "fold": 4,
+          "c_index": 0.4366,
+          "c_index_se": 0.01,
+          "integrated_brier_score": 0.4583
+        },
+        {
+          "fold": 5,
+          "c_index": 0.5489,
+          "c_index_se": 0.0112,
+          "integrated_brier_score": 0.3977
+        }
+      ],
+      "mean_integrated_brier_score": 0.4541,
+      "std_integrated_brier_score": 0.0347
+    },
+    "comparative_benchmarks": {
+      "cox_ph": 0.482,
+      "rsf": 0.5522,
+      "deepsurv": 0.479,
+      "bayesian_cox": 0.5248
+    }
+  },
+  "whas500": {
+    "posterior_summary": [
+      {
+        "feature": "hr",
+        "coef (beta_mean)": 0.04879518104962827,
+        "exp(coef) HR Mean": 1.2481768027698792,
+        "exp(coef) HR Median": 1.081816008704066,
+        "HR SD": 0.8079731647590147,
+        "95% Credible Lower": 0.30331806160608726,
+        "95% Credible Upper": 3.125036359816357,
+        "Prob(HR > 1)": 0.5475
+      },
+      {
+        "feature": "sysbp",
+        "coef (beta_mean)": 0.022931644217916505,
+        "exp(coef) HR Mean": 1.2030393904564354,
+        "exp(coef) HR Median": 1.0215844504663476,
+        "HR SD": 0.7261256173165824,
+        "95% Credible Lower": 0.29787425721156113,
+        "95% Credible Upper": 3.068444101704746,
+        "Prob(HR > 1)": 0.5125
+      },
+      {
+        "feature": "bmi",
+        "coef (beta_mean)": -0.009974384828979763,
+        "exp(coef) HR Mean": 1.1672113089269485,
+        "exp(coef) HR Median": 0.9876901614408302,
+        "HR SD": 0.6828716754172075,
+        "95% Credible Lower": 0.2897996591365113,
+        "95% Credible Upper": 2.828636320455054,
+        "Prob(HR > 1)": 0.475
+      },
+      {
+        "feature": "age",
+        "coef (beta_mean)": -0.03908878328967864,
+        "exp(coef) HR Mean": 1.1472474405164563,
+        "exp(coef) HR Median": 0.9652231830523442,
+        "HR SD": 0.7432555916969131,
+        "95% Credible Lower": 0.2986188532524927,
+        "95% Credible Upper": 2.9671610084381483,
+        "Prob(HR > 1)": 0.47
+      },
+      {
+        "feature": "diasbp",
+        "coef (beta_mean)": -0.02829204061916031,
+        "exp(coef) HR Mean": 1.1391321676021269,
+        "exp(coef) HR Median": 0.9780340964658603,
+        "HR SD": 0.7054318762698363,
+        "95% Credible Lower": 0.32357533039953257,
+        "95% Credible Upper": 2.7480350285524824,
+        "Prob(HR > 1)": 0.4775
+      },
+      {
+        "feature": "age_x_gender",
+        "coef (beta_mean)": -0.0686200891928377,
+        "exp(coef) HR Mean": 1.1063386686958865,
+        "exp(coef) HR Median": 0.9217437905842377,
+        "HR SD": 0.6992732796734009,
+        "95% Credible Lower": 0.2916676601642929,
+        "95% Credible Upper": 2.994095453721182,
+        "Prob(HR > 1)": 0.425
+      },
+      {
+        "feature": "age_x_chf",
+        "coef (beta_mean)": -0.08279413972565759,
+        "exp(coef) HR Mean": 1.1031863015116432,
+        "exp(coef) HR Median": 0.8925014972861969,
+        "HR SD": 0.72911236019551,
+        "95% Credible Lower": 0.2856944781641868,
+        "95% Credible Upper": 2.892595964370514,
+        "Prob(HR > 1)": 0.43
+      },
+      {
+        "feature": "chf_1",
+        "coef (beta_mean)": -0.2058529209446539,
+        "exp(coef) HR Mean": 1.0246042947822247,
+        "exp(coef) HR Median": 0.7854945478072872,
+        "HR SD": 0.8700152218549885,
+        "95% Credible Lower": 0.23690926618898317,
+        "95% Credible Upper": 3.067121287299161,
+        "Prob(HR > 1)": 0.365
+      },
+      {
+        "feature": "gender_1",
+        "coef (beta_mean)": -0.20952080335255338,
+        "exp(coef) HR Mean": 1.0001349238095347,
+        "exp(coef) HR Median": 0.7871580172232344,
+        "HR SD": 0.7775740102888816,
+        "95% Credible Lower": 0.2568422314994345,
+        "95% Credible Upper": 3.209333653820298,
+        "Prob(HR > 1)": 0.345
+      },
+      {
+        "feature": "cvd_1",
+        "coef (beta_mean)": -0.22024627290906273,
+        "exp(coef) HR Mean": 0.9983479370512828,
+        "exp(coef) HR Median": 0.8079018204545886,
+        "HR SD": 0.7460852062341196,
+        "95% Credible Lower": 0.24138745378258802,
+        "95% Credible Upper": 2.975999166437615,
+        "Prob(HR > 1)": 0.365
+      },
+      {
+        "feature": "afb_1",
+        "coef (beta_mean)": -0.2841423368096474,
+        "exp(coef) HR Mean": 0.9378260967392588,
+        "exp(coef) HR Median": 0.7211498778148802,
+        "HR SD": 0.713996612414468,
+        "95% Credible Lower": 0.20917967785978195,
+        "95% Credible Upper": 2.8924888374355846,
+        "Prob(HR > 1)": 0.3125
+      },
+      {
+        "feature": "sho_1",
+        "coef (beta_mean)": -0.27169742107743744,
+        "exp(coef) HR Mean": 0.9285530250540346,
+        "exp(coef) HR Median": 0.7543690051221907,
+        "HR SD": 0.626081403930225,
+        "95% Credible Lower": 0.230638593726912,
+        "95% Credible Upper": 2.59277256084563,
+        "Prob(HR > 1)": 0.3575
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.4274,
+      "c_index_se": 0.014,
+      "brier_scores": {
+        "bs_time_265.0": 0.6907,
+        "bs_time_522.0": 0.4766,
+        "bs_time_1010.0": 0.2419
+      },
+      "integrated_brier_score": 0.4367
+    },
+    "cv_results": {
+      "dataset_name": "whas500",
+      "n_splits": 5,
+      "mean_c_index": 0.5108,
+      "std_c_index": 0.0434,
+      "fold_c_indices": [
+        0.4577,
+        0.5694,
+        0.5158,
+        0.5301,
+        0.4812
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.4577,
+          "c_index_se": 0.0146,
+          "integrated_brier_score": 0.5566
+        },
+        {
+          "fold": 2,
+          "c_index": 0.5694,
+          "c_index_se": 0.0166,
+          "integrated_brier_score": 0.5226
+        },
+        {
+          "fold": 3,
+          "c_index": 0.5158,
+          "c_index_se": 0.015,
+          "integrated_brier_score": 0.5532
+        },
+        {
+          "fold": 4,
+          "c_index": 0.5301,
+          "c_index_se": 0.0151,
+          "integrated_brier_score": 0.4483
+        },
+        {
+          "fold": 5,
+          "c_index": 0.4812,
+          "c_index_se": 0.0159,
+          "integrated_brier_score": 0.4565
+        }
+      ],
+      "mean_integrated_brier_score": 0.5074,
+      "std_integrated_brier_score": 0.052
+    },
+    "comparative_benchmarks": {
+      "cox_ph": 0.4685,
+      "rsf": 0.5508,
+      "deepsurv": 0.5968,
+      "bayesian_cox": 0.4274
+    }
+  },
+  "metabric": {
+    "posterior_summary": [
+      {
+        "feature": "tumour_stage",
+        "coef (beta_mean)": -0.042970702172007,
+        "exp(coef) HR Mean": 1.1784529823160352,
+        "exp(coef) HR Median": 0.9356674818129096,
+        "HR SD": 0.8200448704806501,
+        "95% Credible Lower": 0.25726352510327816,
+        "95% Credible Upper": 3.2605882925832814,
+        "Prob(HR > 1)": 0.455
+      },
+      {
+        "feature": "age_x_stage",
+        "coef (beta_mean)": -0.029894006434825728,
+        "exp(coef) HR Mean": 1.162608215439256,
+        "exp(coef) HR Median": 0.976779607108933,
+        "HR SD": 0.7375886542266964,
+        "95% Credible Lower": 0.31716633794519766,
+        "95% Credible Upper": 3.1279819809491105,
+        "Prob(HR > 1)": 0.485
+      },
+      {
+        "feature": "age",
+        "coef (beta_mean)": -0.05881849098760626,
+        "exp(coef) HR Mean": 1.119902943746932,
+        "exp(coef) HR Median": 0.912448753731937,
+        "HR SD": 0.7592621759743045,
+        "95% Credible Lower": 0.3373225159305604,
+        "95% Credible Upper": 3.1349402199107446,
+        "Prob(HR > 1)": 0.435
+      },
+      {
+        "feature": "lymph_nodes_positive",
+        "coef (beta_mean)": -0.081455631462978,
+        "exp(coef) HR Mean": 1.1129217658017974,
+        "exp(coef) HR Median": 0.886116612608475,
+        "HR SD": 0.7668684814148661,
+        "95% Credible Lower": 0.25820829017571617,
+        "95% Credible Upper": 2.9656551677600196,
+        "Prob(HR > 1)": 0.43
+      },
+      {
+        "feature": "log_lymph_nodes",
+        "coef (beta_mean)": -0.10944925210628426,
+        "exp(coef) HR Mean": 1.0786298100234744,
+        "exp(coef) HR Median": 0.9402628266229696,
+        "HR SD": 0.6866699269541789,
+        "95% Credible Lower": 0.22008723048074186,
+        "95% Credible Upper": 2.7280514390068658,
+        "Prob(HR > 1)": 0.46
+      },
+      {
+        "feature": "PAM50Subtype_Her2",
+        "coef (beta_mean)": -0.19768704428064773,
+        "exp(coef) HR Mean": 1.032443513003433,
+        "exp(coef) HR Median": 0.8560209159543539,
+        "HR SD": 0.8332141778162432,
+        "95% Credible Lower": 0.2221907505106509,
+        "95% Credible Upper": 2.867240603794963,
+        "Prob(HR > 1)": 0.3925
+      },
+      {
+        "feature": "hormone_therapy_1",
+        "coef (beta_mean)": -0.2176972921751821,
+        "exp(coef) HR Mean": 1.0183571163104075,
+        "exp(coef) HR Median": 0.802134986538569,
+        "HR SD": 0.7921129107108682,
+        "95% Credible Lower": 0.19910470036503267,
+        "95% Credible Upper": 3.3353153677627083,
+        "Prob(HR > 1)": 0.365
+      },
+      {
+        "feature": "PAM50Subtype_Normal",
+        "coef (beta_mean)": -0.22706111671693271,
+        "exp(coef) HR Mean": 1.0018131715968692,
+        "exp(coef) HR Median": 0.8255300401278958,
+        "HR SD": 0.7144038073673271,
+        "95% Credible Lower": 0.21027383724312165,
+        "95% Credible Upper": 2.7382765034905763,
+        "Prob(HR > 1)": 0.4
+      },
+      {
+        "feature": "chemotherapy_1",
+        "coef (beta_mean)": -0.21860517106672617,
+        "exp(coef) HR Mean": 0.9702080644204244,
+        "exp(coef) HR Median": 0.7900956826902344,
+        "HR SD": 0.6502124445188104,
+        "95% Credible Lower": 0.21491651000989181,
+        "95% Credible Upper": 2.7865200961958503,
+        "Prob(HR > 1)": 0.3475
+      },
+      {
+        "feature": "PAM50Subtype_LumB",
+        "coef (beta_mean)": -0.24968401131198953,
+        "exp(coef) HR Mean": 0.9587433542518968,
+        "exp(coef) HR Median": 0.7794967013400493,
+        "HR SD": 0.7168706260734499,
+        "95% Credible Lower": 0.22531629735625067,
+        "95% Credible Upper": 2.9403547584033554,
+        "Prob(HR > 1)": 0.355
+      },
+      {
+        "feature": "PAM50Subtype_LumA",
+        "coef (beta_mean)": -0.2803242269670033,
+        "exp(coef) HR Mean": 0.9238570001373617,
+        "exp(coef) HR Median": 0.7556965089434281,
+        "HR SD": 0.6436806826790711,
+        "95% Credible Lower": 0.2194319404485219,
+        "95% Credible Upper": 2.5477430114203643,
+        "Prob(HR > 1)": 0.305
+      }
+    ],
+    "test_eval": {
+      "c_index": 0.545,
+      "c_index_se": 0.0032,
+      "brier_scores": {
+        "bs_time_41.8": 0.4958,
+        "bs_time_95.1": 0.4141,
+        "bs_time_172.6": 0.2277
+      },
+      "integrated_brier_score": 0.3755
+    },
+    "cv_results": {
+      "dataset_name": "metabric",
+      "n_splits": 5,
+      "mean_c_index": 0.5071,
+      "std_c_index": 0.0255,
+      "fold_c_indices": [
+        0.5063,
+        0.5362,
+        0.4671,
+        0.5198,
+        0.5061
+      ],
+      "fold_details": [
+        {
+          "fold": 1,
+          "c_index": 0.5063,
+          "c_index_se": 0.0036,
+          "integrated_brier_score": 0.3805
+        },
+        {
+          "fold": 2,
+          "c_index": 0.5362,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.3678
+        },
+        {
+          "fold": 3,
+          "c_index": 0.4671,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.4027
+        },
+        {
+          "fold": 4,
+          "c_index": 0.5198,
+          "c_index_se": 0.0034,
+          "integrated_brier_score": 0.4067
+        },
+        {
+          "fold": 5,
+          "c_index": 0.5061,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.4294
+        }
+      ],
+      "mean_integrated_brier_score": 0.3974,
+      "std_integrated_brier_score": 0.024
+    },
+    "comparative_benchmarks": {
+      "cox_ph": 0.5129,
+      "rsf": 0.5833,
+      "deepsurv": 0.5493,
+      "bayesian_cox": 0.545
+    }
+  }
+}

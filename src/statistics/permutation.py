@@ -1,8 +1,8 @@
 """
 Permutation tests for feature significance and model performance comparisons.
 """
-from typing import Callable, Tuple
 import numpy as np
+
 
 class PermutationTest:
     """Computes p-values for model differences using permutation resampling."""

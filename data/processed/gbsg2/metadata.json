@@ -1,0 +1,86 @@
+{
+  "dataset_name": "gbsg2",
+  "random_state": 42,
+  "target_time_col": "time",
+  "target_event_col": "event",
+  "num_features": 11,
+  "feature_names": [
+    "age",
+    "tsize",
+    "pnode",
+    "progrec",
+    "estrec",
+    "log_pnode",
+    "log_progrec",
+    "log_estrec",
+    "age_x_horTh",
+    "horTh_yes",
+    "menostat_Pre"
+  ],
+  "train_samples": 479,
+  "val_samples": 102,
+  "test_samples": 105,
+  "train_censoring_rate": 55.11,
+  "val_censoring_rate": 54.9,
+  "test_censoring_rate": 55.24,
+  "scaling_params": {
+    "age": {
+      "mean": 51.2901878914405,
+      "std": 17.069796657090375
+    },
+    "tsize": {
+      "mean": 63.78079331941545,
+      "std": 32.405381523299226
+    },
+    "pnode": {
+      "mean": 3.012526096033403,
+      "std": 2.657556071834645
+    },
+    "progrec": {
+      "mean": 104.74947807933194,
+      "std": 106.1431292440085
+    },
+    "estrec": {
+      "mean": 92.65344467640918,
+      "std": 92.79901880315893
+    },
+    "log_pnode": {
+      "mean": 1.259162284139663,
+      "std": 0.4735154363917127
+    },
+    "log_progrec": {
+      "mean": 4.113132781804477,
+      "std": 1.2226924896124436
+    },
+    "log_estrec": {
+      "mean": 4.004355434863841,
+      "std": 1.1653242648518025
+    },
+    "age_x_horTh": {
+      "mean": 22.50939457202505,
+      "std": 27.8340009003026
+    }
+  },
+  "encoding_maps": {
+    "horTh": [
+      "yes"
+    ],
+    "menostat": [
+      "Pre"
+    ]
+  },
+  "validation_report": {
+    "dataset_name": "gbsg2",
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": {
+      "total_rows": 686,
+      "total_cols": 9,
+      "valid_rows": 686,
+      "event_count": 308,
+      "censored_count": 378,
+      "censoring_rate": 55.1
+    }
+  }
+}

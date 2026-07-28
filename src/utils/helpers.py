@@ -2,9 +2,9 @@
 Common helper functions.
 """
 
-import os
-from typing import Any, Dict
 import json
+import os
+from typing import Any
 
 
 def ensure_dir(path: str) -> str:
@@ -13,14 +13,14 @@ def ensure_dir(path: str) -> str:
     return path
 
 
-def save_json(data: Dict[str, Any], file_path: str) -> None:
+def save_json(data: dict[str, Any], file_path: str) -> None:
     """Saves dictionary to JSON file."""
     ensure_dir(os.path.dirname(file_path))
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
-def load_json(file_path: str) -> Dict[str, Any]:
+def load_json(file_path: str) -> dict[str, Any]:
     """Loads JSON file."""
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)

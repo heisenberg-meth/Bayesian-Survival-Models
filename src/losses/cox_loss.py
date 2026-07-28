@@ -3,6 +3,7 @@ Cox Negative Partial Log-Likelihood Loss.
 """
 from typing import Any
 
+
 class CoxPartialLikelihoodLoss:
     """Computes negative Cox partial log-likelihood for DeepSurv / Neural Cox models."""
 
