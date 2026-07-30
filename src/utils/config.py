@@ -38,10 +38,10 @@ def load_yaml(file_path: str) -> ConfigDict:
     """Loads a YAML configuration file into a ConfigDict object."""
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Config file not found at '{file_path}'")
-    
+
     with open(file_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
-    
+
     return ConfigDict(data)
 
 
@@ -64,7 +64,7 @@ def get_project_config(config_dir: str = "config") -> ConfigDict:
     training_file = os.path.join(config_dir, "training.yaml")
 
     config = load_yaml(base_file) if os.path.exists(base_file) else ConfigDict()
-    
+
     if os.path.exists(datasets_file):
         config.datasets = load_yaml(datasets_file)
     if os.path.exists(model_file):

@@ -1,6 +1,7 @@
 """
 Confidence Interval estimation (Normal, Student-t, Percentile, BCa).
 """
+
 import numpy as np
 
 

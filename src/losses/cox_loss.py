@@ -1,6 +1,7 @@
 """
 Cox Negative Partial Log-Likelihood Loss.
 """
+
 from typing import Any
 
 

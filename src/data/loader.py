@@ -4,8 +4,9 @@ Provides standardized loading methods for raw, interim, and processed survival d
 """
 
 import os
+
 import pandas as pd
-from typing import Tuple, Dict, Any, Optional
+
 
 class DatasetLoader:
     """Standardized loader for survival datasets."""
@@ -16,11 +17,13 @@ class DatasetLoader:
         filename_map = {
             "gbsg2": "gbsg2.csv",
             "whas500": "whas500.csv",
-            "metabric": "metabric.csv"
+            "metabric": "metabric.csv",
         }
         dataset_key = dataset_name.lower()
         if dataset_key not in filename_map:
-            raise ValueError(f"Unknown dataset name: {dataset_name}. Must be one of {list(filename_map.keys())}")
+            raise ValueError(
+                f"Unknown dataset name: {dataset_name}. Must be one of {list(filename_map.keys())}"
+            )
 
         filepath = os.path.join(data_dir, "raw", filename_map[dataset_key])
         if not os.path.exists(filepath):
@@ -30,7 +33,9 @@ class DatasetLoader:
         return df
 
     @staticmethod
-    def load_processed(processed_dir: str, dataset_name: str, split: str = "train") -> Tuple[pd.DataFrame, pd.Series, pd.Series]:
+    def load_processed(
+        processed_dir: str, dataset_name: str, split: str = "train"
+    ) -> tuple[pd.DataFrame, pd.Series, pd.Series]:
         """
         Loads processed CSV split from data/processed/{dataset_name}/{split}.csv.
         Returns:
@@ -45,8 +50,16 @@ class DatasetLoader:
             raise FileNotFoundError(f"Processed split file not found at {split_path}")
 
         df = pd.read_csv(split_path)
-        time_col = [c for c in df.columns if c.endswith("_time") or c in ("time", "lenfol", "duration")][0]
-        event_col = [c for c in df.columns if c.endswith("_event") or c in ("event", "cens", "fstat")][0]
+        time_col = next(
+            c
+            for c in df.columns
+            if c.endswith("_time") or c in ("time", "lenfol", "duration")
+        )
+        event_col = next(
+            c
+            for c in df.columns
+            if c.endswith("_event") or c in ("event", "cens", "fstat")
+        )
 
         X = df.drop(columns=[time_col, event_col])
         y_time = df[time_col]

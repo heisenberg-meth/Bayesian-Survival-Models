@@ -2,19 +2,27 @@
 German Breast Cancer Study Group 2 (GBSG2) Dataset Loader.
 """
 
-from typing import Tuple, List, Dict, Any, Optional
-import os
+from typing import Any
+
 from .base import BaseDataset
 
 
 class GBSG2Dataset(BaseDataset):
     """GBSG2 Survival Dataset."""
 
-    def __init__(self, data_path: Optional[str] = "data/raw/gbsg2.csv"):
+    def __init__(self, data_path: str | None = "data/raw/gbsg2.csv"):
         super().__init__(data_path=data_path)
         self._duration_col = "time"
         self._event_col = "cens"
-        self._feature_names = ["horTh", "age", "menostat", "tsize", "pnode", "progrec", "estrec"]
+        self._feature_names = [
+            "horTh",
+            "age",
+            "menostat",
+            "tsize",
+            "pnode",
+            "progrec",
+            "estrec",
+        ]
 
     def load(self) -> "GBSG2Dataset":
         """Load GBSG2 raw data and validate schema."""
@@ -22,7 +30,9 @@ class GBSG2Dataset(BaseDataset):
         self.validate_schema()
         return self
 
-    def get_features_and_target(self) -> Tuple[List[Dict[str, Any]], List[float], List[int]]:
+    def get_features_and_target(
+        self,
+    ) -> tuple[list[dict[str, Any]], list[float], list[int]]:
         """Returns features list of dicts, duration list, event list."""
         if not self._data:
             self.load()

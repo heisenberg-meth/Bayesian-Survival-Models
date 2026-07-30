@@ -1,6 +1,7 @@
 """
 Preprocessing Pipeline for Survival Analysis Data.
 """
+
 from typing import Any
 
 import numpy as np

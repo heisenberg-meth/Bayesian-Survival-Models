@@ -25,7 +25,9 @@ class CoxPHModel(BaseSurvivalModel):
         self.summary_df = None
         self.se_beta = None
 
-    def fit(self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray) -> "CoxPHModel":
+    def fit(
+        self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray
+    ) -> "CoxPHModel":
         """Fits Cox Proportional Hazards model parameters via Partial Likelihood maximization."""
         self.feature_names = list(X.columns)
         X_mat = X.values.astype(float)
@@ -46,17 +48,19 @@ class CoxPHModel(BaseSurvivalModel):
             # Log-sum-exp trick for numerical stability
             # Reverse cumulative logsumexp for risk sets
             exp_theta = np.exp(theta - np.max(theta))
-            
+
             # Risk set sums backwards
             risk_sums = np.cumsum(exp_theta[::-1])[::-1]
-            
+
             # Mask for event occurrences
-            event_mask = (y_event == 1)
-            
-            log_lik = np.sum(theta[event_mask] - (np.max(theta) + np.log(risk_sums[event_mask])))
-            
+            event_mask = y_event == 1
+
+            log_lik = np.sum(
+                theta[event_mask] - (np.max(theta) + np.log(risk_sums[event_mask]))
+            )
+
             # L2 penalty
-            pen = 0.5 * self.l2_reg * np.sum(beta ** 2)
+            pen = 0.5 * self.l2_reg * np.sum(beta**2)
             return -(log_lik - pen)
 
         def _gradient(beta):
@@ -66,12 +70,18 @@ class CoxPHModel(BaseSurvivalModel):
 
             # Cumulative sums backwards for weighted risk sets
             risk_sums = np.cumsum(exp_theta[::-1])[::-1]
-            weighted_x_sums = np.cumsum((X_mat * exp_theta[:, None])[::-1], axis=0)[::-1]
+            weighted_x_sums = np.cumsum((X_mat * exp_theta[:, None])[::-1], axis=0)[
+                ::-1
+            ]
 
-            event_mask = (y_event == 1)
+            event_mask = y_event == 1
 
-            weighted_means = weighted_x_sums[event_mask] / risk_sums[event_mask][:, None]
-            grad = np.sum(X_mat[event_mask] - weighted_means, axis=0) - self.l2_reg * beta
+            weighted_means = (
+                weighted_x_sums[event_mask] / risk_sums[event_mask][:, None]
+            )
+            grad = (
+                np.sum(X_mat[event_mask] - weighted_means, axis=0) - self.l2_reg * beta
+            )
             return -grad
 
         init_beta = np.zeros(n_features)
@@ -79,8 +89,8 @@ class CoxPHModel(BaseSurvivalModel):
             _neg_log_partial_likelihood,
             init_beta,
             jac=_gradient,
-            method='L-BFGS-B',
-            options={'maxiter': 500, 'ftol': 1e-9}
+            method="L-BFGS-B",
+            options={"maxiter": 500, "ftol": 1e-9},
         )
 
         self.beta = res.x
@@ -109,7 +119,7 @@ class CoxPHModel(BaseSurvivalModel):
             # Events at time t
             d_t = np.sum((y_time == t) & (y_event == 1))
             # Risk set at time t
-            at_risk_mask = (y_time >= t)
+            at_risk_mask = y_time >= t
             sum_exp_risk = np.sum(exp_theta[at_risk_mask])
 
             if sum_exp_risk > 0:
@@ -127,16 +137,22 @@ class CoxPHModel(BaseSurvivalModel):
         ci_lower = np.exp(self.beta - 1.96 * self.se_beta)
         ci_upper = np.exp(self.beta + 1.96 * self.se_beta)
 
-        self.summary_df = pd.DataFrame({
-            "feature": self.feature_names,
-            "coef (beta)": self.beta,
-            "exp(coef) HR": hr,
-            "se(coef)": self.se_beta,
-            "95% CI Lower": ci_lower,
-            "95% CI Upper": ci_upper,
-            "z": z_scores,
-            "p": p_values
-        }).sort_values(by="p").reset_index(drop=True)
+        self.summary_df = (
+            pd.DataFrame(
+                {
+                    "feature": self.feature_names,
+                    "coef (beta)": self.beta,
+                    "exp(coef) HR": hr,
+                    "se(coef)": self.se_beta,
+                    "95% CI Lower": ci_lower,
+                    "95% CI Upper": ci_upper,
+                    "z": z_scores,
+                    "p": p_values,
+                }
+            )
+            .sort_values(by="p")
+            .reset_index(drop=True)
+        )
 
         return self
 
@@ -152,14 +168,16 @@ class CoxPHModel(BaseSurvivalModel):
         if self.beta is None or len(self.unique_event_times) == 0:
             raise ValueError("Model must be fitted before calling predict_survival().")
 
-        risk_scores = self.predict_risk(X) # (N,)
-        exp_risk = np.exp(risk_scores)     # (N,)
+        risk_scores = self.predict_risk(X)  # (N,)
+        exp_risk = np.exp(risk_scores)  # (N,)
 
         # Interpolate baseline cumulative hazard H0(t) for eval_times
-        indices = np.searchsorted(self.unique_event_times, eval_times, side='right') - 1
+        indices = np.searchsorted(self.unique_event_times, eval_times, side="right") - 1
         h0_eval = np.zeros_like(eval_times, dtype=float)
         valid_mask = indices >= 0
-        h0_eval[valid_mask] = self.baseline_cum_hazard[np.minimum(indices[valid_mask], len(self.baseline_cum_hazard) - 1)]
+        h0_eval[valid_mask] = self.baseline_cum_hazard[
+            np.minimum(indices[valid_mask], len(self.baseline_cum_hazard) - 1)
+        ]
 
         # S(t | X_i) = exp( - H0(t) * exp(risk_i) )
         # Shape: (N_samples, M_times)
@@ -167,7 +185,9 @@ class CoxPHModel(BaseSurvivalModel):
         surv_matrix = np.exp(-cum_haz_matrix)
         return np.clip(surv_matrix, 1e-6, 1.0)
 
-    def check_proportional_hazards(self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray) -> pd.DataFrame:
+    def check_proportional_hazards(
+        self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray
+    ) -> pd.DataFrame:
         """Computes Schoenfeld residuals to evaluate proportional hazard assumption."""
         X_mat = X[self.feature_names].values.astype(float)
         y_time = np.asarray(y_time, dtype=float)
@@ -183,7 +203,7 @@ class CoxPHModel(BaseSurvivalModel):
             t = y_time[idx]
             x_i = X_mat[idx]
 
-            at_risk = (y_time >= t)
+            at_risk = y_time >= t
             weights = exp_risk[at_risk]
             w_sum = np.sum(weights)
 
@@ -198,16 +218,18 @@ class CoxPHModel(BaseSurvivalModel):
 
         # Correlation between residuals and rank of event time
         time_ranks = stats.rankdata(res_times)
-        
+
         ph_results = []
         for j, col in enumerate(self.feature_names):
             r, p_val = stats.pearsonr(time_ranks, sch_matrix[:, j])
-            ph_results.append({
-                "feature": col,
-                "rho": float(round(r, 4)),
-                "p_value": float(round(p_val, 4)),
-                "ph_satisfied": bool(p_val > 0.05)
-            })
+            ph_results.append(
+                {
+                    "feature": col,
+                    "rho": float(round(r, 4)),
+                    "p_value": float(round(p_val, 4)),
+                    "ph_satisfied": bool(p_val > 0.05),
+                }
+            )
 
         return pd.DataFrame(ph_results)
 

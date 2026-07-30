@@ -1,324 +1,417 @@
 {
   "gbsg2": {
+    "best_params": {
+      "n_estimators": 75,
+      "max_depth": 4,
+      "min_samples_leaf": 3,
+      "min_samples_split": 6,
+      "max_features": "sqrt",
+      "bootstrap": true
+    },
     "vimp": [
       {
-        "feature": "tsize",
-        "importance (VIMP)": 0.05624772731622363
-      },
-      {
         "feature": "age",
-        "importance (VIMP)": 0.055577883676867446
-      },
-      {
-        "feature": "log_progrec",
-        "importance (VIMP)": 0.05224780386978234
-      },
-      {
-        "feature": "estrec",
-        "importance (VIMP)": 0.04673594763736577
+        "importance (VIMP)": 0.061376815754722425
       },
       {
         "feature": "log_pnode",
-        "importance (VIMP)": 0.04667853246827813
+        "importance (VIMP)": 0.055099423934470204
+      },
+      {
+        "feature": "tsize",
+        "importance (VIMP)": 0.051979866414039955
+      },
+      {
+        "feature": "log_progrec",
+        "importance (VIMP)": 0.038295917781477895
       },
       {
         "feature": "log_estrec",
-        "importance (VIMP)": 0.03944422116323132
+        "importance (VIMP)": 0.037760042869993016
+      },
+      {
+        "feature": "estrec",
+        "importance (VIMP)": 0.031425235880653046
       },
       {
         "feature": "age_x_horTh",
-        "importance (VIMP)": 0.027788941838433723
+        "importance (VIMP)": 0.023942125509559653
       },
       {
         "feature": "progrec",
-        "importance (VIMP)": 0.019119251306195073
+        "importance (VIMP)": 0.018430269277143085
       },
       {
         "feature": "pnode",
-        "importance (VIMP)": 0.01718627394691008
+        "importance (VIMP)": 0.016918336491167696
       },
       {
         "feature": "menostat_Pre",
-        "importance (VIMP)": 0.014219823544046939
+        "importance (VIMP)": 0.011310788310271658
       },
       {
         "feature": "horTh_yes",
-        "importance (VIMP)": 0.0
+        "importance (VIMP)": 0.0027750665059042
       }
     ],
     "test_eval": {
-      "c_index": 0.5522,
+      "c_index": 0.5437,
       "c_index_se": 0.0103,
       "brier_scores": {
-        "bs_time_255.0": 0.091,
-        "bs_time_617.0": 0.1454,
+        "bs_time_255.0": 0.0908,
+        "bs_time_617.0": 0.1452,
         "bs_time_1418.0": 0.1416
       },
-      "integrated_brier_score": 0.1356
+      "integrated_brier_score": 0.1355,
+      "time_dependent_auc": {
+        "auc_time_255.0": 0.6795,
+        "auc_time_617.0": 0.5449,
+        "auc_time_1418.0": 0.5804
+      }
     },
     "cv_results": {
       "dataset_name": "gbsg2",
       "n_splits": 5,
-      "mean_c_index": 0.4505,
-      "std_c_index": 0.0717,
+      "mean_c_index": 0.4503,
+      "std_c_index": 0.07,
       "fold_c_indices": [
-        0.5119,
-        0.5201,
-        0.4614,
-        0.3499,
-        0.409
+        0.5322,
+        0.5041,
+        0.4518,
+        0.3653,
+        0.3979
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.5119,
+          "c_index": 0.5322,
           "c_index_se": 0.011,
-          "integrated_brier_score": 0.1297
+          "integrated_brier_score": 0.1268
         },
         {
           "fold": 2,
-          "c_index": 0.5201,
+          "c_index": 0.5041,
           "c_index_se": 0.0107,
-          "integrated_brier_score": 0.1493
+          "integrated_brier_score": 0.1498
         },
         {
           "fold": 3,
-          "c_index": 0.4614,
+          "c_index": 0.4518,
           "c_index_se": 0.0122,
-          "integrated_brier_score": 0.1173
+          "integrated_brier_score": 0.1174
         },
         {
           "fold": 4,
-          "c_index": 0.3499,
-          "c_index_se": 0.0096,
-          "integrated_brier_score": 0.1944
+          "c_index": 0.3653,
+          "c_index_se": 0.0097,
+          "integrated_brier_score": 0.1856
         },
         {
           "fold": 5,
-          "c_index": 0.409,
-          "c_index_se": 0.0111,
-          "integrated_brier_score": 0.1588
+          "c_index": 0.3979,
+          "c_index_se": 0.011,
+          "integrated_brier_score": 0.1582
         }
       ],
-      "mean_integrated_brier_score": 0.1499,
-      "std_integrated_brier_score": 0.0297
+      "mean_integrated_brier_score": 0.1476,
+      "std_integrated_brier_score": 0.027
     },
-    "cox_baseline_test_c_index": 0.482
+    "calibration_curve": {
+      "mean_pred": [
+        0.721411513356305,
+        0.7474412717942558,
+        0.7648189952182246,
+        0.7830233292531183,
+        0.820921173611763
+      ],
+      "observed_surv": [
+        0.9523809523809523,
+        1.0,
+        0.9523809523809523,
+        0.9523809523809523,
+        1.0
+      ],
+      "eval_time": 617.0
+    },
+    "cox_baseline_test_c_index": 0.482,
+    "cox_baseline_test_ibs": 0.1386
   },
   "whas500": {
+    "best_params": {
+      "n_estimators": 75,
+      "max_depth": 6,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
+      "max_features": "sqrt",
+      "bootstrap": true
+    },
     "vimp": [
       {
         "feature": "hr",
-        "importance (VIMP)": 0.08899492539574339
+        "importance (VIMP)": 0.08460198439748545
       },
       {
         "feature": "age",
-        "importance (VIMP)": 0.07513443914261919
-      },
-      {
-        "feature": "bmi",
-        "importance (VIMP)": 0.06740892221464823
-      },
-      {
-        "feature": "diasbp",
-        "importance (VIMP)": 0.06714383094751197
+        "importance (VIMP)": 0.06793910474892073
       },
       {
         "feature": "sysbp",
-        "importance (VIMP)": 0.06093312126031969
+        "importance (VIMP)": 0.06403847610391578
       },
       {
-        "feature": "age_x_gender",
-        "importance (VIMP)": 0.04483829432704689
+        "feature": "bmi",
+        "importance (VIMP)": 0.057941376959781965
+      },
+      {
+        "feature": "diasbp",
+        "importance (VIMP)": 0.044951904870105364
       },
       {
         "feature": "cvd_1",
-        "importance (VIMP)": 0.02461561766265241
+        "importance (VIMP)": 0.029349390290085653
+      },
+      {
+        "feature": "age_x_gender",
+        "importance (VIMP)": 0.02264636824964028
       },
       {
         "feature": "afb_1",
-        "importance (VIMP)": 0.013595394985988052
+        "importance (VIMP)": 0.017344542906915117
       },
       {
         "feature": "age_x_chf",
-        "importance (VIMP)": 0.012497159736423624
-      },
-      {
-        "feature": "gender_1",
-        "importance (VIMP)": 0.008331439824282416
-      },
-      {
-        "feature": "chf_1",
-        "importance (VIMP)": 0.005945618420056031
+        "importance (VIMP)": 0.01393622661516325
       },
       {
         "feature": "sho_1",
-        "importance (VIMP)": 0.005718397333939307
+        "importance (VIMP)": 0.0059834886010755595
+      },
+      {
+        "feature": "gender_1",
+        "importance (VIMP)": 0.004165719912141208
+      },
+      {
+        "feature": "chf_1",
+        "importance (VIMP)": 0.003749147920927065
       }
     ],
     "test_eval": {
-      "c_index": 0.5508,
+      "c_index": 0.5702,
       "c_index_se": 0.0141,
       "brier_scores": {
-        "bs_time_265.0": 0.0909,
-        "bs_time_522.0": 0.1609,
-        "bs_time_1010.0": 0.1559
+        "bs_time_265.0": 0.0946,
+        "bs_time_522.0": 0.1588,
+        "bs_time_1010.0": 0.1527
       },
-      "integrated_brier_score": 0.1472
+      "integrated_brier_score": 0.1457,
+      "time_dependent_auc": {
+        "auc_time_265.0": 0.5263,
+        "auc_time_522.0": 0.5877,
+        "auc_time_1010.0": 0.5767
+      }
     },
     "cv_results": {
       "dataset_name": "whas500",
       "n_splits": 5,
-      "mean_c_index": 0.5116,
-      "std_c_index": 0.0579,
+      "mean_c_index": 0.5308,
+      "std_c_index": 0.0441,
       "fold_c_indices": [
-        0.4645,
-        0.6051,
-        0.5258,
-        0.4672,
-        0.4954
+        0.5081,
+        0.5884,
+        0.5602,
+        0.4763,
+        0.5209
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.4645,
+          "c_index": 0.5081,
           "c_index_se": 0.0146,
-          "integrated_brier_score": 0.1594
+          "integrated_brier_score": 0.1551
         },
         {
           "fold": 2,
-          "c_index": 0.6051,
-          "c_index_se": 0.0163,
-          "integrated_brier_score": 0.1175
+          "c_index": 0.5884,
+          "c_index_se": 0.0165,
+          "integrated_brier_score": 0.1179
         },
         {
           "fold": 3,
-          "c_index": 0.5258,
-          "c_index_se": 0.015,
-          "integrated_brier_score": 0.1563
+          "c_index": 0.5602,
+          "c_index_se": 0.0149,
+          "integrated_brier_score": 0.1519
         },
         {
           "fold": 4,
-          "c_index": 0.4672,
+          "c_index": 0.4763,
           "c_index_se": 0.0151,
-          "integrated_brier_score": 0.1716
+          "integrated_brier_score": 0.1746
         },
         {
           "fold": 5,
-          "c_index": 0.4954,
+          "c_index": 0.5209,
           "c_index_se": 0.0159,
-          "integrated_brier_score": 0.1517
+          "integrated_brier_score": 0.1536
         }
       ],
-      "mean_integrated_brier_score": 0.1513,
-      "std_integrated_brier_score": 0.0203
+      "mean_integrated_brier_score": 0.1506,
+      "std_integrated_brier_score": 0.0205
     },
-    "cox_baseline_test_c_index": 0.4685
+    "calibration_curve": {
+      "mean_pred": [
+        0.6621898710945646,
+        0.7227985075915567,
+        0.7639116865599357,
+        0.7990930802447956,
+        0.8511990324090348
+      ],
+      "observed_surv": [
+        1.0,
+        1.0,
+        0.9375,
+        0.9333333333333333,
+        1.0
+      ],
+      "eval_time": 522.0
+    },
+    "cox_baseline_test_c_index": 0.4685,
+    "cox_baseline_test_ibs": 0.1565
   },
   "metabric": {
+    "best_params": {
+      "n_estimators": 75,
+      "max_depth": 4,
+      "min_samples_leaf": 3,
+      "min_samples_split": 6,
+      "max_features": "sqrt",
+      "bootstrap": true
+    },
     "vimp": [
       {
-        "feature": "age_x_stage",
-        "importance (VIMP)": 0.047888113896684126
-      },
-      {
         "feature": "age",
-        "importance (VIMP)": 0.04333131498969478
+        "importance (VIMP)": 0.03397415743856658
       },
       {
         "feature": "log_lymph_nodes",
-        "importance (VIMP)": 0.029030185881686266
+        "importance (VIMP)": 0.02507500863618184
       },
       {
-        "feature": "lymph_nodes_positive",
-        "importance (VIMP)": 0.026134639046410335
+        "feature": "age_x_stage",
+        "importance (VIMP)": 0.02258216017109338
       },
       {
         "feature": "PAM50Subtype_Her2",
-        "importance (VIMP)": 0.024480179477326613
+        "importance (VIMP)": 0.01679882936068966
+      },
+      {
+        "feature": "lymph_nodes_positive",
+        "importance (VIMP)": 0.01628745094842743
       },
       {
         "feature": "tumour_stage",
-        "importance (VIMP)": 0.021827222021681747
+        "importance (VIMP)": 0.0142661962373416
       },
       {
         "feature": "hormone_therapy_1",
-        "importance (VIMP)": 0.01916359063333295
+        "importance (VIMP)": 0.01256127807729479
       },
       {
         "feature": "chemotherapy_1",
-        "importance (VIMP)": 0.016874517247134513
+        "importance (VIMP)": 0.008459576846493233
       },
       {
         "feature": "PAM50Subtype_LumA",
-        "importance (VIMP)": 0.009226159286127356
+        "importance (VIMP)": 0.00685654622589138
       },
       {
         "feature": "PAM50Subtype_LumB",
-        "importance (VIMP)": 0.008901089517421856
+        "importance (VIMP)": 0.0046208425032118194
       },
       {
         "feature": "PAM50Subtype_Normal",
-        "importance (VIMP)": 0.006063764133257266
+        "importance (VIMP)": 0.00042501659311355855
       }
     ],
     "test_eval": {
-      "c_index": 0.5833,
+      "c_index": 0.5758,
       "c_index_se": 0.0032,
       "brier_scores": {
-        "bs_time_41.8": 0.1271,
-        "bs_time_95.1": 0.1827,
-        "bs_time_172.6": 0.1599
+        "bs_time_41.8": 0.127,
+        "bs_time_95.1": 0.1829,
+        "bs_time_172.6": 0.161
       },
-      "integrated_brier_score": 0.1646
+      "integrated_brier_score": 0.165,
+      "time_dependent_auc": {
+        "auc_time_41.8": 0.577,
+        "auc_time_95.1": 0.5704,
+        "auc_time_172.6": 0.6279
+      }
     },
     "cv_results": {
       "dataset_name": "metabric",
       "n_splits": 5,
-      "mean_c_index": 0.5089,
-      "std_c_index": 0.0205,
+      "mean_c_index": 0.5115,
+      "std_c_index": 0.0229,
       "fold_c_indices": [
-        0.5324,
-        0.4973,
-        0.4928,
-        0.4921,
-        0.5301
+        0.542,
+        0.5032,
+        0.4955,
+        0.488,
+        0.5288
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.5324,
+          "c_index": 0.542,
           "c_index_se": 0.0036,
-          "integrated_brier_score": 0.1612
+          "integrated_brier_score": 0.1604
         },
         {
           "fold": 2,
-          "c_index": 0.4973,
+          "c_index": 0.5032,
           "c_index_se": 0.0035,
-          "integrated_brier_score": 0.1726
+          "integrated_brier_score": 0.1716
         },
         {
           "fold": 3,
-          "c_index": 0.4928,
+          "c_index": 0.4955,
           "c_index_se": 0.0035,
-          "integrated_brier_score": 0.1718
+          "integrated_brier_score": 0.1715
         },
         {
           "fold": 4,
-          "c_index": 0.4921,
+          "c_index": 0.488,
           "c_index_se": 0.0034,
-          "integrated_brier_score": 0.1806
+          "integrated_brier_score": 0.1784
         },
         {
           "fold": 5,
-          "c_index": 0.5301,
+          "c_index": 0.5288,
           "c_index_se": 0.0035,
-          "integrated_brier_score": 0.1624
+          "integrated_brier_score": 0.1617
         }
       ],
-      "mean_integrated_brier_score": 0.1697,
-      "std_integrated_brier_score": 0.008
+      "mean_integrated_brier_score": 0.1687,
+      "std_integrated_brier_score": 0.0076
     },
-    "cox_baseline_test_c_index": 0.5129
+    "calibration_curve": {
+      "mean_pred": [
+        0.6258970211649915,
+        0.6556760130621351,
+        0.6661801982322345,
+        0.6784190148525776,
+        0.7070634246279224
+      ],
+      "observed_surv": [
+        1.0,
+        0.9824561403508771,
+        0.9827586206896551,
+        0.9824561403508771,
+        1.0
+      ],
+      "eval_time": 95.1
+    },
+    "cox_baseline_test_c_index": 0.5129,
+    "cox_baseline_test_ibs": 0.1671
   }
 }

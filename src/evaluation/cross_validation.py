@@ -39,17 +39,17 @@ class CrossValidationEvaluator:
     def evaluate_model(
         self,
         model_trainer_fn: Callable[[pd.DataFrame, pd.DataFrame], Any],
-        eval_times: np.ndarray | None = None
+        eval_times: np.ndarray | None = None,
     ) -> dict[str, Any]:
         """
         Runs 5-fold CV using a model trainer function.
-        
+
         Parameters:
-            model_trainer_fn: Function `fn(df_train_fold, df_val_fold)` that trains model 
-                              and returns fitted model object with `.predict_risk(X)` 
+            model_trainer_fn: Function `fn(df_train_fold, df_val_fold)` that trains model
+                              and returns fitted model object with `.predict_risk(X)`
                               and optional `.predict_survival(X, times)`.
             eval_times: Evaluation times array for Brier Score calculation.
-            
+
         Returns:
             cv_results (dict): Dictionary with per-fold metrics, mean C-index, std C-index, etc.
         """
@@ -82,7 +82,8 @@ class CrossValidationEvaluator:
             # Predict survival curves if supported
             surv_prob_fn = None
             if hasattr(fitted_model, "predict_survival") and eval_times is not None:
-                def surv_prob_fn(times):
+
+                def surv_prob_fn(times, fitted_model=fitted_model, X_val=X_val):
                     return fitted_model.predict_survival(X_val, times)
 
             fold_eval = evaluate_survival_model(
@@ -90,7 +91,7 @@ class CrossValidationEvaluator:
                 y_event=y_val_event,
                 risk_scores=val_risk,
                 surv_prob_fn=surv_prob_fn,
-                eval_times=eval_times
+                eval_times=eval_times,
             )
 
             c_idx = fold_eval["c_index"]
@@ -99,7 +100,7 @@ class CrossValidationEvaluator:
             fold_res = {
                 "fold": fold_num,
                 "c_index": c_idx,
-                "c_index_se": fold_eval["c_index_se"]
+                "c_index_se": fold_eval["c_index_se"],
             }
 
             if "integrated_brier_score" in fold_eval:
@@ -110,7 +111,11 @@ class CrossValidationEvaluator:
             fold_details.append(fold_res)
 
         c_mean = float(round(np.mean(fold_c_indices), 4))
-        c_std = float(round(np.std(fold_c_indices, ddof=1), 4)) if len(fold_c_indices) > 1 else 0.0
+        c_std = (
+            float(round(np.std(fold_c_indices, ddof=1), 4))
+            if len(fold_c_indices) > 1
+            else 0.0
+        )
 
         cv_summary = {
             "dataset_name": self.dataset_name,
@@ -118,11 +123,15 @@ class CrossValidationEvaluator:
             "mean_c_index": c_mean,
             "std_c_index": c_std,
             "fold_c_indices": fold_c_indices,
-            "fold_details": fold_details
+            "fold_details": fold_details,
         }
 
         if len(fold_ibses) > 0:
-            cv_summary["mean_integrated_brier_score"] = float(round(np.mean(fold_ibses), 4))
-            cv_summary["std_integrated_brier_score"] = float(round(np.std(fold_ibses, ddof=1), 4))
+            cv_summary["mean_integrated_brier_score"] = float(
+                round(np.mean(fold_ibses), 4)
+            )
+            cv_summary["std_integrated_brier_score"] = float(
+                round(np.std(fold_ibses, ddof=1), 4)
+            )
 
         return cv_summary

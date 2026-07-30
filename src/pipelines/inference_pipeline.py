@@ -1,6 +1,7 @@
 """
 Inference Pipeline for Patient Survival Curves Prediction.
 """
+
 import numpy as np
 
 

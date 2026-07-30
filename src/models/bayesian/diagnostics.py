@@ -1,6 +1,7 @@
 """
 MCMC Convergence Diagnostics (R-hat, Effective Sample Size, energy plots).
 """
+
 from typing import Any
 
 

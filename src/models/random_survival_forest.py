@@ -10,9 +10,11 @@ import pandas as pd
 from src.models.base import BaseSurvivalModel
 
 
-def _log_rank_split_score(x_feat: np.ndarray, times: np.ndarray, events: np.ndarray, threshold: float) -> float:
-    """Computes two-sample Log-Rank statistic for a candidate split (threshold)."""
-    left_mask = (x_feat <= threshold)
+def _log_rank_split_score(
+    x_feat: np.ndarray, times: np.ndarray, events: np.ndarray, threshold: float
+) -> float:
+    """Computes two-sample Log-Rank statistic for a candidate split (threshold) using suffix-sum optimization."""
+    left_mask = x_feat <= threshold
     right_mask = ~left_mask
 
     n_left = left_mask.sum()
@@ -21,42 +23,62 @@ def _log_rank_split_score(x_feat: np.ndarray, times: np.ndarray, events: np.ndar
     if n_left < 3 or n_right < 3:
         return -1.0
 
-    # Distinct event times
-    event_mask = (events == 1)
-    if not np.any(event_mask):
-        return -1.0
+    n = len(times)
 
-    # Log-rank test statistic computation
-    unique_event_times = np.unique(times[event_mask])
+    # Sort times and events to enable O(1) risk set lookups via suffix sum
+    sort_idx = np.argsort(times)
+    t_sorted = times[sort_idx]
+    e_sorted = events[sort_idx]
+    L_sorted = left_mask[sort_idx]
+
+    # Suffix sums of L_sorted to get Y_L at each index
+    Y_L_all = np.zeros(n + 1, dtype=float)
+    Y_L_all[:-1] = np.cumsum(L_sorted[::-1])[::-1]
+
+    # Find unique times and their first occurrence index
+    unique_times, first_indices, counts = np.unique(
+        t_sorted, return_index=True, return_counts=True
+    )
 
     num_sum = 0.0
     den_sum = 0.0
 
-    for t in unique_event_times:
-        # Risk sets at time t
-        at_risk = (times >= t)
-        Y_total = at_risk.sum()
-        if Y_total <= 1:
+    e_L_sorted = e_sorted & L_sorted
+
+    for k, t in enumerate(unique_times):
+        start = first_indices[k]
+        end = start + counts[k]
+
+        # Number of events at time t
+        d_total = e_sorted[start:end].sum()
+        if d_total == 0:
             continue
 
-        Y_L = (at_risk & left_mask).sum()
-        if Y_L == 0 or Y_L == Y_total:
-            continue
+        # Number of events in left group at time t
+        d_L = e_L_sorted[start:end].sum()
 
-        d_total = (at_risk & (times == t) & event_mask).sum()
-        d_L = (at_risk & left_mask & (times == t) & event_mask).sum()
+        # Risk sets at time t (suffix starting at 'start')
+        Y_total = n - start
+        Y_L = Y_L_all[start]
+
+        if Y_total <= 1 or Y_L == 0 or Y_L == Y_total:
+            continue
 
         E_L = d_total * (Y_L / Y_total)
-        V_L = (Y_L / Y_total) * (1.0 - Y_L / Y_total) * ((Y_total - d_total) / (Y_total - 1.0)) * d_total
+        V_L = (
+            (Y_L / Y_total)
+            * (1.0 - Y_L / Y_total)
+            * ((Y_total - d_total) / (Y_total - 1.0))
+            * d_total
+        )
 
-        num_sum += (d_L - E_L)
+        num_sum += d_L - E_L
         den_sum += V_L
 
     if den_sum <= 1e-8:
         return -1.0
 
-    log_rank_stat = (num_sum ** 2) / den_sum
-    return float(log_rank_stat)
+    return float((num_sum**2) / den_sum)
 
 
 class SurvivalTreeNode:
@@ -82,28 +104,47 @@ class SurvivalTree:
         self,
         max_depth: int = 6,
         min_samples_split: int = 10,
+        min_samples_leaf: int = 3,
         max_features: str = "sqrt",
-        random_state: int | None = None
+        random_state: int | None = None,
     ):
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
+        self.min_samples_leaf = min_samples_leaf
         self.max_features = max_features
         self.random_state = random_state
         self.root = None
         self.all_unique_event_times = np.array([])
 
-    def fit(self, X: np.ndarray, y_time: np.ndarray, y_event: np.ndarray, all_event_times: np.ndarray):
+    def fit(
+        self,
+        X: np.ndarray,
+        y_time: np.ndarray,
+        y_event: np.ndarray,
+        all_event_times: np.ndarray,
+    ):
         self.all_unique_event_times = all_event_times
         rng = np.random.RandomState(self.random_state)
         self.root = self._build_tree(X, y_time, y_event, depth=0, rng=rng)
         return self
 
-    def _build_tree(self, X: np.ndarray, y_time: np.ndarray, y_event: np.ndarray, depth: int, rng: np.random.RandomState) -> SurvivalTreeNode:
+    def _build_tree(
+        self,
+        X: np.ndarray,
+        y_time: np.ndarray,
+        y_event: np.ndarray,
+        depth: int,
+        rng: np.random.RandomState,
+    ) -> SurvivalTreeNode:
         node = SurvivalTreeNode(depth=depth)
         n_samples, n_features = X.shape
 
         # Leaf termination check
-        if depth >= self.max_depth or n_samples < self.min_samples_split or y_event.sum() == 0:
+        if (
+            depth >= self.max_depth
+            or n_samples < self.min_samples_split
+            or y_event.sum() == 0
+        ):
             return self._make_leaf(node, y_time, y_event)
 
         # Select random subset of features
@@ -135,6 +176,15 @@ class SurvivalTree:
                 candidate_thresholds = (unique_vals[:-1] + unique_vals[1:]) / 2.0
 
             for thresh in candidate_thresholds:
+                # Check min_samples_leaf constraint
+                left_mask = x_col <= thresh
+                right_mask = ~left_mask
+                if (
+                    left_mask.sum() < self.min_samples_leaf
+                    or right_mask.sum() < self.min_samples_leaf
+                ):
+                    continue
+
                 score = _log_rank_split_score(x_col, y_time, y_event, thresh)
                 if score > best_score:
                     best_score = score
@@ -150,12 +200,18 @@ class SurvivalTree:
         left_mask = X[:, best_feat] <= best_thresh
         right_mask = ~left_mask
 
-        node.left = self._build_tree(X[left_mask], y_time[left_mask], y_event[left_mask], depth + 1, rng)
-        node.right = self._build_tree(X[right_mask], y_time[right_mask], y_event[right_mask], depth + 1, rng)
+        node.left = self._build_tree(
+            X[left_mask], y_time[left_mask], y_event[left_mask], depth + 1, rng
+        )
+        node.right = self._build_tree(
+            X[right_mask], y_time[right_mask], y_event[right_mask], depth + 1, rng
+        )
 
         return node
 
-    def _make_leaf(self, node: SurvivalTreeNode, y_time: np.ndarray, y_event: np.ndarray) -> SurvivalTreeNode:
+    def _make_leaf(
+        self, node: SurvivalTreeNode, y_time: np.ndarray, y_event: np.ndarray
+    ) -> SurvivalTreeNode:
         node.is_leaf = True
         node.unique_times = self.all_unique_event_times
 
@@ -168,7 +224,7 @@ class SurvivalTree:
             events_at_t = ((y_time == t) & (y_event == 1)).sum()
 
             if at_risk > 0:
-                cum_h += (events_at_t / at_risk)
+                cum_h += events_at_t / at_risk
             chaz[idx] = cum_h
 
         node.nelson_aalen_chaz = chaz
@@ -200,13 +256,17 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
         n_estimators: int = 100,
         max_depth: int = 6,
         min_samples_split: int = 10,
+        min_samples_leaf: int = 3,
         max_features: str = "sqrt",
-        random_state: int = 42
+        bootstrap: bool = True,
+        random_state: int = 42,
     ):
         self.n_estimators = n_estimators
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
+        self.min_samples_leaf = min_samples_leaf
         self.max_features = max_features
+        self.bootstrap = bootstrap
         self.random_state = random_state
 
         self.trees: list[SurvivalTree] = []
@@ -214,7 +274,9 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
         self.all_unique_event_times = np.array([])
         self.feature_importances_ = None
 
-    def fit(self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray) -> "RandomSurvivalForestModel":
+    def fit(
+        self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray
+    ) -> "RandomSurvivalForestModel":
         """Fits Random Survival Forest ensemble."""
         self.feature_names = list(X.columns)
         X_mat = X.values.astype(float)
@@ -228,18 +290,24 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
         self.trees = []
 
         for i in range(self.n_estimators):
-            # Bootstrap sample
-            boot_idx = rng.choice(n_samples, size=n_samples, replace=True)
-            X_boot = X_mat[boot_idx]
-            t_boot = y_time[boot_idx]
-            e_boot = y_event[boot_idx]
+            if self.bootstrap:
+                # Bootstrap sample
+                boot_idx = rng.choice(n_samples, size=n_samples, replace=True)
+                X_boot = X_mat[boot_idx]
+                t_boot = y_time[boot_idx]
+                e_boot = y_event[boot_idx]
+            else:
+                X_boot = X_mat
+                t_boot = y_time
+                e_boot = y_event
 
             tree_seed = rng.randint(0, 1000000)
             tree = SurvivalTree(
                 max_depth=self.max_depth,
                 min_samples_split=self.min_samples_split,
+                min_samples_leaf=self.min_samples_leaf,
                 max_features=self.max_features,
-                random_state=tree_seed
+                random_state=tree_seed,
             )
             tree.fit(X_boot, t_boot, e_boot, self.all_unique_event_times)
             self.trees.append(tree)
@@ -271,13 +339,17 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
     def predict_survival(self, X: pd.DataFrame, eval_times: np.ndarray) -> np.ndarray:
         """Predicts survival probability matrix S(t | X_i) = exp(-H_RSF(t | X_i))."""
         chaz_forest = self.predict_cumulative_hazard(X)
-        
+
         # Interpolate cumulative hazard to eval_times
-        indices = np.searchsorted(self.all_unique_event_times, eval_times, side='right') - 1
+        indices = (
+            np.searchsorted(self.all_unique_event_times, eval_times, side="right") - 1
+        )
         h0_eval = np.zeros((len(X), len(eval_times)), dtype=float)
 
         valid_mask = indices >= 0
-        valid_indices = np.minimum(indices[valid_mask], len(self.all_unique_event_times) - 1)
+        valid_indices = np.minimum(
+            indices[valid_mask], len(self.all_unique_event_times) - 1
+        )
 
         for i in range(len(X)):
             h0_eval[i, valid_mask] = chaz_forest[i, valid_indices]
@@ -285,7 +357,9 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
         surv_matrix = np.exp(-h0_eval)
         return np.clip(surv_matrix, 1e-6, 1.0)
 
-    def _compute_feature_importance(self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray):
+    def _compute_feature_importance(
+        self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray
+    ):
         """Computes Permutation Feature Importance (VIMP) based on drop in C-index."""
         from src.evaluation.metrics import concordance_index
 
@@ -309,7 +383,14 @@ class RandomSurvivalForestModel(BaseSurvivalModel):
         if self.feature_importances_ is None:
             return pd.DataFrame()
 
-        df_imp = pd.DataFrame([
-            {"feature": k, "importance (VIMP)": v} for k, v in self.feature_importances_.items()
-        ]).sort_values(by="importance (VIMP)", ascending=False).reset_index(drop=True)
+        df_imp = (
+            pd.DataFrame(
+                [
+                    {"feature": k, "importance (VIMP)": v}
+                    for k, v in self.feature_importances_.items()
+                ]
+            )
+            .sort_values(by="importance (VIMP)", ascending=False)
+            .reset_index(drop=True)
+        )
         return df_imp

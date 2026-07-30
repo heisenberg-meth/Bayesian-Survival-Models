@@ -7,6 +7,7 @@ from .gbsg2 import GBSG2Dataset
 from .metabric import METABRICDataset
 from .whas500 import WHAS500Dataset
 
+
 def load_dataset(name: str, **kwargs) -> BaseDataset:
     """Factory function dispatching to specific dataset class."""
     registry = {
@@ -16,8 +17,11 @@ def load_dataset(name: str, **kwargs) -> BaseDataset:
     }
     key = name.lower()
     if key not in registry:
-        raise ValueError(f"Unknown dataset '{name}'. Available datasets: {list(registry.keys())}")
+        raise ValueError(
+            f"Unknown dataset '{name}'. Available datasets: {list(registry.keys())}"
+        )
     return registry[key](**kwargs)
+
 
 __all__ = [
     "BaseDataset",

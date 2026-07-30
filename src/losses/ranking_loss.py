@@ -1,6 +1,7 @@
 """
 Concordance and Pairwise Ranking Losses for Survival Models.
 """
+
 from typing import Any
 
 

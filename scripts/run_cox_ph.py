@@ -5,21 +5,22 @@ Evaluates test discrimination (C-index) and calibration (IBS), executes 5-fold C
 performs Schoenfeld residuals assumption tests, exports results, and generates publication plots.
 """
 
+import json
 import os
 import sys
-import json
+
 import numpy as np
 import pandas as pd
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 # Ensure project root is in sys.path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from src.models.cox import CoxPHModel
-from src.evaluation.metrics import evaluate_survival_model
 from src.evaluation.cross_validation import CrossValidationEvaluator
+from src.evaluation.metrics import evaluate_survival_model
+from src.models.cox import CoxPHModel
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
@@ -30,10 +31,11 @@ TABLES_DIR = os.path.join(REPORTS_DIR, "tables")
 os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(TABLES_DIR, exist_ok=True)
 
+
 def draw_baseline_survival_plot(eval_times, surv_curves, dataset_name, filepath):
     """Draws baseline survival curves using Pillow."""
     img_w, img_h = 900, 600
-    img = Image.new('RGB', (img_w, img_h), color=(255, 255, 255))
+    img = Image.new("RGB", (img_w, img_h), color=(255, 255, 255))
     draw = ImageDraw.Draw(img)
 
     # Padding
@@ -42,22 +44,44 @@ def draw_baseline_survival_plot(eval_times, surv_curves, dataset_name, filepath)
     plot_h = img_h - pad_top - pad_bot
 
     # Title & Axis Labels
-    draw.text((img_w // 2 - 180, 20), f"Cox PH Survival Curves — {dataset_name.upper()}", fill=(30, 41, 59))
+    draw.text(
+        (img_w // 2 - 180, 20),
+        f"Cox PH Survival Curves — {dataset_name.upper()}",
+        fill=(30, 41, 59),
+    )
     draw.text((img_w // 2 - 50, img_h - 35), "Time Horizon", fill=(51, 65, 85))
     draw.text((15, img_h // 2 - 60), "Survival S(t)", fill=(51, 65, 85))
 
     # Axis Lines
-    draw.line([(pad_left, pad_top), (pad_left, img_h - pad_bot)], fill=(148, 163, 184), width=2)
-    draw.line([(pad_left, img_h - pad_bot), (img_w - pad_right, img_h - pad_bot)], fill=(148, 163, 184), width=2)
+    draw.line(
+        [(pad_left, pad_top), (pad_left, img_h - pad_bot)],
+        fill=(148, 163, 184),
+        width=2,
+    )
+    draw.line(
+        [(pad_left, img_h - pad_bot), (img_w - pad_right, img_h - pad_bot)],
+        fill=(148, 163, 184),
+        width=2,
+    )
 
     # Gridlines
     for y_val in [0.0, 0.25, 0.5, 0.75, 1.0]:
         y_pos = img_h - pad_bot - int(y_val * plot_h)
-        draw.line([(pad_left, y_pos), (img_w - pad_right, y_pos)], fill=(226, 232, 240), width=1)
+        draw.line(
+            [(pad_left, y_pos), (img_w - pad_right, y_pos)],
+            fill=(226, 232, 240),
+            width=1,
+        )
         draw.text((pad_left - 45, y_pos - 8), f"{y_val:.2f}", fill=(71, 85, 105))
 
     max_t = max(eval_times) if len(eval_times) > 0 else 1.0
-    colors = [(37, 99, 235), (220, 38, 38), (16, 185, 129), (217, 119, 6), (147, 51, 234)]
+    colors = [
+        (37, 99, 235),
+        (220, 38, 38),
+        (16, 185, 129),
+        (217, 119, 6),
+        (147, 51, 234),
+    ]
 
     # Draw curves
     for idx, (label, surv_vals) in enumerate(surv_curves.items()):
@@ -69,7 +93,7 @@ def draw_baseline_survival_plot(eval_times, surv_curves, dataset_name, filepath)
             pts.append((x_pos, y_pos))
 
         for i in range(len(pts) - 1):
-            draw.line([pts[i], pts[i+1]], fill=color, width=3)
+            draw.line([pts[i], pts[i + 1]], fill=color, width=3)
 
         # Legend
         leg_x = img_w - pad_right - 220
@@ -79,18 +103,25 @@ def draw_baseline_survival_plot(eval_times, surv_curves, dataset_name, filepath)
 
     img.save(filepath)
 
+
 def draw_forest_plot(df_summary, dataset_name, filepath):
     """Draws Hazard Ratio Forest Plot with 95% CIs using Pillow."""
     img_w, img_h = 900, 650
-    img = Image.new('RGB', (img_w, img_h), color=(255, 255, 255))
+    img = Image.new("RGB", (img_w, img_h), color=(255, 255, 255))
     draw = ImageDraw.Draw(img)
 
     pad_left, pad_right, pad_top, pad_bot = 220, 50, 70, 60
     plot_w = img_w - pad_left - pad_right
     plot_h = img_h - pad_top - pad_bot
 
-    draw.text((img_w // 2 - 200, 20), f"Cox PH Hazard Ratios (95% CI) — {dataset_name.upper()}", fill=(30, 41, 59))
-    draw.text((img_w // 2 - 60, img_h - 35), "Hazard Ratio (log scale)", fill=(51, 65, 85))
+    draw.text(
+        (img_w // 2 - 200, 20),
+        f"Cox PH Hazard Ratios (95% CI) — {dataset_name.upper()}",
+        fill=(30, 41, 59),
+    )
+    draw.text(
+        (img_w // 2 - 60, img_h - 35), "Hazard Ratio (log scale)", fill=(51, 65, 85)
+    )
 
     n_feats = len(df_summary)
     row_h = plot_h / max(n_feats, 1)
@@ -103,7 +134,9 @@ def draw_forest_plot(df_summary, dataset_name, filepath):
 
     # Null line HR = 1.0 (log HR = 0)
     x_null = pad_left + int(((0.0 - min_log) / (max_log - min_log)) * plot_w)
-    draw.line([(x_null, pad_top), (x_null, img_h - pad_bot)], fill=(239, 68, 68), width=2)
+    draw.line(
+        [(x_null, pad_top), (x_null, img_h - pad_bot)], fill=(239, 68, 68), width=2
+    )
     draw.text((x_null - 15, pad_top - 20), "HR = 1.0", fill=(239, 68, 68))
 
     for idx, row in df_summary.iterrows():
@@ -116,22 +149,39 @@ def draw_forest_plot(df_summary, dataset_name, filepath):
         # Label
         draw.text((20, y_center - 8), feat_name[:25], fill=(30, 41, 59))
 
-        x_hr = pad_left + int(((np.log(max(hr_val, 1e-4)) - min_log) / (max_log - min_log)) * plot_w)
-        x_l = pad_left + int(((np.log(max(ci_l, 1e-4)) - min_log) / (max_log - min_log)) * plot_w)
-        x_u = pad_left + int(((np.log(max(ci_u, 1e-4)) - min_log) / (max_log - min_log)) * plot_w)
+        x_hr = pad_left + int(
+            ((np.log(max(hr_val, 1e-4)) - min_log) / (max_log - min_log)) * plot_w
+        )
+        x_l = pad_left + int(
+            ((np.log(max(ci_l, 1e-4)) - min_log) / (max_log - min_log)) * plot_w
+        )
+        x_u = pad_left + int(
+            ((np.log(max(ci_u, 1e-4)) - min_log) / (max_log - min_log)) * plot_w
+        )
 
         # CI line
         draw.line([(x_l, y_center), (x_u, y_center)], fill=(37, 99, 235), width=2)
         # End caps
-        draw.line([(x_l, y_center - 5), (x_l, y_center + 5)], fill=(37, 99, 235), width=2)
-        draw.line([(x_u, y_center - 5), (x_u, y_center + 5)], fill=(37, 99, 235), width=2)
+        draw.line(
+            [(x_l, y_center - 5), (x_l, y_center + 5)], fill=(37, 99, 235), width=2
+        )
+        draw.line(
+            [(x_u, y_center - 5), (x_u, y_center + 5)], fill=(37, 99, 235), width=2
+        )
         # Point estimate
-        draw.ellipse([(x_hr - 5, y_center - 5), (x_hr + 5, y_center + 5)], fill=(15, 23, 42))
+        draw.ellipse(
+            [(x_hr - 5, y_center - 5), (x_hr + 5, y_center + 5)], fill=(15, 23, 42)
+        )
 
         # Text annotation
-        draw.text((img_w - 180, y_center - 8), f"{hr_val:.2f} [{ci_l:.2f}, {ci_u:.2f}]", fill=(71, 85, 105))
+        draw.text(
+            (img_w - 180, y_center - 8),
+            f"{hr_val:.2f} [{ci_l:.2f}, {ci_u:.2f}]",
+            fill=(71, 85, 105),
+        )
 
     img.save(filepath)
+
 
 def main():
     print("=" * 60)
@@ -146,7 +196,7 @@ def main():
         dataset_dir = os.path.join(PROCESSED_DIR, dname)
 
         train_df = pd.read_csv(os.path.join(dataset_dir, "train.csv"))
-        val_df = pd.read_csv(os.path.join(dataset_dir, "val.csv"))
+        pd.read_csv(os.path.join(dataset_dir, "val.csv"))
         test_df = pd.read_csv(os.path.join(dataset_dir, "test.csv"))
 
         X_train = train_df.drop(columns=["time", "event"])
@@ -166,7 +216,9 @@ def main():
         print(summary_df.to_string(index=False))
 
         # 2. Check Proportional Hazards Assumption
-        ph_df = cox_model.check_proportional_hazards(X_train, y_train_time, y_train_event)
+        ph_df = cox_model.check_proportional_hazards(
+            X_train, y_train_time, y_train_event
+        )
         print("\n    Proportional Hazards Assumption Test (Schoenfeld Residuals):")
         print(ph_df.to_string(index=False))
 
@@ -174,7 +226,7 @@ def main():
         eval_times = np.percentile(y_test_time, [25, 50, 75])
         test_risk = cox_model.predict_risk(X_test)
 
-        def surv_fn(times):
+        def surv_fn(times, cox_model=cox_model, X_test=X_test):
             return cox_model.predict_survival(X_test, times)
 
         test_eval = evaluate_survival_model(
@@ -182,11 +234,15 @@ def main():
             y_event=y_test_event,
             risk_scores=test_risk,
             surv_prob_fn=surv_fn,
-            eval_times=eval_times
+            eval_times=eval_times,
         )
 
-        print(f"\n    Test C-Index:              {test_eval['c_index']} ± {test_eval['c_index_se']}")
-        print(f"    Test Integrated Brier:     {test_eval.get('integrated_brier_score', 'N/A')}")
+        print(
+            f"\n    Test C-Index:              {test_eval['c_index']} ± {test_eval['c_index_se']}"
+        )
+        print(
+            f"    Test Integrated Brier:     {test_eval.get('integrated_brier_score', 'N/A')}"
+        )
 
         # 4. 5-Fold Stratified Cross-Validation
         def model_trainer(df_tr, df_v):
@@ -200,15 +256,19 @@ def main():
         cv_evaluator = CrossValidationEvaluator(PROCESSED_DIR, dname)
         cv_results = cv_evaluator.evaluate_model(model_trainer, eval_times=eval_times)
 
-        print(f"    5-Fold CV Mean C-Index:    {cv_results['mean_c_index']} ± {cv_results['std_c_index']}")
-        print(f"    5-Fold CV Mean IBS:        {cv_results.get('mean_integrated_brier_score', 'N/A')} ± {cv_results.get('std_integrated_brier_score', 'N/A')}")
+        print(
+            f"    5-Fold CV Mean C-Index:    {cv_results['mean_c_index']} ± {cv_results['std_c_index']}"
+        )
+        print(
+            f"    5-Fold CV Mean IBS:        {cv_results.get('mean_integrated_brier_score', 'N/A')} ± {cv_results.get('std_integrated_brier_score', 'N/A')}"
+        )
 
         # 5. Generate Figures
         forest_path = os.path.join(FIGURES_DIR, f"cox_ph_{dname}_hr_forest.png")
         draw_forest_plot(summary_df, dname, forest_path)
 
         surv_path = os.path.join(FIGURES_DIR, f"cox_ph_{dname}_baseline_survival.png")
-        
+
         # Sample 3 synthetic risk profiles (Low, Medium, High risk)
         low_idx = np.argmin(test_risk)
         high_idx = np.argmax(test_risk)
@@ -217,7 +277,7 @@ def main():
         surv_curves = {
             "Low Risk Profile": surv_fn(eval_times)[low_idx],
             "Median Risk Profile": surv_fn(eval_times)[med_idx],
-            "High Risk Profile": surv_fn(eval_times)[high_idx]
+            "High Risk Profile": surv_fn(eval_times)[high_idx],
         }
         draw_baseline_survival_plot(eval_times, surv_curves, dname, surv_path)
 
@@ -225,7 +285,7 @@ def main():
             "summary": summary_df.to_dict(orient="records"),
             "ph_assumption": ph_df.to_dict(orient="records"),
             "test_eval": test_eval,
-            "cv_results": cv_results
+            "cv_results": cv_results,
         }
 
     # 6. Save JSON table artifact
@@ -236,6 +296,7 @@ def main():
     print("\n" + "=" * 60)
     print(f"COX PH BASELINE EXECUTION COMPLETE! Results saved to {json_path}")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()

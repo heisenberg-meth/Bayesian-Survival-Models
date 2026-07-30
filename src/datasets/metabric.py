@@ -14,7 +14,14 @@ class METABRICDataset(BaseDataset):
         super().__init__(data_path=data_path)
         self._duration_col = "duration"
         self._event_col = "event"
-        self._feature_names = ["age", "tumour_stage", "lymph_nodes_positive", "chemotherapy", "hormone_therapy", "PAM50Subtype"]
+        self._feature_names = [
+            "age",
+            "tumour_stage",
+            "lymph_nodes_positive",
+            "chemotherapy",
+            "hormone_therapy",
+            "PAM50Subtype",
+        ]
 
     def load(self) -> "METABRICDataset":
         """Load METABRIC raw data and validate schema."""
@@ -22,7 +29,9 @@ class METABRICDataset(BaseDataset):
         self.validate_schema()
         return self
 
-    def get_features_and_target(self) -> tuple[list[dict[str, Any]], list[float], list[int]]:
+    def get_features_and_target(
+        self,
+    ) -> tuple[list[dict[str, Any]], list[float], list[int]]:
         """Returns features list of dicts, duration list, event list."""
         if not self._data:
             self.load()

@@ -14,15 +14,17 @@ from typing import Any
 import numpy as np
 
 
-def concordance_index(y_time: np.ndarray, y_event: np.ndarray, risk_scores: np.ndarray) -> tuple[float, float]:
+def concordance_index(
+    y_time: np.ndarray, y_event: np.ndarray, risk_scores: np.ndarray
+) -> tuple[float, float]:
     """
     Computes Harrell's Concordance Index (C-index) for right-censored survival data.
-    
+
     Parameters:
         y_time (np.ndarray): Survival/follow-up times (N,)
         y_event (np.ndarray): Event status indicators (1=event, 0=censored) (N,)
         risk_scores (np.ndarray): Predicted risk scores (higher value = higher risk / shorter survival) (N,)
-        
+
     Returns:
         c_index (float): Harrell's C-index in [0, 1]
         se (float): Asymptotic standard error approximation
@@ -50,7 +52,7 @@ def concordance_index(y_time: np.ndarray, y_event: np.ndarray, risk_scores: np.n
         for j in range(n):
             if i == j:
                 continue
-            
+
             t_j = y_time[j]
             e_j = y_event[j]
 
@@ -77,11 +79,12 @@ def concordance_index(y_time: np.ndarray, y_event: np.ndarray, risk_scores: np.n
         return 0.5, 0.0
 
     c_idx = (concordant + 0.5 * tied_risk) / total_pairs
-    
+
     # Asymptotic standard error estimation
     se = np.sqrt((c_idx * (1.0 - c_idx)) / max(total_pairs, 1.0))
 
     return float(c_idx), float(se)
+
 
 class KaplanMeierCensoringEstimator:
     """Computes Kaplan-Meier survival curve for censoring distribution G(t) = P(C > t)."""
@@ -106,12 +109,12 @@ class KaplanMeierCensoringEstimator:
         current_surv = 1.0
 
         for t in unique_times:
-            idx = (times == t)
+            idx = times == t
             d_i = cens[idx].sum()  # number of censings at time t
             n_i = n_at_risk
-            
+
             if n_i > 0:
-                current_surv *= (1.0 - d_i / n_i)
+                current_surv *= 1.0 - d_i / n_i
             surv_probs.append(current_surv)
             n_at_risk -= len(idx)
 
@@ -126,24 +129,27 @@ class KaplanMeierCensoringEstimator:
             return np.ones_like(eval_times)
 
         # Step function interpolation (left-continuous or step-right)
-        indices = np.searchsorted(self.times, eval_times, side='right') - 1
+        indices = np.searchsorted(self.times, eval_times, side="right") - 1
         g_vals = np.ones_like(eval_times, dtype=float)
 
         valid_mask = indices >= 0
-        g_vals[valid_mask] = self.survival_probs[np.minimum(indices[valid_mask], len(self.survival_probs) - 1)]
+        g_vals[valid_mask] = self.survival_probs[
+            np.minimum(indices[valid_mask], len(self.survival_probs) - 1)
+        ]
         # Clip to avoid division by zero in IPCW
         return np.maximum(g_vals, 1e-4)
+
 
 def brier_score_at_time(
     y_time: np.ndarray,
     y_event: np.ndarray,
     surv_probs: np.ndarray,
     eval_time: float,
-    km_cens: KaplanMeierCensoringEstimator
+    km_cens: KaplanMeierCensoringEstimator,
 ) -> float:
     """
     Computes Inverse Probability of Censoring Weighted (IPCW) Brier Score at time t.
-    
+
     Parameters:
         y_time: Observed survival times (N,)
         y_event: Event indicators (N,)
@@ -171,7 +177,7 @@ def brier_score_at_time(
     bs_terms[mask1] = (0.0 - surv_probs[mask1]) ** 2
 
     # Term 2: Subject survived past eval_time (T_i > t)
-    mask2 = (y_time > eval_time)
+    mask2 = y_time > eval_time
     weights[mask2] = 1.0 / g_t
     bs_terms[mask2] = (1.0 - surv_probs[mask2]) ** 2
 
@@ -184,15 +190,16 @@ def brier_score_at_time(
     bs = float(np.sum(weights[valid_mask] * bs_terms[valid_mask]) / n)
     return bs
 
+
 def integrated_brier_score(
     y_time: np.ndarray,
     y_event: np.ndarray,
     surv_prob_fn: Callable[[np.ndarray], np.ndarray],
-    eval_times: np.ndarray
+    eval_times: np.ndarray,
 ) -> float:
     """
     Computes Integrated Brier Score (IBS) by integrating BS(t) across time range.
-    
+
     Parameters:
         y_time: Survival times
         y_event: Event indicators
@@ -204,7 +211,7 @@ def integrated_brier_score(
     eval_times = np.sort(np.asarray(eval_times, dtype=float))
 
     km_cens = KaplanMeierCensoringEstimator().fit(y_time, y_event)
-    
+
     # Predict survival probability matrix: shape (N, M)
     S_mat = surv_prob_fn(eval_times)
 
@@ -215,7 +222,7 @@ def integrated_brier_score(
         bs_list.append(bs_t)
 
     bs_arr = np.array(bs_list)
-    
+
     # Integrate using trapezoidal rule
     t_min, t_max = eval_times[0], eval_times[-1]
     if t_max == t_min:
@@ -224,16 +231,17 @@ def integrated_brier_score(
     ibs = float(np.trapz(bs_arr, eval_times) / (t_max - t_min))
     return ibs
 
+
 def evaluate_survival_model(
     y_time: np.ndarray,
     y_event: np.ndarray,
     risk_scores: np.ndarray,
     surv_prob_fn: Callable[[np.ndarray], np.ndarray] | None = None,
-    eval_times: np.ndarray | None = None
+    eval_times: np.ndarray | None = None,
 ) -> dict[str, Any]:
     """
     Master Evaluation Suite for any survival model.
-    Returns C-index, SE, Brier scores, and Integrated Brier Score (IBS).
+    Returns C-index, SE, Brier scores, Integrated Brier Score (IBS), and time-dependent AUC.
     """
     c_idx, se = concordance_index(y_time, y_event, risk_scores)
 
@@ -244,17 +252,24 @@ def evaluate_survival_model(
 
     if surv_prob_fn is not None and eval_times is not None and len(eval_times) > 0:
         km_cens = KaplanMeierCensoringEstimator().fit(y_time, y_event)
-        
+
         S_mat = surv_prob_fn(eval_times)
         brier_scores = {}
+        td_aucs = {}
+
+        from src.evaluation.ranking import time_dependent_auc
 
         for idx, t in enumerate(eval_times):
             bs_t = brier_score_at_time(y_time, y_event, S_mat[:, idx], t, km_cens)
             brier_scores[f"bs_time_{round(t, 1)}"] = float(round(bs_t, 4))
 
+            auc_t = time_dependent_auc(y_time, y_event, risk_scores, t, km_cens)
+            td_aucs[f"auc_time_{round(t, 1)}"] = float(round(auc_t, 4))
+
         ibs = integrated_brier_score(y_time, y_event, surv_prob_fn, eval_times)
-        
+
         results["brier_scores"] = brier_scores
         results["integrated_brier_score"] = float(round(ibs, 4))
+        results["time_dependent_auc"] = td_aucs
 
     return results

@@ -5,7 +5,7 @@ Implements clinically and statistically justified transformations and interactio
 
 import numpy as np
 import pandas as pd
-from typing import Dict, Any
+
 
 class FeatureEngineer:
     """Applies clinical feature engineering transformations to survival datasets."""
@@ -28,7 +28,9 @@ class FeatureEngineer:
 
             # 2. Clinical interaction: Age x Hormone Therapy
             if "age" in df_out.columns and "horTh" in df_out.columns:
-                hor_val = df_out["horTh"].apply(lambda x: 1 if str(x).lower() in ("yes", "1") else 0)
+                hor_val = df_out["horTh"].apply(
+                    lambda x: 1 if str(x).lower() in ("yes", "1") else 0
+                )
                 df_out["age_x_horTh"] = df_out["age"] * hor_val
 
         elif self.dataset_name == "whas500":
