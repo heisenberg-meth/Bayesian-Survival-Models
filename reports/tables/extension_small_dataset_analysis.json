@@ -1,0 +1,37 @@
+[
+    {
+        "proportion": 0.2,
+        "Cox PH": 0.4452,
+        "RSF": 0.4486,
+        "DeepSurv": 0.3926,
+        "Bayesian Cox": 0.5368
+    },
+    {
+        "proportion": 0.4,
+        "Cox PH": 0.4786,
+        "RSF": 0.4876,
+        "DeepSurv": 0.405,
+        "Bayesian Cox": 0.5492
+    },
+    {
+        "proportion": 0.6,
+        "Cox PH": 0.4435,
+        "RSF": 0.4756,
+        "DeepSurv": 0.4409,
+        "Bayesian Cox": 0.5394
+    },
+    {
+        "proportion": 0.8,
+        "Cox PH": 0.4756,
+        "RSF": 0.4722,
+        "DeepSurv": 0.4824,
+        "Bayesian Cox": 0.5415
+    },
+    {
+        "proportion": 1.0,
+        "Cox PH": 0.482,
+        "RSF": 0.5188,
+        "DeepSurv": 0.5634,
+        "Bayesian Cox": 0.5244
+    }
+]

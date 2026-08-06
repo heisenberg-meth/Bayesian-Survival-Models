@@ -1,0 +1,23 @@
+[
+    {
+        "censoring_rate": 0.6,
+        "Cox PH": 0.4782,
+        "RSF": 0.5034,
+        "DeepSurv": 0.5351,
+        "Bayesian Cox": 0.5244
+    },
+    {
+        "censoring_rate": 0.75,
+        "Cox PH": 0.4876,
+        "RSF": 0.5103,
+        "DeepSurv": 0.5398,
+        "Bayesian Cox": 0.5244
+    },
+    {
+        "censoring_rate": 0.9,
+        "Cox PH": 0.5805,
+        "RSF": 0.5565,
+        "DeepSurv": 0.5938,
+        "Bayesian Cox": 0.5235
+    }
+]

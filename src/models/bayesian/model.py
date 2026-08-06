@@ -27,6 +27,8 @@ class BayesianCoxModel(BaseSurvivalModel):
         tune: int = 300,
         chains: int = 1,
         random_state: int = 42,
+        coefficient_prior: str = "normal",
+        prior_params: dict | None = None,
     ):
         self.n_intervals = n_intervals
         self.inference_method = inference_method.lower()
@@ -35,6 +37,8 @@ class BayesianCoxModel(BaseSurvivalModel):
         self.tune = tune
         self.chains = chains
         self.random_state = random_state
+        self.coefficient_prior = coefficient_prior.lower()
+        self.prior_params = prior_params if prior_params is not None else {}
 
         self.feature_names = []
         self.cutoffs = np.array([])
@@ -107,8 +111,31 @@ class BayesianCoxModel(BaseSurvivalModel):
         log_exposure = np.log(obs_exposures)
 
         with pm.Model() as model:
-            # Normal Priors for Regression Coefficients
-            beta = pm.Normal("beta", mu=0.0, sigma=1.0, shape=n_features)
+            # Priors for Regression Coefficients (Normal, Student-t, or Laplace/Lasso)
+            if self.coefficient_prior == "normal":
+                prior_mu = self.prior_params.get("mu", 0.0)
+                prior_sigma = self.prior_params.get("sigma", 1.0)
+                beta = pm.Normal(
+                    "beta", mu=prior_mu, sigma=prior_sigma, shape=n_features
+                )
+            elif self.coefficient_prior == "student-t":
+                prior_nu = self.prior_params.get("nu", 3.0)
+                prior_mu = self.prior_params.get("mu", 0.0)
+                prior_sigma = self.prior_params.get("sigma", 1.0)
+                beta = pm.StudentT(
+                    "beta",
+                    nu=prior_nu,
+                    mu=prior_mu,
+                    sigma=prior_sigma,
+                    shape=n_features,
+                )
+            elif self.coefficient_prior == "laplace":
+                prior_mu = self.prior_params.get("mu", 0.0)
+                prior_b = self.prior_params.get("b", 1.0)
+                beta = pm.Laplace("beta", mu=prior_mu, b=prior_b, shape=n_features)
+            else:
+                raise ValueError(f"Unknown coefficient prior: {self.coefficient_prior}")
+
             # Log-Normal Priors for Baseline Hazards
             log_lambda = pm.Normal("log_lambda", mu=-2.0, sigma=2.0, shape=M)
 
@@ -135,6 +162,7 @@ class BayesianCoxModel(BaseSurvivalModel):
                     draws=self.draws,
                     tune=self.tune,
                     chains=self.chains,
+                    cores=1,
                     random_seed=self.random_state,
                     progressbar=False,
                     return_inferencedata=True,
@@ -241,6 +269,35 @@ class BayesianCoxModel(BaseSurvivalModel):
         surv_upper = np.clip(np.percentile(surv_draws, 97.5, axis=0), 1e-6, 1.0)
 
         return surv_mean, surv_lower, surv_upper
+
+    def get_mcmc_diagnostics(self) -> pd.DataFrame:
+        """
+        Computes Gelman-Rubin (R-hat) and Effective Sample Size (ESS) diagnostics for regression parameters.
+        Only valid if inference_method == 'mcmc' or if MCMC chains exist.
+        """
+        import re
+
+        import arviz as az
+
+        if self.idata is None:
+            return pd.DataFrame()
+        if "posterior" not in self.idata:
+            return pd.DataFrame()
+
+        summary = az.summary(self.idata, var_names=["beta"])
+        summary = summary.reset_index()
+        summary.columns = ["parameter"] + list(summary.columns[1:])
+
+        def map_param_name(param_str):
+            match = re.search(r"beta\[(\d+)\]", param_str)
+            if match:
+                idx = int(match.group(1))
+                if 0 <= idx < len(self.feature_names):
+                    return self.feature_names[idx]
+            return param_str
+
+        summary["feature"] = summary["parameter"].apply(map_param_name)
+        return summary
 
     def get_summary(self) -> pd.DataFrame:
         """Returns Posterior Summary DataFrame for Hazard Ratios and Coefficients."""

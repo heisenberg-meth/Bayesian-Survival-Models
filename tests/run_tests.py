@@ -55,9 +55,7 @@ def main():
                 traceback.print_exc()
                 total_failed += 1
 
-    print("\n" + "=" * 60)
     print(f"Test Summary: {total_run} run, {total_failed} failed.")
-    print("=" * 60)
     if total_failed > 0:
         sys.exit(1)
 

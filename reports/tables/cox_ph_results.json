@@ -195,13 +195,7 @@
       "n_splits": 5,
       "mean_c_index": 0.4485,
       "std_c_index": 0.0592,
-      "fold_c_indices": [
-        0.432,
-        0.5068,
-        0.5129,
-        0.3787,
-        0.4121
-      ],
+      "fold_c_indices": [0.432, 0.5068, 0.5129, 0.3787, 0.4121],
       "fold_details": [
         {
           "fold": 1,
@@ -450,13 +444,7 @@
       "n_splits": 5,
       "mean_c_index": 0.5129,
       "std_c_index": 0.0501,
-      "fold_c_indices": [
-        0.4688,
-        0.5369,
-        0.5267,
-        0.5765,
-        0.4557
-      ],
+      "fold_c_indices": [0.4688, 0.5369, 0.5267, 0.5765, 0.4557],
       "fold_details": [
         {
           "fold": 1,
@@ -689,13 +677,7 @@
       "n_splits": 5,
       "mean_c_index": 0.489,
       "std_c_index": 0.0267,
-      "fold_c_indices": [
-        0.5021,
-        0.4858,
-        0.4724,
-        0.4578,
-        0.5268
-      ],
+      "fold_c_indices": [0.5021, 0.4858, 0.4724, 0.4578, 0.5268],
       "fold_details": [
         {
           "fold": 1,

@@ -50,6 +50,7 @@ class DeepSurvModel(BaseSurvivalModel):
         self.unique_event_times = np.array([])
         self.baseline_cum_hazard = np.array([])
         self.training_loss_history = []
+        self.feature_importances_ = None
 
     def _init_weights(self, in_dim: int, rng: np.random.RandomState):
         """Initializes network weights using LeCun normal initialization for SELU."""
@@ -241,7 +242,48 @@ class DeepSurvModel(BaseSurvivalModel):
         self.unique_event_times = unique_event_times
         self.baseline_cum_hazard = np.array(cum_hazard)
 
+        # Compute feature importances
+        self._compute_feature_importance(X, y_time, y_event)
+
         return self
+
+    def _compute_feature_importance(
+        self, X: pd.DataFrame, y_time: np.ndarray, y_event: np.ndarray
+    ):
+        """Computes Permutation Feature Importance (VIMP) based on drop in C-index."""
+        from src.evaluation.metrics import concordance_index
+
+        baseline_risk = self.predict_risk(X)
+        baseline_c, _ = concordance_index(y_time, y_event, baseline_risk)
+
+        importances = {}
+        rng = np.random.RandomState(self.random_state)
+
+        for col in self.feature_names:
+            X_perm = X.copy()
+            X_perm[col] = rng.permutation(X_perm[col].values)
+            perm_risk = self.predict_risk(X_perm)
+            perm_c, _ = concordance_index(y_time, y_event, perm_risk)
+            importances[col] = float(max(0.0, baseline_c - perm_c))
+
+        self.feature_importances_ = importances
+
+    def get_feature_importances(self) -> pd.DataFrame:
+        """Returns feature importances dataframe."""
+        if self.feature_importances_ is None:
+            return pd.DataFrame()
+
+        df_imp = (
+            pd.DataFrame(
+                [
+                    {"feature": k, "importance (VIMP)": v}
+                    for k, v in self.feature_importances_.items()
+                ]
+            )
+            .sort_values(by="importance (VIMP)", ascending=False)
+            .reset_index(drop=True)
+        )
+        return df_imp
 
     def predict_risk(self, X: pd.DataFrame) -> np.ndarray:
         """Predicts log-risk score g_theta(X)."""

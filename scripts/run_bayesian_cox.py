@@ -6,6 +6,7 @@ and calibration (IBS), executes 5-fold CV, compares against Cox PH, RSF, and Dee
 exports results, and generates publication plots.
 """
 
+import argparse
 import json
 import os
 import sys
@@ -187,30 +188,79 @@ def draw_bayesian_credible_survival_plot(
     img.save(filepath)
 
 
+def load_json_if_exists(path: str) -> dict:
+    if not os.path.exists(path):
+        return {}
+
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
 def main():
+    parser = argparse.ArgumentParser(
+        description="Run Bayesian Cox Survival Model Execution Pipeline."
+    )
+    parser.add_argument(
+        "--method",
+        type=str,
+        choices=["advi", "mcmc"],
+        default="advi",
+        help="Inference method to use: variational 'advi' or sampler 'mcmc'.",
+    )
+    parser.add_argument(
+        "--prior",
+        type=str,
+        choices=["normal", "student-t", "laplace"],
+        default="normal",
+        help="Regression coefficient prior distribution type.",
+    )
+    parser.add_argument(
+        "--prior-params",
+        type=str,
+        default=None,
+        help="JSON string of parameter configurations for the prior (e.g. '{\"sigma\": 2.0}').",
+    )
+    parser.add_argument(
+        "--draws", type=int, default=400, help="Number of posterior samples to draw."
+    )
+    parser.add_argument(
+        "--tune", type=int, default=300, help="Number of MCMC tuning iterations."
+    )
+    parser.add_argument(
+        "--advi-iterations", type=int, default=1200, help="Number of ADVI iterations."
+    )
+    parser.add_argument(
+        "--chains", type=int, default=1, help="Number of MCMC chains to run."
+    )
+    parser.add_argument(
+        "--intervals",
+        type=int,
+        default=6,
+        help="Number of piecewise intervals for baseline hazard.",
+    )
+    args = parser.parse_args()
+
+    prior_params = {}
+    if args.prior_params:
+        try:
+            prior_params = json.loads(args.prior_params)
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"[!] Error parsing --prior-params JSON string: {e}")
+            sys.exit(1)
+
     print("=" * 60)
-    print("STARTING PHASE 9 — BAYESIAN COX MODEL (PYMC MCMC / ADVI)")
+    print(f"STARTING PHASE 8 — BAYESIAN COX MODEL ({args.method.upper()})")
+    print(f"  Coefficient Prior: {args.prior.upper()} (params: {prior_params})")
+    print(f"  Piecewise Intervals: {args.intervals}, Draws: {args.draws}")
     print("=" * 60)
 
     cox_results_path = os.path.join(TABLES_DIR, "cox_ph_results.json")
     rsf_results_path = os.path.join(TABLES_DIR, "rsf_results.json")
     deepsurv_results_path = os.path.join(TABLES_DIR, "deepsurv_results.json")
 
-    cox_results = (
-        json.load(open(cox_results_path, "r"))
-        if os.path.exists(cox_results_path)
-        else {}
-    )
-    rsf_results = (
-        json.load(open(rsf_results_path, "r"))
-        if os.path.exists(rsf_results_path)
-        else {}
-    )
-    deepsurv_results = (
-        json.load(open(deepsurv_results_path, "r"))
-        if os.path.exists(deepsurv_results_path)
-        else {}
-    )
+    cox_results = load_json_if_exists(cox_results_path)
+    rsf_results = load_json_if_exists(rsf_results_path)
+    deepsurv_results = load_json_if_exists(deepsurv_results_path)
 
     all_results = {}
     datasets = ["gbsg2", "whas500", "metabric"]
@@ -220,7 +270,6 @@ def main():
         dataset_dir = os.path.join(PROCESSED_DIR, dname)
 
         train_df = pd.read_csv(os.path.join(dataset_dir, "train.csv"))
-        pd.read_csv(os.path.join(dataset_dir, "val.csv"))
         test_df = pd.read_csv(os.path.join(dataset_dir, "test.csv"))
 
         X_train = train_df.drop(columns=["time", "event"])
@@ -233,11 +282,15 @@ def main():
 
         # 1. Fit Bayesian Cox Model
         bayes_model = BayesianCoxModel(
-            n_intervals=6,
-            inference_method="advi",
-            n_advi_iterations=1200,
-            draws=400,
+            n_intervals=args.intervals,
+            inference_method=args.method,
+            n_advi_iterations=args.advi_iterations,
+            draws=args.draws,
+            tune=args.tune,
+            chains=args.chains,
             random_state=42,
+            coefficient_prior=args.prior,
+            prior_params=prior_params,
         )
         bayes_model.fit(X_train, y_train_time, y_train_event)
 
@@ -254,6 +307,18 @@ def main():
                 ]
             ].to_string(index=False)
         )
+
+        # Print MCMC diagnostics if MCMC was run
+        diag_list = []
+        if args.method == "mcmc":
+            diag_df = bayes_model.get_mcmc_diagnostics()
+            print("\n    MCMC Convergence Diagnostics:")
+            print(
+                diag_df[
+                    ["feature", "mean", "sd", "hdi_3%", "hdi_97%", "ess_bulk", "r_hat"]
+                ].to_string(index=False)
+            )
+            diag_list = diag_df.to_dict(orient="records")
 
         # 2. Test Evaluation
         eval_times = np.percentile(y_test_time, [25, 50, 75])
@@ -283,11 +348,17 @@ def main():
             y_tr_t = df_tr["time"].values
             y_tr_e = df_tr["event"].values
             m = BayesianCoxModel(
-                n_intervals=6,
-                inference_method="advi",
-                n_advi_iterations=600,
-                draws=250,
+                n_intervals=args.intervals,
+                inference_method=args.method,
+                n_advi_iterations=args.advi_iterations // 2
+                if args.method == "advi"
+                else 600,
+                draws=args.draws // 2 if args.method == "advi" else 150,
+                tune=args.tune // 2 if args.method == "mcmc" else 150,
+                chains=1,  # Speed up CV folds
                 random_state=42,
+                coefficient_prior=args.prior,
+                prior_params=prior_params,
             )
             m.fit(X_tr, y_tr_t, y_tr_e)
             return m
@@ -336,6 +407,7 @@ def main():
 
         all_results[dname] = {
             "posterior_summary": summary_df.to_dict(orient="records"),
+            "mcmc_diagnostics": diag_list,
             "test_eval": test_eval,
             "cv_results": cv_results,
             "comparative_benchmarks": {

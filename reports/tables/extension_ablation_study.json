@@ -1,0 +1,20 @@
+[
+    {
+        "prior": "normal",
+        "c_index": 0.5248,
+        "c_index_se": 0.0103,
+        "integrated_brier_score": 0.4217
+    },
+    {
+        "prior": "student-t",
+        "c_index": 0.5248,
+        "c_index_se": 0.0103,
+        "integrated_brier_score": 0.4217
+    },
+    {
+        "prior": "laplace",
+        "c_index": 0.5248,
+        "c_index_se": 0.0103,
+        "integrated_brier_score": 0.4217
+    }
+]

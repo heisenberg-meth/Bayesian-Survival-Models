@@ -57,10 +57,6 @@ class CrossValidationEvaluator:
         fold_ibses = []
         fold_details = []
 
-        self.full_train_df.drop(columns=["time", "event"])
-        self.full_train_df["time"].values
-        self.full_train_df["event"].values
-
         for fold_info in self.cv_folds:
             fold_num = fold_info["fold"]
             train_idx = fold_info["train_indices"]
