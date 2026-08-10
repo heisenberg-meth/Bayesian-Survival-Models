@@ -11,8 +11,8 @@
 ### Step 3.1 — Dataset Integrity
 
 - **Rows**: 686
-- **Columns**: 9
-- **Memory Usage**: 20.19 KB
+- **Columns**: 10
+- **Memory Usage**: 29.35 KB
 - **Time Column**: `time`
 - **Event Column**: `cens`
 - **Duplicate Rows**: 0 (0.0%)
@@ -21,14 +21,15 @@
 
 | Feature | Clinical Description | Data Type | Units / Range | Missing | Unique |
 | ------- | -------------------- | --------- | ------------- | ------- | ------ |
+| `age` | Age — Patient age at diagnosis | Numerical (Years) | N/A | 0 | 54 |
+| `estrec` | Estrogen Receptor — Estrogen receptor level | Numerical (fmol/mg) | N/A | 0 | 244 |
 | `horTh` | Hormone Therapy — Hormone therapy status (tamoxifen treatment) | Categorical (yes/no) | N/A | 0 | 2 |
-| `age` | Age — Patient age at diagnosis | Numerical (Years) | N/A | 0 | 60 |
 | `menostat` | Menopausal Status — Menopausal status of patient | Categorical (Pre/Post) | N/A | 0 | 2 |
-| `tsize` | Tumor Size — Tumor size in millimeters | Numerical (mm) | N/A | 0 | 113 |
-| `pnode` | Positive Lymph Nodes — Number of positive lymph nodes | Numerical (count) | N/A | 0 | 18 |
-| `progrec` | Progesterone Receptor — Progesterone receptor level | Numerical (fmol/mg) | N/A | 0 | 259 |
-| `estrec` | Estrogen Receptor — Estrogen receptor level | Numerical (fmol/mg) | N/A | 0 | 249 |
-| `time` | Recurrence-Free Time — Time to recurrence or censoring | Numerical (Days) | N/A | 0 | 578 |
+| `pnodes` | pnodes — Clinical variable | Unknown | N/A | 0 | 30 |
+| `progrec` | Progesterone Receptor — Progesterone receptor level | Numerical (fmol/mg) | N/A | 0 | 242 |
+| `tgrade` | tgrade — Clinical variable | Unknown | N/A | 0 | 3 |
+| `tsize` | Tumor Size — Tumor size in millimeters | Numerical (mm) | N/A | 0 | 58 |
+| `time` | Recurrence-Free Time — Time to recurrence or censoring | Numerical (Days) | N/A | 0 | 574 |
 | `cens` | Recurrence Event — Recurrence indicator (1=event/recurrence, 0=censored) | Binary Target (0/1) | N/A | 0 | 2 |
 
 
@@ -40,66 +41,70 @@
 
 | Feature | Mean | Median | Mode | Std Dev | Min | Max | Q1 | Q3 | IQR | Skewness | Kurtosis |
 | ------- | ---- | ------ | ---- | ------- | --- | --- | -- | -- | --- | -------- | -------- |
-| `age` | 50.933 | 52.0 | 29 | 17.24 | 21 | 80 | 36.0 | 65.75 | 29.75 | -0.066 | -1.232 |
-| `tsize` | 63.999 | 65.0 | 90 | 31.916 | 8 | 120 | 38.0 | 91.0 | 53.0 | -0.03 | -1.177 |
-| `pnode` | 2.964 | 2.0 | 2 | 2.704 | 1 | 30 | 1.0 | 4.0 | 3.0 | 4.584 | 33.787 |
-| `progrec` | 103.694 | 69.5 | 0 | 107.797 | 0 | 862 | 30.0 | 139.75 | 109.75 | 2.329 | 8.051 |
-| `estrec` | 97.016 | 65.0 | 7 | 99.022 | 0 | 1023 | 28.0 | 138.75 | 110.75 | 2.538 | 13.045 |
-| `time` | 990.985 | 692.0 | 35 | 982.883 | 8 | 9948 | 295.0 | 1394.75 | 1099.75 | 2.51 | 12.687 |
+| `age` | 53.052 | 53.0 | 47.0 | 10.121 | 21.0 | 80.0 | 46.0 | 61.0 | 15.0 | -0.146 | -0.369 |
+| `estrec` | 96.252 | 36.0 | 0.0 | 153.084 | 0.0 | 1144.0 | 8.0 | 114.0 | 106.0 | 3.081 | 12.406 |
+| `pnodes` | 5.01 | 3.0 | 1.0 | 5.475 | 1.0 | 51.0 | 1.0 | 7.0 | 6.0 | 2.878 | 13.208 |
+| `progrec` | 109.996 | 32.5 | 0.0 | 202.332 | 0.0 | 2380.0 | 7.0 | 131.75 | 124.75 | 4.776 | 34.809 |
+| `tsize` | 29.329 | 25.0 | 30.0 | 14.296 | 3.0 | 120.0 | 20.0 | 35.0 | 15.0 | 1.772 | 5.277 |
+| `time` | 1124.49 | 1084.0 | 177.0 | 642.792 | 8.0 | 2659.0 | 567.75 | 1684.75 | 1117.0 | 0.263 | -0.991 |
 
 
 ### Step 3.6 — Categorical Feature Analysis
 
-#### Feature: `horTh` (Imbalance Ratio: 1.28:1)
-  - `no`: 385 records (56.12%)
-  - `yes`: 301 records (43.88%)
-#### Feature: `menostat` (Imbalance Ratio: 1.42:1)
-  - `Pre`: 284 records (41.4%)
-  - `Post`: 402 records (58.6%)
-#### Feature: `cens` (Imbalance Ratio: 1.23:1)
-  - `1`: 308 records (44.9%)
-  - `0`: 378 records (55.1%)
+#### Feature: `horTh` (Imbalance Ratio: 1.79:1)
+  - `no`: 440 records (64.14%)
+  - `yes`: 246 records (35.86%)
+#### Feature: `menostat` (Imbalance Ratio: 1.37:1)
+  - `Post`: 396 records (57.73%)
+  - `Pre`: 290 records (42.27%)
+#### Feature: `tgrade` (Imbalance Ratio: 5.48:1)
+  - `II`: 444 records (64.72%)
+  - `III`: 161 records (23.47%)
+  - `I`: 81 records (11.81%)
+#### Feature: `cens` (Imbalance Ratio: 1.29:1)
+  - `1`: 299 records (43.59%)
+  - `0`: 387 records (56.41%)
 
 
 ### Step 3.7 — Survival Target Statistics
 
 - **Total Patients**: 686
-- **Events Experienced (1)**: 308
-- **Censored Patients (0)**: 378
-- **Censoring Rate**: **55.1%**
-- **Survival Time Range**: 8.0 to 9948.0
-- **Mean Survival Time**: 990.99
-- **Median Survival Time**: 692.0
+- **Events Experienced (1)**: 299
+- **Censored Patients (0)**: 387
+- **Censoring Rate**: **56.41%**
+- **Survival Time Range**: 8.0 to 2659.0
+- **Mean Survival Time**: 1124.49
+- **Median Survival Time**: 1084.0
 
 ### Step 3.8 — Kaplan-Meier Survival Analysis
 
-- **Overall Median Survival Time**: `1530.0`
-- **Final Horizon Survival Probability**: `0.0375`
+- **Overall Median Survival Time**: `1807.0`
+- **Final Horizon Survival Probability**: `0.3428`
 
 #### Stratified by `horTh`:
-  - Group `no`: Median Survival = `1551.0`, Final S(t) = `0.0800`
-  - Group `yes`: Median Survival = `1521.0`, Final S(t) = `0.0000`
+  - Group `no`: Median Survival = `1528.0`, Final S(t) = `0.2322`
+  - Group `yes`: Median Survival = `2018.0`, Final S(t) = `0.4379`
 
 #### Stratified by `menostat`:
-  - Group `Post`: Median Survival = `1625.0`, Final S(t) = `0.0000`
-  - Group `Pre`: Median Survival = `1347.0`, Final S(t) = `0.0544`
+  - Group `Post`: Median Survival = `1701.0`, Final S(t) = `0.2944`
+  - Group `Pre`: Median Survival = `2015.0`, Final S(t) = `0.4418`
 
 ### Steps 3.10 & 3.11 — Outlier Detection & Feature Distributions
 
 | Feature | IQR Outliers | Z-Score Outliers | Distribution Shape | Preprocessing Recommendation |
 | ------- | ------------ | ---------------- | ------------------ | ---------------------------- |
-| `age` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `tsize` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `pnode` | 23 (3.35%) | 8 (1.17%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
-| `progrec` | 39 (5.69%) | 13 (1.9%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
-| `estrec` | 27 (3.94%) | 11 (1.6%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
-| `time` | 23 (3.35%) | 11 (1.6%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `age` | 1 (0.15%) | 1 (0.15%) | Normal / Near-Gaussian | Standard Scaling (Z-score) |
+| `estrec` | 69 (10.06%) | 14 (2.04%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `pnodes` | 29 (4.23%) | 10 (1.46%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `progrec` | 67 (9.77%) | 14 (2.04%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `tsize` | 34 (4.96%) | 10 (1.46%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `time` | 0 (0.0%) | 0 (0.0%) | Normal / Near-Gaussian | Standard Scaling (Z-score) |
 
 
 ### Step 3.12 — Clinical Insights & Observations
 
 - **Q1 Age Survival**: Age has a slight protective effect in postmenopausal women with hormone therapy, but high recurrence risk is concentrated in younger patients with low progesterone receptors.
-- **Q2 Hormone Therapy**: Hormone therapy (Tamoxifen) significantly improves recurrence-free survival. Final survival probability for horTh=yes is higher (0.0) than horTh=no (0.08).
+- **Q2 Hormone Therapy**: Hormone therapy (Tamoxifen) significantly improves recurrence-free survival. Final survival probability for horTh=yes is higher (0.4379) than horTh=no (0.2322).
 - **Q3 Tumor Size**: Larger tumor size (>30mm) and positive lymph node counts (>3 nodes) correlate strongly with decreased recurrence-free survival time.
 
 ---
@@ -109,8 +114,8 @@
 ### Step 3.1 — Dataset Integrity
 
 - **Rows**: 500
-- **Columns**: 12
-- **Memory Usage**: 17.65 KB
+- **Columns**: 16
+- **Memory Usage**: 28.71 KB
 - **Time Column**: `lenfol`
 - **Event Column**: `fstat`
 - **Duplicate Rows**: 0 (0.0%)
@@ -119,17 +124,21 @@
 
 | Feature | Clinical Description | Data Type | Units / Range | Missing | Unique |
 | ------- | -------------------- | --------- | ------------- | ------- | ------ |
-| `age` | Age — Patient age at hospital admission | Numerical (Years) | N/A | 0 | 66 |
-| `gender` | Gender — Patient sex/gender | Binary (0=Male, 1=Female) | N/A | 0 | 2 |
-| `hr` | Heart Rate — Initial heart rate at admission | Numerical (bpm) | N/A | 0 | 145 |
-| `sysbp` | Systolic BP — Systolic blood pressure | Numerical (mmHg) | N/A | 0 | 137 |
-| `diasbp` | Diastolic BP — Diastolic blood pressure | Numerical (mmHg) | N/A | 0 | 91 |
-| `bmi` | Body Mass Index — Body Mass Index | Numerical (kg/m^2) | N/A | 0 | 181 |
-| `cvd` | Cardiovascular Disease — History of cardiovascular disease | Binary (0/1) | N/A | 0 | 2 |
 | `afb` | Atrial Fibrillation — Atrial fibrillation status | Binary (0/1) | N/A | 0 | 2 |
-| `sho` | Cardiogenic Shock — Cardiogenic shock status | Binary (0/1) | N/A | 0 | 2 |
+| `age` | Age — Patient age at hospital admission | Numerical (Years) | N/A | 0 | 66 |
+| `av3` | av3 — Clinical variable | Unknown | N/A | 0 | 2 |
+| `bmi` | Body Mass Index — Body Mass Index | Numerical (kg/m^2) | N/A | 0 | 411 |
 | `chf` | Heart Failure — Congestive heart failure complications | Binary (0/1) | N/A | 0 | 2 |
-| `lenfol` | Follow-up Length — Total follow-up time from admission | Numerical (Days) | N/A | 0 | 439 |
+| `cvd` | Cardiovascular Disease — History of cardiovascular disease | Binary (0/1) | N/A | 0 | 2 |
+| `diasbp` | Diastolic BP — Diastolic blood pressure | Numerical (mmHg) | N/A | 0 | 97 |
+| `gender` | Gender — Patient sex/gender | Binary (0=Male, 1=Female) | N/A | 0 | 2 |
+| `hr` | Heart Rate — Initial heart rate at admission | Numerical (bpm) | N/A | 0 | 105 |
+| `los` | los — Clinical variable | Unknown | N/A | 0 | 27 |
+| `miord` | miord — Clinical variable | Unknown | N/A | 0 | 2 |
+| `mitype` | mitype — Clinical variable | Unknown | N/A | 0 | 2 |
+| `sho` | Cardiogenic Shock — Cardiogenic shock status | Binary (0/1) | N/A | 0 | 2 |
+| `sysbp` | Systolic BP — Systolic blood pressure | Numerical (mmHg) | N/A | 0 | 133 |
+| `lenfol` | Follow-up Length — Total follow-up time from admission | Numerical (Days) | N/A | 0 | 395 |
 | `fstat` | Vital Status — Final status (1=dead, 0=censored/alive) | Binary Target (0/1) | N/A | 0 | 2 |
 
 
@@ -141,73 +150,90 @@
 
 | Feature | Mean | Median | Mode | Std Dev | Min | Max | Q1 | Q3 | IQR | Skewness | Kurtosis |
 | ------- | ---- | ------ | ---- | ------- | --- | --- | -- | -- | --- | -------- | -------- |
-| `age` | 64.06 | 65.0 | 74 | 19.268 | 30 | 95 | 46.0 | 80.25 | 34.25 | -0.099 | -1.224 |
-| `hr` | 108.02 | 111.0 | 147 | 42.753 | 35 | 180 | 71.0 | 145.25 | 74.25 | -0.034 | -1.204 |
-| `sysbp` | 149.688 | 150.5 | 113 | 40.075 | 80 | 220 | 115.0 | 183.0 | 68.0 | -0.021 | -1.18 |
-| `diasbp` | 84.844 | 84.0 | 59 | 26.0 | 40 | 130 | 62.75 | 108.25 | 45.5 | 0.012 | -1.259 |
-| `bmi` | 26.854 | 26.7 | 25.8 | 4.82 | 12.2 | 44.0 | 23.675 | 30.3 | 6.625 | 0.051 | 0.261 |
-| `lenfol` | 873.382 | 643.0 | 99 | 807.987 | 1 | 5188 | 270.0 | 1239.25 | 969.25 | 1.546 | 2.919 |
+| `age` | 69.846 | 72.0 | 76.0 | 14.491 | 30.0 | 104.0 | 59.0 | 82.0 | 23.0 | -0.379 | -0.627 |
+| `av3` | 0.022 | 0.0 | 0 | 0.147 | 0 | 1 | 0.0 | 0.0 | 0.0 | 6.517 | 40.477 |
+| `bmi` | 26.614 | 25.946 | 24.211 | 5.406 | 13.045 | 44.839 | 23.224 | 29.392 | 6.168 | 0.529 | 0.392 |
+| `diasbp` | 78.266 | 79.0 | 80.0 | 21.545 | 6.0 | 198.0 | 63.0 | 91.25 | 28.25 | 0.307 | 1.979 |
+| `hr` | 87.018 | 85.0 | 100.0 | 23.586 | 35.0 | 186.0 | 69.0 | 100.25 | 31.25 | 0.565 | 0.455 |
+| `los` | 6.116 | 5.0 | 4.0 | 4.714 | 0.0 | 47.0 | 3.0 | 7.0 | 4.0 | 2.827 | 14.278 |
+| `miord` | 0.342 | 0.0 | 0 | 0.475 | 0 | 1 | 0.0 | 1.0 | 1.0 | 0.666 | -1.556 |
+| `mitype` | 0.306 | 0.0 | 0 | 0.461 | 0 | 1 | 0.0 | 1.0 | 1.0 | 0.842 | -1.291 |
+| `sysbp` | 144.704 | 141.5 | 130.0 | 32.295 | 57.0 | 244.0 | 123.0 | 164.0 | 41.0 | 0.337 | -0.031 |
+| `lenfol` | 882.436 | 631.5 | 1.0 | 705.665 | 1.0 | 2358.0 | 296.5 | 1363.5 | 1067.0 | 0.401 | -1.128 |
 
 
 ### Step 3.6 — Categorical Feature Analysis
 
-#### Feature: `gender` (Imbalance Ratio: 1.54:1)
-  - `1`: 197 records (39.4%)
-  - `0`: 303 records (60.6%)
-#### Feature: `cvd` (Imbalance Ratio: 3.59:1)
-  - `0`: 391 records (78.2%)
-  - `1`: 109 records (21.8%)
-#### Feature: `afb` (Imbalance Ratio: 5.94:1)
-  - `0`: 428 records (85.6%)
-  - `1`: 72 records (14.4%)
-#### Feature: `sho` (Imbalance Ratio: 15.13:1)
-  - `1`: 31 records (6.2%)
-  - `0`: 469 records (93.8%)
-#### Feature: `chf` (Imbalance Ratio: 4.81:1)
-  - `0`: 414 records (82.8%)
-  - `1`: 86 records (17.2%)
-#### Feature: `fstat` (Imbalance Ratio: 1.35:1)
-  - `0`: 287 records (57.4%)
-  - `1`: 213 records (42.6%)
+#### Feature: `afb` (Imbalance Ratio: 5.41:1)
+  - `1`: 78 records (15.6%)
+  - `0`: 422 records (84.4%)
+#### Feature: `av3` (Imbalance Ratio: 44.45:1)
+  - `0`: 489 records (97.8%)
+  - `1`: 11 records (2.2%)
+#### Feature: `chf` (Imbalance Ratio: 2.23:1)
+  - `0`: 345 records (69.0%)
+  - `1`: 155 records (31.0%)
+#### Feature: `cvd` (Imbalance Ratio: 3.0:1)
+  - `1`: 375 records (75.0%)
+  - `0`: 125 records (25.0%)
+#### Feature: `gender` (Imbalance Ratio: 1.5:1)
+  - `0`: 300 records (60.0%)
+  - `1`: 200 records (40.0%)
+#### Feature: `miord` (Imbalance Ratio: 1.92:1)
+  - `1`: 171 records (34.2%)
+  - `0`: 329 records (65.8%)
+#### Feature: `mitype` (Imbalance Ratio: 2.27:1)
+  - `0`: 347 records (69.4%)
+  - `1`: 153 records (30.6%)
+#### Feature: `sho` (Imbalance Ratio: 21.73:1)
+  - `0`: 478 records (95.6%)
+  - `1`: 22 records (4.4%)
+#### Feature: `fstat` (Imbalance Ratio: 1.33:1)
+  - `0`: 285 records (57.0%)
+  - `1`: 215 records (43.0%)
 
 
 ### Step 3.7 — Survival Target Statistics
 
 - **Total Patients**: 500
-- **Events Experienced (1)**: 213
-- **Censored Patients (0)**: 287
-- **Censoring Rate**: **57.4%**
-- **Survival Time Range**: 1.0 to 5188.0
-- **Mean Survival Time**: 873.38
-- **Median Survival Time**: 643.0
+- **Events Experienced (1)**: 215
+- **Censored Patients (0)**: 285
+- **Censoring Rate**: **57.0%**
+- **Survival Time Range**: 1.0 to 2358.0
+- **Mean Survival Time**: 882.44
+- **Median Survival Time**: 631.5
 
 ### Step 3.8 — Kaplan-Meier Survival Analysis
 
-- **Overall Median Survival Time**: `1528.0`
+- **Overall Median Survival Time**: `1627.0`
 - **Final Horizon Survival Probability**: `0.0000`
 
 #### Stratified by `gender`:
-  - Group `0`: Median Survival = `1565.0`, Final S(t) = `0.0000`
-  - Group `1`: Median Survival = `1434.0`, Final S(t) = `0.1074`
+  - Group `0`: Median Survival = `2160.0`, Final S(t) = `0.4764`
+  - Group `1`: Median Survival = `1317.0`, Final S(t) = `0.0000`
 
 #### Stratified by `chf`:
-  - Group `0`: Median Survival = `1562.0`, Final S(t) = `0.0000`
-  - Group `1`: Median Survival = `1439.0`, Final S(t) = `0.0000`
+  - Group `0`: Median Survival = `2358.0`, Final S(t) = `0.0000`
+  - Group `1`: Median Survival = `359.0`, Final S(t) = `0.0000`
 
 #### Stratified by `cvd`:
-  - Group `0`: Median Survival = `1467.0`, Final S(t) = `0.0539`
-  - Group `1`: Median Survival = `1562.0`, Final S(t) = `0.0000`
+  - Group `0`: Median Survival = `2353.0`, Final S(t) = `0.0000`
+  - Group `1`: Median Survival = `1577.0`, Final S(t) = `0.0000`
 
 ### Steps 3.10 & 3.11 — Outlier Detection & Feature Distributions
 
 | Feature | IQR Outliers | Z-Score Outliers | Distribution Shape | Preprocessing Recommendation |
 | ------- | ------------ | ---------------- | ------------------ | ---------------------------- |
-| `age` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `hr` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `sysbp` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `diasbp` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
-| `bmi` | 5 (1.0%) | 3 (0.6%) | Normal / Near-Gaussian | Standard Scaling (Z-score) |
-| `lenfol` | 21 (4.2%) | 6 (1.2%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `age` | 0 (0.0%) | 0 (0.0%) | Normal / Near-Gaussian | Standard Scaling (Z-score) |
+| `av3` | 11 (2.2%) | 11 (2.2%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `bmi` | 18 (3.6%) | 1 (0.2%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
+| `diasbp` | 9 (1.8%) | 4 (0.8%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
+| `hr` | 9 (1.8%) | 2 (0.4%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
+| `los` | 33 (6.6%) | 10 (2.0%) | Right-Skewed (Positive Skew) | Log / Box-Cox Transformation or Robust Scaling |
+| `miord` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
+| `mitype` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
+| `sysbp` | 6 (1.2%) | 1 (0.2%) | Normal / Near-Gaussian | Standard Scaling (Z-score) |
+| `lenfol` | 0 (0.0%) | 0 (0.0%) | Moderate Skew / Non-Gaussian | MinMax / Robust Scaling |
 
 
 ### Step 3.12 — Clinical Insights & Observations

@@ -4,6 +4,8 @@ Trains Bayesian Cox models across GBSG2, WHAS500, and METABRIC preprocessed data
 Evaluates posterior hazard ratio distributions, 95% credible intervals, test discrimination (C-index)
 and calibration (IBS), executes 5-fold CV, compares against Cox PH, RSF, and DeepSurv baselines,
 exports results, and generates publication plots.
+
+Hyperparameters are loaded from config/model.yaml; CLI arguments override when explicitly passed.
 """
 
 import argparse
@@ -22,6 +24,7 @@ if PROJECT_ROOT not in sys.path:
 from src.evaluation.cross_validation import CrossValidationEvaluator
 from src.evaluation.metrics import evaluate_survival_model
 from src.models.bayesian.model import BayesianCoxModel
+from src.utils.config import get_project_config
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
@@ -31,6 +34,36 @@ TABLES_DIR = os.path.join(REPORTS_DIR, "tables")
 
 os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(TABLES_DIR, exist_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Load project config — canonical hyperparameter source
+# ---------------------------------------------------------------------------
+def _load_model_config():
+    """Load Bayesian Cox config from config/model.yaml, with safe fallbacks."""
+    try:
+        cfg = get_project_config(os.path.join(PROJECT_ROOT, "config"))
+        bcfg = cfg.models.bayesian_cox
+    except Exception:  # noqa: BLE001
+        # Fallback if config files are missing
+        from src.utils.config import ConfigDict
+
+        bcfg = ConfigDict(
+            {
+                "beta_prior_mean": 0.0,
+                "beta_prior_sd": 10.0,
+                "coefficient_prior": "normal",
+                "n_intervals": 6,
+                "mcmc": {
+                    "draws": 2000,
+                    "tune": 1000,
+                    "chains": 4,
+                    "target_accept": 0.95,
+                },
+                "advi": {"n_iterations": 10000},
+            }
+        )
+    return bcfg
 
 
 def draw_posterior_hr_forest_plot(summary_df, dataset_name, filepath):
@@ -197,6 +230,24 @@ def load_json_if_exists(path: str) -> dict:
 
 
 def main():
+    # -----------------------------------------------------------------------
+    # Load canonical config from config/model.yaml
+    # -----------------------------------------------------------------------
+    bcfg = _load_model_config()
+    mcmc_cfg = bcfg.get("mcmc", {})
+    advi_cfg = bcfg.get("advi", {})
+
+    # Config-sourced defaults (CLI overrides only when explicitly passed)
+    cfg_draws = mcmc_cfg.get("draws", 2000)
+    cfg_tune = mcmc_cfg.get("tune", 1000)
+    cfg_chains = mcmc_cfg.get("chains", 4)
+    cfg_target_accept = mcmc_cfg.get("target_accept", 0.95)
+    cfg_advi_iters = advi_cfg.get("n_iterations", 10000)
+    cfg_prior = bcfg.get("coefficient_prior", "normal")
+    cfg_intervals = bcfg.get("n_intervals", 6)
+    cfg_prior_sigma = bcfg.get("beta_prior_sd", 10.0)
+    cfg_prior_mu = bcfg.get("beta_prior_mean", 0.0)
+
     parser = argparse.ArgumentParser(
         description="Run Bayesian Cox Survival Model Execution Pipeline."
     )
@@ -211,7 +262,7 @@ def main():
         "--prior",
         type=str,
         choices=["normal", "student-t", "laplace"],
-        default="normal",
+        default=cfg_prior,
         help="Regression coefficient prior distribution type.",
     )
     parser.add_argument(
@@ -221,37 +272,60 @@ def main():
         help="JSON string of parameter configurations for the prior (e.g. '{\"sigma\": 2.0}').",
     )
     parser.add_argument(
-        "--draws", type=int, default=400, help="Number of posterior samples to draw."
+        "--draws",
+        type=int,
+        default=cfg_draws,
+        help="Number of posterior samples to draw.",
     )
     parser.add_argument(
-        "--tune", type=int, default=300, help="Number of MCMC tuning iterations."
+        "--tune", type=int, default=cfg_tune, help="Number of MCMC tuning iterations."
     )
     parser.add_argument(
-        "--advi-iterations", type=int, default=1200, help="Number of ADVI iterations."
+        "--advi-iterations",
+        type=int,
+        default=cfg_advi_iters,
+        help="Number of ADVI iterations.",
     )
     parser.add_argument(
-        "--chains", type=int, default=1, help="Number of MCMC chains to run."
+        "--chains", type=int, default=cfg_chains, help="Number of MCMC chains to run."
     )
     parser.add_argument(
         "--intervals",
         type=int,
-        default=6,
+        default=cfg_intervals,
         help="Number of piecewise intervals for baseline hazard.",
+    )
+    parser.add_argument(
+        "--target-accept",
+        type=float,
+        default=cfg_target_accept,
+        help="Target acceptance rate for NUTS sampler.",
     )
     args = parser.parse_args()
 
-    prior_params = {}
+    # Build prior_params: start from config defaults, overlay CLI JSON if given
+    prior_params = {"mu": cfg_prior_mu, "sigma": cfg_prior_sigma}
     if args.prior_params:
         try:
-            prior_params = json.loads(args.prior_params)
+            cli_prior = json.loads(args.prior_params)
+            prior_params.update(cli_prior)
         except (json.JSONDecodeError, TypeError) as e:
             print(f"[!] Error parsing --prior-params JSON string: {e}")
             sys.exit(1)
 
-    print("=" * 60)
-    print(f"STARTING PHASE 8 — BAYESIAN COX MODEL ({args.method.upper()})")
-    print(f"  Coefficient Prior: {args.prior.upper()} (params: {prior_params})")
-    print(f"  Piecewise Intervals: {args.intervals}, Draws: {args.draws}")
+    # -----------------------------------------------------------------------
+    # Log resolved configuration for reproducibility
+    # -----------------------------------------------------------------------
+    print(f"STARTING PHASE 9 — BAYESIAN COX MODEL ({args.method.upper()})")
+    print("  Resolved Configuration (source: config/model.yaml + CLI overrides):")
+    print(f"    Inference Method:    {args.method}")
+    print(f"    Coefficient Prior:   {args.prior} (params: {prior_params})")
+    print(f"    Piecewise Intervals: {args.intervals}")
+    print(f"    Draws:               {args.draws}")
+    print(f"    Tune:                {args.tune}")
+    print(f"    Chains:              {args.chains}")
+    print(f"    ADVI Iterations:     {args.advi_iterations}")
+    print(f"    Target Accept:       {args.target_accept}")
     print("=" * 60)
 
     cox_results_path = os.path.join(TABLES_DIR, "cox_ph_results.json")
@@ -280,7 +354,7 @@ def main():
         y_test_time = test_df["time"].values
         y_test_event = test_df["event"].values
 
-        # 1. Fit Bayesian Cox Model
+        # 1. Fit Bayesian Cox Model — using config-sourced hyperparameters
         bayes_model = BayesianCoxModel(
             n_intervals=args.intervals,
             inference_method=args.method,
@@ -319,6 +393,18 @@ def main():
                 ].to_string(index=False)
             )
             diag_list = diag_df.to_dict(orient="records")
+
+            # Check convergence criteria (R̂ < 1.01, ESS > 400)
+            rhat_ok = all(diag_df["r_hat"] < 1.01)
+            ess_ok = all(diag_df["ess_bulk"] > 400)
+            print(
+                f"\n    Convergence Check — R̂ < 1.01: {'PASS' if rhat_ok else 'FAIL'}"
+            )
+            print(f"    Convergence Check — ESS > 400: {'PASS' if ess_ok else 'FAIL'}")
+            if not rhat_ok or not ess_ok:
+                print(
+                    "    [!] WARNING: Convergence criteria not met. Consider increasing draws/tune."
+                )
 
         # 2. Test Evaluation
         eval_times = np.percentile(y_test_time, [25, 50, 75])
@@ -415,6 +501,16 @@ def main():
                 "rsf": rsf_c,
                 "deepsurv": ds_c,
                 "bayesian_cox": test_eval["c_index"],
+            },
+            "resolved_config": {
+                "method": args.method,
+                "prior": args.prior,
+                "prior_params": prior_params,
+                "draws": args.draws,
+                "tune": args.tune,
+                "chains": args.chains,
+                "advi_iterations": args.advi_iterations,
+                "n_intervals": args.intervals,
             },
         }
 

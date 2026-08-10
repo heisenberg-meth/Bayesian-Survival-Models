@@ -1,7 +1,7 @@
 {
   "gbsg2": {
     "best_params": {
-      "n_estimators": 75,
+      "n_estimators": 100,
       "max_depth": 4,
       "min_samples_leaf": 3,
       "min_samples_split": 6,
@@ -11,118 +11,118 @@
     "vimp": [
       {
         "feature": "age",
-        "importance (VIMP)": 0.061376815754722425
+        "importance (VIMP)": 0.052898509119442716
       },
       {
         "feature": "log_pnode",
-        "importance (VIMP)": 0.055099423934470204
+        "importance (VIMP)": 0.04809477330577405
       },
       {
         "feature": "tsize",
-        "importance (VIMP)": 0.051979866414039955
+        "importance (VIMP)": 0.04612351916709734
       },
       {
         "feature": "log_progrec",
-        "importance (VIMP)": 0.038295917781477895
+        "importance (VIMP)": 0.039463359552927235
       },
       {
         "feature": "log_estrec",
-        "importance (VIMP)": 0.037760042869993016
+        "importance (VIMP)": 0.03431513272473263
       },
       {
         "feature": "estrec",
-        "importance (VIMP)": 0.031425235880653046
-      },
-      {
-        "feature": "age_x_horTh",
-        "importance (VIMP)": 0.023942125509559653
+        "importance (VIMP)": 0.03131040554247766
       },
       {
         "feature": "progrec",
-        "importance (VIMP)": 0.018430269277143085
+        "importance (VIMP)": 0.019272358423762292
       },
       {
-        "feature": "pnode",
-        "importance (VIMP)": 0.016918336491167696
+        "feature": "age_x_horTh",
+        "importance (VIMP)": 0.01923408164437046
       },
       {
         "feature": "menostat_Pre",
-        "importance (VIMP)": 0.011310788310271658
+        "importance (VIMP)": 0.0076936326577482506
+      },
+      {
+        "feature": "pnode",
+        "importance (VIMP)": 0.007100342577175622
       },
       {
         "feature": "horTh_yes",
-        "importance (VIMP)": 0.0027750665059042
+        "importance (VIMP)": 0.0011291649920576186
       }
     ],
     "test_eval": {
-      "c_index": 0.5437,
+      "c_index": 0.5441,
       "c_index_se": 0.0103,
       "brier_scores": {
-        "bs_time_255.0": 0.0908,
-        "bs_time_617.0": 0.1452,
-        "bs_time_1418.0": 0.1416
+        "bs_time_255.0": 0.0911,
+        "bs_time_617.0": 0.1449,
+        "bs_time_1418.0": 0.1423
       },
-      "integrated_brier_score": 0.1355,
+      "integrated_brier_score": 0.1356,
       "time_dependent_auc": {
-        "auc_time_255.0": 0.6795,
-        "auc_time_617.0": 0.5449,
-        "auc_time_1418.0": 0.5804
+        "auc_time_255.0": 0.6632,
+        "auc_time_617.0": 0.5495,
+        "auc_time_1418.0": 0.5828
       }
     },
     "cv_results": {
       "dataset_name": "gbsg2",
       "n_splits": 5,
-      "mean_c_index": 0.4503,
-      "std_c_index": 0.07,
+      "mean_c_index": 0.4411,
+      "std_c_index": 0.0725,
       "fold_c_indices": [
-        0.5322,
-        0.5041,
-        0.4518,
-        0.3653,
-        0.3979
+        0.5167,
+        0.505,
+        0.4386,
+        0.3422,
+        0.4029
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.5322,
+          "c_index": 0.5167,
           "c_index_se": 0.011,
-          "integrated_brier_score": 0.1268
+          "integrated_brier_score": 0.1275
         },
         {
           "fold": 2,
-          "c_index": 0.5041,
+          "c_index": 0.505,
           "c_index_se": 0.0107,
-          "integrated_brier_score": 0.1498
+          "integrated_brier_score": 0.1503
         },
         {
           "fold": 3,
-          "c_index": 0.4518,
-          "c_index_se": 0.0122,
-          "integrated_brier_score": 0.1174
+          "c_index": 0.4386,
+          "c_index_se": 0.0121,
+          "integrated_brier_score": 0.1175
         },
         {
           "fold": 4,
-          "c_index": 0.3653,
-          "c_index_se": 0.0097,
-          "integrated_brier_score": 0.1856
+          "c_index": 0.3422,
+          "c_index_se": 0.0095,
+          "integrated_brier_score": 0.187
         },
         {
           "fold": 5,
-          "c_index": 0.3979,
+          "c_index": 0.4029,
           "c_index_se": 0.011,
-          "integrated_brier_score": 0.1582
+          "integrated_brier_score": 0.1581
         }
       ],
-      "mean_integrated_brier_score": 0.1476,
-      "std_integrated_brier_score": 0.027
+      "mean_integrated_brier_score": 0.1481,
+      "std_integrated_brier_score": 0.0273
     },
     "calibration_curve": {
       "mean_pred": [
-        0.721411513356305,
-        0.7474412717942558,
-        0.7648189952182246,
-        0.7830233292531183,
-        0.820921173611763
+        0.7166468641142562,
+        0.7417917603224657,
+        0.7609170416038844,
+        0.7777850598014895,
+        0.8142138087981404
       ],
       "observed_surv": [
         0.9523809523809523,
@@ -134,12 +134,28 @@
       "eval_time": 617.0
     },
     "cox_baseline_test_c_index": 0.482,
-    "cox_baseline_test_ibs": 0.1386
+    "cox_baseline_test_ibs": 0.1386,
+    "resolved_config": {
+      "config_center": {
+        "n_estimators": 100,
+        "max_depth": 8,
+        "min_samples_split": 10,
+        "min_samples_leaf": 5
+      },
+      "grid_search_best": {
+        "n_estimators": 100,
+        "max_depth": 4,
+        "min_samples_leaf": 3,
+        "min_samples_split": 6,
+        "max_features": "sqrt",
+        "bootstrap": true
+      }
+    }
   },
   "whas500": {
     "best_params": {
-      "n_estimators": 75,
-      "max_depth": 6,
+      "n_estimators": 100,
+      "max_depth": 8,
       "min_samples_leaf": 5,
       "min_samples_split": 10,
       "max_features": "sqrt",
@@ -148,126 +164,126 @@
     "vimp": [
       {
         "feature": "hr",
-        "importance (VIMP)": 0.08460198439748545
+        "importance (VIMP)": 0.10921760206013786
       },
       {
         "feature": "age",
-        "importance (VIMP)": 0.06793910474892073
+        "importance (VIMP)": 0.07884571688252662
       },
       {
         "feature": "sysbp",
-        "importance (VIMP)": 0.06403847610391578
+        "importance (VIMP)": 0.066500037870181
       },
       {
         "feature": "bmi",
-        "importance (VIMP)": 0.057941376959781965
+        "importance (VIMP)": 0.05953192456259937
       },
       {
         "feature": "diasbp",
-        "importance (VIMP)": 0.044951904870105364
-      },
-      {
-        "feature": "cvd_1",
-        "importance (VIMP)": 0.029349390290085653
+        "importance (VIMP)": 0.05430583958191315
       },
       {
         "feature": "age_x_gender",
-        "importance (VIMP)": 0.02264636824964028
+        "importance (VIMP)": 0.040180262061652594
       },
       {
-        "feature": "afb_1",
-        "importance (VIMP)": 0.017344542906915117
-      },
-      {
-        "feature": "age_x_chf",
-        "importance (VIMP)": 0.01393622661516325
-      },
-      {
-        "feature": "sho_1",
-        "importance (VIMP)": 0.0059834886010755595
+        "feature": "cvd_1",
+        "importance (VIMP)": 0.02219192607740661
       },
       {
         "feature": "gender_1",
-        "importance (VIMP)": 0.004165719912141208
+        "importance (VIMP)": 0.01253502991744293
+      },
+      {
+        "feature": "afb_1",
+        "importance (VIMP)": 0.012383549193365151
+      },
+      {
+        "feature": "age_x_chf",
+        "importance (VIMP)": 0.009732636522002514
       },
       {
         "feature": "chf_1",
-        "importance (VIMP)": 0.003749147920927065
+        "importance (VIMP)": 0.0029917443005377242
+      },
+      {
+        "feature": "sho_1",
+        "importance (VIMP)": 0.0017798985079148233
       }
     ],
     "test_eval": {
-      "c_index": 0.5702,
+      "c_index": 0.5581,
       "c_index_se": 0.0141,
       "brier_scores": {
-        "bs_time_265.0": 0.0946,
-        "bs_time_522.0": 0.1588,
-        "bs_time_1010.0": 0.1527
+        "bs_time_265.0": 0.0918,
+        "bs_time_522.0": 0.1589,
+        "bs_time_1010.0": 0.1539
       },
       "integrated_brier_score": 0.1457,
       "time_dependent_auc": {
-        "auc_time_265.0": 0.5263,
-        "auc_time_522.0": 0.5877,
-        "auc_time_1010.0": 0.5767
+        "auc_time_265.0": 0.5482,
+        "auc_time_522.0": 0.5775,
+        "auc_time_1010.0": 0.5812
       }
     },
     "cv_results": {
       "dataset_name": "whas500",
       "n_splits": 5,
-      "mean_c_index": 0.5308,
-      "std_c_index": 0.0441,
+      "mean_c_index": 0.5415,
+      "std_c_index": 0.0334,
       "fold_c_indices": [
-        0.5081,
-        0.5884,
-        0.5602,
-        0.4763,
-        0.5209
+        0.5355,
+        0.5604,
+        0.5701,
+        0.4863,
+        0.5554
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.5081,
+          "c_index": 0.5355,
           "c_index_se": 0.0146,
-          "integrated_brier_score": 0.1551
+          "integrated_brier_score": 0.1527
         },
         {
           "fold": 2,
-          "c_index": 0.5884,
-          "c_index_se": 0.0165,
-          "integrated_brier_score": 0.1179
+          "c_index": 0.5604,
+          "c_index_se": 0.0166,
+          "integrated_brier_score": 0.1216
         },
         {
           "fold": 3,
-          "c_index": 0.5602,
+          "c_index": 0.5701,
           "c_index_se": 0.0149,
-          "integrated_brier_score": 0.1519
+          "integrated_brier_score": 0.1521
         },
         {
           "fold": 4,
-          "c_index": 0.4763,
+          "c_index": 0.4863,
           "c_index_se": 0.0151,
-          "integrated_brier_score": 0.1746
+          "integrated_brier_score": 0.1745
         },
         {
           "fold": 5,
-          "c_index": 0.5209,
-          "c_index_se": 0.0159,
-          "integrated_brier_score": 0.1536
+          "c_index": 0.5554,
+          "c_index_se": 0.0158,
+          "integrated_brier_score": 0.1515
         }
       ],
-      "mean_integrated_brier_score": 0.1506,
-      "std_integrated_brier_score": 0.0205
+      "mean_integrated_brier_score": 0.1505,
+      "std_integrated_brier_score": 0.0188
     },
     "calibration_curve": {
       "mean_pred": [
-        0.6621898710945646,
-        0.7227985075915567,
-        0.7639116865599357,
-        0.7990930802447956,
-        0.8511990324090348
+        0.6475799759996916,
+        0.7150942441342204,
+        0.7540652528510687,
+        0.8037285462598741,
+        0.8628880182097427
       ],
       "observed_surv": [
         1.0,
-        1.0,
+        0.9333333333333333,
         0.9375,
         0.9333333333333333,
         1.0
@@ -275,143 +291,175 @@
       "eval_time": 522.0
     },
     "cox_baseline_test_c_index": 0.4685,
-    "cox_baseline_test_ibs": 0.1565
+    "cox_baseline_test_ibs": 0.1565,
+    "resolved_config": {
+      "config_center": {
+        "n_estimators": 100,
+        "max_depth": 8,
+        "min_samples_split": 10,
+        "min_samples_leaf": 5
+      },
+      "grid_search_best": {
+        "n_estimators": 100,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "min_samples_split": 10,
+        "max_features": "sqrt",
+        "bootstrap": true
+      }
+    }
   },
   "metabric": {
     "best_params": {
-      "n_estimators": 75,
+      "n_estimators": 100,
       "max_depth": 4,
-      "min_samples_leaf": 3,
-      "min_samples_split": 6,
+      "min_samples_leaf": 5,
+      "min_samples_split": 10,
       "max_features": "sqrt",
       "bootstrap": true
     },
     "vimp": [
       {
         "feature": "age",
-        "importance (VIMP)": 0.03397415743856658
-      },
-      {
-        "feature": "log_lymph_nodes",
-        "importance (VIMP)": 0.02507500863618184
+        "importance (VIMP)": 0.03231775715444596
       },
       {
         "feature": "age_x_stage",
-        "importance (VIMP)": 0.02258216017109338
+        "importance (VIMP)": 0.022724802726316495
       },
       {
-        "feature": "PAM50Subtype_Her2",
-        "importance (VIMP)": 0.01679882936068966
+        "feature": "log_lymph_nodes",
+        "importance (VIMP)": 0.021315843609419405
       },
       {
         "feature": "lymph_nodes_positive",
-        "importance (VIMP)": 0.01628745094842743
+        "importance (VIMP)": 0.01977491587000313
+      },
+      {
+        "feature": "PAM50Subtype_Her2",
+        "importance (VIMP)": 0.017601315028509035
       },
       {
         "feature": "tumour_stage",
-        "importance (VIMP)": 0.0142661962373416
+        "importance (VIMP)": 0.013871260727302381
       },
       {
         "feature": "hormone_therapy_1",
-        "importance (VIMP)": 0.01256127807729479
+        "importance (VIMP)": 0.012323540485256412
       },
       {
         "feature": "chemotherapy_1",
-        "importance (VIMP)": 0.008459576846493233
+        "importance (VIMP)": 0.010721480222173008
       },
       {
         "feature": "PAM50Subtype_LumA",
-        "importance (VIMP)": 0.00685654622589138
+        "importance (VIMP)": 0.006769214049224259
       },
       {
         "feature": "PAM50Subtype_LumB",
-        "importance (VIMP)": 0.0046208425032118194
+        "importance (VIMP)": 0.0033768441644639324
       },
       {
         "feature": "PAM50Subtype_Normal",
-        "importance (VIMP)": 0.00042501659311355855
+        "importance (VIMP)": 0.001918396814122203
       }
     ],
     "test_eval": {
-      "c_index": 0.5758,
+      "c_index": 0.5746,
       "c_index_se": 0.0032,
       "brier_scores": {
         "bs_time_41.8": 0.127,
         "bs_time_95.1": 0.1829,
-        "bs_time_172.6": 0.161
+        "bs_time_172.6": 0.1609
       },
       "integrated_brier_score": 0.165,
       "time_dependent_auc": {
-        "auc_time_41.8": 0.577,
-        "auc_time_95.1": 0.5704,
-        "auc_time_172.6": 0.6279
+        "auc_time_41.8": 0.5566,
+        "auc_time_95.1": 0.5721,
+        "auc_time_172.6": 0.6324
       }
     },
     "cv_results": {
       "dataset_name": "metabric",
       "n_splits": 5,
-      "mean_c_index": 0.5115,
-      "std_c_index": 0.0229,
+      "mean_c_index": 0.5098,
+      "std_c_index": 0.0281,
       "fold_c_indices": [
-        0.542,
-        0.5032,
-        0.4955,
-        0.488,
-        0.5288
+        0.5477,
+        0.498,
+        0.493,
+        0.4802,
+        0.5303
       ],
       "fold_details": [
         {
           "fold": 1,
-          "c_index": 0.542,
-          "c_index_se": 0.0036,
-          "integrated_brier_score": 0.1604
+          "c_index": 0.5477,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.1603
         },
         {
           "fold": 2,
-          "c_index": 0.5032,
+          "c_index": 0.498,
+          "c_index_se": 0.0035,
+          "integrated_brier_score": 0.1718
+        },
+        {
+          "fold": 3,
+          "c_index": 0.493,
           "c_index_se": 0.0035,
           "integrated_brier_score": 0.1716
         },
         {
-          "fold": 3,
-          "c_index": 0.4955,
-          "c_index_se": 0.0035,
-          "integrated_brier_score": 0.1715
-        },
-        {
           "fold": 4,
-          "c_index": 0.488,
+          "c_index": 0.4802,
           "c_index_se": 0.0034,
-          "integrated_brier_score": 0.1784
+          "integrated_brier_score": 0.1787
         },
         {
           "fold": 5,
-          "c_index": 0.5288,
+          "c_index": 0.5303,
           "c_index_se": 0.0035,
-          "integrated_brier_score": 0.1617
+          "integrated_brier_score": 0.162
         }
       ],
-      "mean_integrated_brier_score": 0.1687,
+      "mean_integrated_brier_score": 0.1689,
       "std_integrated_brier_score": 0.0076
     },
     "calibration_curve": {
       "mean_pred": [
-        0.6258970211649915,
-        0.6556760130621351,
-        0.6661801982322345,
-        0.6784190148525776,
-        0.7070634246279224
+        0.6263484821510434,
+        0.6542980499992747,
+        0.6650089074550124,
+        0.6780466757457052,
+        0.7076949757417139
       ],
       "observed_surv": [
+        0.9649122807017544,
         1.0,
-        0.9824561403508771,
         0.9827586206896551,
-        0.9824561403508771,
-        1.0
+        1.0,
+        0.9827586206896551
       ],
       "eval_time": 95.1
     },
     "cox_baseline_test_c_index": 0.5129,
-    "cox_baseline_test_ibs": 0.1671
+    "cox_baseline_test_ibs": 0.1671,
+    "resolved_config": {
+      "config_center": {
+        "n_estimators": 100,
+        "max_depth": 8,
+        "min_samples_split": 10,
+        "min_samples_leaf": 5
+      },
+      "grid_search_best": {
+        "n_estimators": 100,
+        "max_depth": 4,
+        "min_samples_leaf": 5,
+        "min_samples_split": 10,
+        "max_features": "sqrt",
+        "bootstrap": true
+      }
+    }
   }
 }

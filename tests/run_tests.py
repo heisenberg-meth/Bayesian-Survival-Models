@@ -27,7 +27,7 @@ def main():
         print(f"\n[+] Scanning module: tests.{module_name}")
         try:
             mod = importlib.import_module(f"tests.{module_name}")
-        except Exception as e:
+        except (ImportError, SyntaxError) as e:
             print(f"  [!] Failed to import tests.{module_name}: {e}")
             traceback.print_exc()
             total_failed += 1
@@ -50,7 +50,7 @@ def main():
             try:
                 func()
                 print("PASSED")
-            except Exception as e:
+            except AssertionError as e:
                 print("FAILED: ", e)
                 traceback.print_exc()
                 total_failed += 1

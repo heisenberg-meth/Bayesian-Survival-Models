@@ -151,7 +151,24 @@
       "eval_time": 617.0
     },
     "cox_baseline_test_c_index": 0.482,
-    "rsf_test_c_index": 0.5437
+    "rsf_test_c_index": 0.5441,
+    "resolved_config": {
+      "config_defaults": {
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "l2_reg": 0.001,
+        "max_iter": 300
+      },
+      "grid_search_best": {
+        "hidden_dims": [
+          16,
+          8
+        ],
+        "l2_reg": 0.001
+      }
+    }
   },
   "whas500": {
     "best_params": {
@@ -309,7 +326,24 @@
       "eval_time": 522.0
     },
     "cox_baseline_test_c_index": 0.4685,
-    "rsf_test_c_index": 0.5702
+    "rsf_test_c_index": 0.5581,
+    "resolved_config": {
+      "config_defaults": {
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "l2_reg": 0.001,
+        "max_iter": 300
+      },
+      "grid_search_best": {
+        "hidden_dims": [
+          16,
+          8
+        ],
+        "l2_reg": 0.001
+      }
+    }
   },
   "metabric": {
     "best_params": {
@@ -463,6 +497,23 @@
       "eval_time": 95.1
     },
     "cox_baseline_test_c_index": 0.5129,
-    "rsf_test_c_index": 0.5758
+    "rsf_test_c_index": 0.5746,
+    "resolved_config": {
+      "config_defaults": {
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "l2_reg": 0.001,
+        "max_iter": 300
+      },
+      "grid_search_best": {
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "l2_reg": 0.001
+      }
+    }
   }
 }

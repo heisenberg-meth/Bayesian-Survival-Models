@@ -3,6 +3,8 @@ Master Execution Script for Phase 6 — Cox Proportional Hazards Model (Baseline
 Trains Cox PH models across GBSG2, WHAS500, and METABRIC preprocessed datasets.
 Evaluates test discrimination (C-index) and calibration (IBS), executes 5-fold CV,
 performs Schoenfeld residuals assumption tests, exports results, and generates publication plots.
+
+Hyperparameters are loaded from config/model.yaml; CLI arguments override when explicitly passed.
 """
 
 import json
@@ -21,6 +23,7 @@ if PROJECT_ROOT not in sys.path:
 from src.evaluation.cross_validation import CrossValidationEvaluator
 from src.evaluation.metrics import evaluate_survival_model
 from src.models.cox import CoxPHModel
+from src.utils.config import get_project_config
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
@@ -30,6 +33,20 @@ TABLES_DIR = os.path.join(REPORTS_DIR, "tables")
 
 os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(TABLES_DIR, exist_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Load project config — canonical hyperparameter source
+# ---------------------------------------------------------------------------
+def _load_model_config():
+    """Load Cox PH config from config/model.yaml, with safe fallbacks."""
+    try:
+        cfg = get_project_config(os.path.join(PROJECT_ROOT, "config"))
+        return cfg.models.cox_ph
+    except Exception:  # noqa: BLE001
+        from src.utils.config import ConfigDict
+
+        return ConfigDict({"l2_reg": 0.0001})
 
 
 def draw_baseline_survival_plot(eval_times, surv_curves, dataset_name, filepath):
@@ -184,8 +201,17 @@ def draw_forest_plot(df_summary, dataset_name, filepath):
 
 
 def main():
+    # -----------------------------------------------------------------------
+    # Load canonical config from config/model.yaml
+    # -----------------------------------------------------------------------
+    cox_cfg = _load_model_config()
+    cfg_l2_reg = cox_cfg.get("l2_reg", 0.0001)
+
     print("=" * 60)
     print("STARTING PHASE 6 — COX PROPORTIONAL HAZARDS MODEL (BASELINE)")
+    print("=" * 60)
+    print("  Resolved Configuration (source: config/model.yaml):")
+    print(f"    L2 Regularization:   {cfg_l2_reg}")
     print("=" * 60)
 
     all_results = {}
@@ -207,8 +233,8 @@ def main():
         y_test_time = test_df["time"].values
         y_test_event = test_df["event"].values
 
-        # 1. Fit Cox PH model
-        cox_model = CoxPHModel(l2_reg=1e-4)
+        # 1. Fit Cox PH model — using config-sourced L2 regularization
+        cox_model = CoxPHModel(l2_reg=cfg_l2_reg)
         cox_model.fit(X_train, y_train_time, y_train_event)
 
         summary_df = cox_model.get_summary()
@@ -249,7 +275,7 @@ def main():
             X_tr = df_tr.drop(columns=["time", "event"])
             y_tr_t = df_tr["time"].values
             y_tr_e = df_tr["event"].values
-            m = CoxPHModel(l2_reg=1e-4)
+            m = CoxPHModel(l2_reg=cfg_l2_reg)
             m.fit(X_tr, y_tr_t, y_tr_e)
             return m
 
@@ -286,6 +312,7 @@ def main():
             "ph_assumption": ph_df.to_dict(orient="records"),
             "test_eval": test_eval,
             "cv_results": cv_results,
+            "resolved_config": {"l2_reg": cfg_l2_reg},
         }
 
     # 6. Save JSON table artifact

@@ -188,14 +188,25 @@
         "bs_time_617.0": 0.1477,
         "bs_time_1418.0": 0.1461
       },
-      "integrated_brier_score": 0.1386
+      "integrated_brier_score": 0.1386,
+      "time_dependent_auc": {
+        "auc_time_255.0": 0.4907,
+        "auc_time_617.0": 0.457,
+        "auc_time_1418.0": 0.4907
+      }
     },
     "cv_results": {
       "dataset_name": "gbsg2",
       "n_splits": 5,
       "mean_c_index": 0.4485,
       "std_c_index": 0.0592,
-      "fold_c_indices": [0.432, 0.5068, 0.5129, 0.3787, 0.4121],
+      "fold_c_indices": [
+        0.432,
+        0.5068,
+        0.5129,
+        0.3787,
+        0.4121
+      ],
       "fold_details": [
         {
           "fold": 1,
@@ -230,6 +241,9 @@
       ],
       "mean_integrated_brier_score": 0.1503,
       "std_integrated_brier_score": 0.0268
+    },
+    "resolved_config": {
+      "l2_reg": 0.0001
     }
   },
   "whas500": {
@@ -437,14 +451,25 @@
         "bs_time_522.0": 0.1705,
         "bs_time_1010.0": 0.1684
       },
-      "integrated_brier_score": 0.1565
+      "integrated_brier_score": 0.1565,
+      "time_dependent_auc": {
+        "auc_time_265.0": 0.4386,
+        "auc_time_522.0": 0.4649,
+        "auc_time_1010.0": 0.4279
+      }
     },
     "cv_results": {
       "dataset_name": "whas500",
       "n_splits": 5,
       "mean_c_index": 0.5129,
       "std_c_index": 0.0501,
-      "fold_c_indices": [0.4688, 0.5369, 0.5267, 0.5765, 0.4557],
+      "fold_c_indices": [
+        0.4688,
+        0.5369,
+        0.5267,
+        0.5765,
+        0.4557
+      ],
       "fold_details": [
         {
           "fold": 1,
@@ -479,6 +504,9 @@
       ],
       "mean_integrated_brier_score": 0.151,
       "std_integrated_brier_score": 0.0166
+    },
+    "resolved_config": {
+      "l2_reg": 0.0001
     }
   },
   "metabric": {
@@ -670,14 +698,25 @@
         "bs_time_95.1": 0.1846,
         "bs_time_172.6": 0.1647
       },
-      "integrated_brier_score": 0.1671
+      "integrated_brier_score": 0.1671,
+      "time_dependent_auc": {
+        "auc_time_41.8": 0.5286,
+        "auc_time_95.1": 0.5059,
+        "auc_time_172.6": 0.5129
+      }
     },
     "cv_results": {
       "dataset_name": "metabric",
       "n_splits": 5,
       "mean_c_index": 0.489,
       "std_c_index": 0.0267,
-      "fold_c_indices": [0.5021, 0.4858, 0.4724, 0.4578, 0.5268],
+      "fold_c_indices": [
+        0.5021,
+        0.4858,
+        0.4724,
+        0.4578,
+        0.5268
+      ],
       "fold_details": [
         {
           "fold": 1,
@@ -712,6 +751,9 @@
       ],
       "mean_integrated_brier_score": 0.1696,
       "std_integrated_brier_score": 0.0079
+    },
+    "resolved_config": {
+      "l2_reg": 0.0001
     }
   }
 }

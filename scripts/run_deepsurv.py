@@ -4,6 +4,8 @@ Trains DeepSurv neural networks across GBSG2, WHAS500, and METABRIC preprocessed
 Performs hyperparameter tuning on validation sets, evaluates test discrimination (C-index)
 and calibration (IBS), computes calibration curves, permutation feature importances (VIMP),
 executes 5-fold CV, compares with Cox PH and RSF baselines, and exports results and plots.
+
+Hyperparameters are loaded from config/model.yaml; grid search uses config as default baseline.
 """
 
 import json
@@ -22,6 +24,7 @@ from src.evaluation.calibration import compute_calibration_curve
 from src.evaluation.cross_validation import CrossValidationEvaluator
 from src.evaluation.metrics import concordance_index, evaluate_survival_model
 from src.models.deepsurv import DeepSurvModel
+from src.utils.config import get_project_config
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
@@ -31,6 +34,55 @@ TABLES_DIR = os.path.join(REPORTS_DIR, "tables")
 
 os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(TABLES_DIR, exist_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Load project config — canonical hyperparameter source
+# ---------------------------------------------------------------------------
+def _load_model_config():
+    """Load DeepSurv config from config/model.yaml, with safe fallbacks."""
+    try:
+        cfg = get_project_config(os.path.join(PROJECT_ROOT, "config"))
+        return cfg.models.deepsurv
+    except Exception:  # noqa: BLE001
+        from src.utils.config import ConfigDict
+
+        return ConfigDict(
+            {
+                "hidden_dims": [64, 32],
+                "l2_reg": 0.001,
+                "max_iter": 300,
+                "dropout": 0.2,
+                "learning_rate": 0.001,
+            }
+        )
+
+
+def _build_param_grid(ds_cfg):
+    """Build a grid search around config-sourced default values."""
+    cfg_hidden = ds_cfg.get("hidden_dims", [64, 32])
+    cfg_l2 = ds_cfg.get("l2_reg", 0.001)
+
+    # Grid: config default + smaller architectures + L2 variations
+    grid = [
+        {"hidden_dims": [16, 8], "l2_reg": 1e-4},
+        {"hidden_dims": [16, 8], "l2_reg": 1e-3},
+        {"hidden_dims": [32, 16], "l2_reg": 1e-4},
+        {"hidden_dims": [32, 16], "l2_reg": 1e-3},
+        {"hidden_dims": [32, 16], "l2_reg": 1e-2},
+        # Config-sourced default as a grid candidate
+        {"hidden_dims": list(cfg_hidden), "l2_reg": cfg_l2},
+    ]
+
+    # Deduplicate (in case config matches one of the above)
+    seen = set()
+    deduped = []
+    for g in grid:
+        key = (tuple(g["hidden_dims"]), g["l2_reg"])
+        if key not in seen:
+            seen.add(key)
+            deduped.append(g)
+    return deduped
 
 
 def draw_training_curve_plot(loss_history, dataset_name, filepath):
@@ -288,8 +340,21 @@ def load_json_if_exists(path: str) -> dict:
 
 
 def main():
+    # -----------------------------------------------------------------------
+    # Load canonical config from config/model.yaml
+    # -----------------------------------------------------------------------
+    ds_cfg = _load_model_config()
+    cfg_max_iter = ds_cfg.get("max_iter", 300)
+    param_grid = _build_param_grid(ds_cfg)
+
     print("=" * 60)
     print("STARTING PHASE 7 — DEEPSURV (DEEP LEARNING SURVIVAL)")
+    print("=" * 60)
+    print("  Resolved Configuration (source: config/model.yaml):")
+    print(f"    hidden_dims:         {ds_cfg.get('hidden_dims', [64, 32])}")
+    print(f"    l2_reg:              {ds_cfg.get('l2_reg', 0.001)}")
+    print(f"    max_iter:            {cfg_max_iter}")
+    print(f"    Grid search combos:  {len(param_grid)}")
     print("=" * 60)
 
     # Load Cox PH and RSF results for comparative analysis
@@ -323,14 +388,6 @@ def main():
         y_test_event = test_df["event"].values
 
         # Hyperparameter tuning grid search
-        param_grid = [
-            {"hidden_dims": [16, 8], "l2_reg": 1e-4},
-            {"hidden_dims": [16, 8], "l2_reg": 1e-3},
-            {"hidden_dims": [32, 16], "l2_reg": 1e-4},
-            {"hidden_dims": [32, 16], "l2_reg": 1e-3},
-            {"hidden_dims": [32, 16], "l2_reg": 1e-2},
-        ]
-
         print("    Running validation set grid search hyperparameter tuning...")
         best_val_c = -1.0
         best_params = None
@@ -355,15 +412,15 @@ def main():
                 best_params = params
 
         print(
-            f"    [-->] Optimal Parameters: {best_params} with Val C-Index = {best_val_c:.4f}"
+            f"    [--->] Optimal Parameters: {best_params} with Val C-Index = {best_val_c:.4f}"
         )
 
-        # Train final model with the optimal parameters
+        # Train final model with the optimal parameters — using config max_iter
         deepsurv_model = DeepSurvModel(
             hidden_dims=best_params["hidden_dims"],
             l2_reg=best_params["l2_reg"],
             random_state=42,
-            max_iter=300,
+            max_iter=cfg_max_iter,
         )
         deepsurv_model.fit(X_train, y_train_time, y_train_event)
 
@@ -482,6 +539,14 @@ def main():
             },
             "cox_baseline_test_c_index": cox_c,
             "rsf_test_c_index": rsf_c,
+            "resolved_config": {
+                "config_defaults": {
+                    "hidden_dims": list(ds_cfg.get("hidden_dims", [64, 32])),
+                    "l2_reg": ds_cfg.get("l2_reg", 0.001),
+                    "max_iter": cfg_max_iter,
+                },
+                "grid_search_best": best_params,
+            },
         }
 
     # Save JSON table artifact

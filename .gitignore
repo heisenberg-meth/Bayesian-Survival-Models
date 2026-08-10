@@ -39,3 +39,7 @@ results/
 # OS
 .DS_Store
 Thumbs.db
+.kilo/*
+.local
+progress.txt
+PRD.md

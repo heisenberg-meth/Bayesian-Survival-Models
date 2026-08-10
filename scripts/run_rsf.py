@@ -4,6 +4,8 @@ Fits RSF models across GBSG2, WHAS500, and METABRIC preprocessed datasets.
 Performs grid search hyperparameter tuning on validation sets, fits optimal ensembles,
 evaluates test discrimination (C-index, time-dependent AUC) and calibration (IBS, calibration curve),
 runs 5-fold CV, computes VIMP, exports results, and generates publication plots.
+
+Hyperparameters are loaded from config/model.yaml; grid search centres on config values.
 """
 
 import json
@@ -22,6 +24,7 @@ from src.evaluation.calibration import compute_calibration_curve
 from src.evaluation.cross_validation import CrossValidationEvaluator
 from src.evaluation.metrics import evaluate_survival_model
 from src.models.random_survival_forest import RandomSurvivalForestModel
+from src.utils.config import get_project_config
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
@@ -31,6 +34,62 @@ TABLES_DIR = os.path.join(REPORTS_DIR, "tables")
 
 os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(TABLES_DIR, exist_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Load project config — canonical hyperparameter source
+# ---------------------------------------------------------------------------
+def _load_model_config():
+    """Load RSF config from config/model.yaml, with safe fallbacks."""
+    try:
+        cfg = get_project_config(os.path.join(PROJECT_ROOT, "config"))
+        return cfg.models.random_survival_forest
+    except Exception:  # noqa: BLE001
+        from src.utils.config import ConfigDict
+
+        return ConfigDict(
+            {
+                "n_estimators": 100,
+                "min_samples_split": 10,
+                "min_samples_leaf": 5,
+                "max_depth": 8,
+                "max_features": "sqrt",
+                "bootstrap": True,
+                "random_state": 42,
+            }
+        )
+
+
+def _build_param_grid(rsf_cfg):
+    """Build a grid search around config-sourced center values."""
+    center_n_est = rsf_cfg.get("n_estimators", 100)
+    center_depth = rsf_cfg.get("max_depth", 8)
+    center_min_leaf = rsf_cfg.get("min_samples_leaf", 5)
+    center_min_split = rsf_cfg.get("min_samples_split", 10)
+    max_features = rsf_cfg.get("max_features", "sqrt")
+    bootstrap = rsf_cfg.get("bootstrap", True)
+
+    # Grid: vary around config center values
+    n_est_vals = sorted({max(10, center_n_est // 2), center_n_est})
+    depth_vals = sorted({max(2, center_depth // 2), center_depth})
+    leaf_vals = sorted({max(1, center_min_leaf - 2), center_min_leaf})
+    split_vals = sorted({max(2, center_min_split - 4), center_min_split})
+
+    grid = []
+    for n_est in n_est_vals:
+        for depth in depth_vals:
+            for leaf, split in zip(leaf_vals, split_vals):
+                grid.append(
+                    {
+                        "n_estimators": n_est,
+                        "max_depth": depth,
+                        "min_samples_leaf": leaf,
+                        "min_samples_split": split,
+                        "max_features": max_features,
+                        "bootstrap": bootstrap,
+                    }
+                )
+    return grid
 
 
 def draw_rsf_survival_plot(eval_times, surv_curves, dataset_name, filepath):
@@ -219,8 +278,23 @@ def draw_calibration_plot(mean_pred, obs_surv, eval_time, dataset_name, filepath
 
 
 def main():
+    # -----------------------------------------------------------------------
+    # Load canonical config from config/model.yaml
+    # -----------------------------------------------------------------------
+    rsf_cfg = _load_model_config()
+    param_grid = _build_param_grid(rsf_cfg)
+
     print("=" * 60)
     print("STARTING PHASE 6 — RANDOM SURVIVAL FORESTS (RSF)")
+    print("=" * 60)
+    print("  Resolved Configuration (source: config/model.yaml):")
+    print(f"    n_estimators:        {rsf_cfg.get('n_estimators', 100)}")
+    print(f"    max_depth:           {rsf_cfg.get('max_depth', 8)}")
+    print(f"    min_samples_split:   {rsf_cfg.get('min_samples_split', 10)}")
+    print(f"    min_samples_leaf:    {rsf_cfg.get('min_samples_leaf', 5)}")
+    print(f"    max_features:        {rsf_cfg.get('max_features', 'sqrt')}")
+    print(f"    bootstrap:           {rsf_cfg.get('bootstrap', True)}")
+    print(f"    Grid search combos:  {len(param_grid)}")
     print("=" * 60)
 
     # Load Cox PH baseline results for comparative analysis
@@ -232,58 +306,6 @@ def main():
 
     all_results = {}
     datasets = ["gbsg2", "whas500", "metabric"]
-
-    # Define hyperparameter grid for tuning
-    param_grid = [
-        {
-            "n_estimators": 40,
-            "max_depth": 4,
-            "min_samples_leaf": 3,
-            "min_samples_split": 6,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-        {
-            "n_estimators": 40,
-            "max_depth": 6,
-            "min_samples_leaf": 3,
-            "min_samples_split": 6,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-        {
-            "n_estimators": 40,
-            "max_depth": 6,
-            "min_samples_leaf": 5,
-            "min_samples_split": 10,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-        {
-            "n_estimators": 75,
-            "max_depth": 4,
-            "min_samples_leaf": 3,
-            "min_samples_split": 6,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-        {
-            "n_estimators": 75,
-            "max_depth": 6,
-            "min_samples_leaf": 3,
-            "min_samples_split": 6,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-        {
-            "n_estimators": 75,
-            "max_depth": 6,
-            "min_samples_leaf": 5,
-            "min_samples_split": 10,
-            "max_features": "sqrt",
-            "bootstrap": True,
-        },
-    ]
 
     for dname in datasets:
         print(f"\n[+] Processing Dataset: '{dname.upper()}'")
@@ -335,7 +357,7 @@ def main():
                 best_params = params
 
         print(
-            f"    [-->] Optimal Parameters: {best_params} with Val C-Index = {best_val_c:.4f}"
+            f"    [--->] Optimal Parameters: {best_params} with Val C-Index = {best_val_c:.4f}"
         )
 
         # Train final model with the optimal parameters
@@ -461,6 +483,15 @@ def main():
             },
             "cox_baseline_test_c_index": cox_c,
             "cox_baseline_test_ibs": cox_ibs,
+            "resolved_config": {
+                "config_center": {
+                    "n_estimators": rsf_cfg.get("n_estimators", 100),
+                    "max_depth": rsf_cfg.get("max_depth", 8),
+                    "min_samples_split": rsf_cfg.get("min_samples_split", 10),
+                    "min_samples_leaf": rsf_cfg.get("min_samples_leaf", 5),
+                },
+                "grid_search_best": best_params,
+            },
         }
 
     # Save JSON table artifact
