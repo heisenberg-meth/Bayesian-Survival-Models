@@ -350,20 +350,20 @@
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.047551870346069336,
-        "pred_time_sec": 0.0006344318389892578
+        "train_time_sec": 0.007603883743286133,
+        "pred_time_sec": 0.0005121231079101562
       },
       "RSF": {
-        "train_time_sec": 7.481964111328125,
-        "pred_time_sec": 0.017303943634033203
+        "train_time_sec": 7.204334259033203,
+        "pred_time_sec": 0.016405344009399414
       },
       "DeepSurv": {
-        "train_time_sec": 0.7550439834594727,
-        "pred_time_sec": 0.0007309913635253906
+        "train_time_sec": 0.5582942962646484,
+        "pred_time_sec": 0.0005223751068115234
       },
       "Bayesian Cox": {
-        "train_time_sec": 71.03350925445557,
-        "pred_time_sec": 0.015255451202392578
+        "train_time_sec": 66.80347657203674,
+        "pred_time_sec": 0.013967514038085938
       }
     }
   },
@@ -728,20 +728,20 @@
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.007532596588134766,
-        "pred_time_sec": 0.0005772113800048828
+        "train_time_sec": 0.0069887638092041016,
+        "pred_time_sec": 0.0004956722259521484
       },
       "RSF": {
-        "train_time_sec": 6.500447750091553,
-        "pred_time_sec": 0.015441656112670898
+        "train_time_sec": 6.169372081756592,
+        "pred_time_sec": 0.01272130012512207
       },
       "DeepSurv": {
-        "train_time_sec": 0.37613439559936523,
-        "pred_time_sec": 0.0007073879241943359
+        "train_time_sec": 0.3476133346557617,
+        "pred_time_sec": 0.0005354881286621094
       },
       "Bayesian Cox": {
-        "train_time_sec": 52.937734603881836,
-        "pred_time_sec": 0.012126445770263672
+        "train_time_sec": 51.13629078865051,
+        "pred_time_sec": 0.011858701705932617
       }
     }
   },
@@ -1096,20 +1096,20 @@
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.019884109497070312,
-        "pred_time_sec": 0.0007264614105224609
+        "train_time_sec": 0.014862537384033203,
+        "pred_time_sec": 0.0005297660827636719
       },
       "RSF": {
-        "train_time_sec": 17.01399254798889,
-        "pred_time_sec": 0.05532956123352051
+        "train_time_sec": 15.679690599441528,
+        "pred_time_sec": 0.05131959915161133
       },
       "DeepSurv": {
-        "train_time_sec": 4.583291292190552,
-        "pred_time_sec": 0.001188516616821289
+        "train_time_sec": 3.7103092670440674,
+        "pred_time_sec": 0.0007634162902832031
       },
       "Bayesian Cox": {
-        "train_time_sec": 188.85090279579163,
-        "pred_time_sec": 0.023380041122436523
+        "train_time_sec": 180.8472716808319,
+        "pred_time_sec": 0.021999359130859375
       }
     }
   }

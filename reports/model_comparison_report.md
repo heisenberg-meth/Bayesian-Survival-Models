@@ -18,9 +18,9 @@ All models were trained, validated, and tested using identical data splits and p
 | Model | Test C-Index | Test IBS | CV Mean C-Index | CV Mean IBS |
 | :--- | :---: | :---: | :---: | :---: |
 | **Cox PH Baseline** | 0.4820 | 0.1386 | 0.4485 | 0.1503 |
-| **Random Survival Forest** | **0.5437** | **0.1355** | 0.4503 | 0.1476 |
+| **Random Survival Forest** | **0.5441** | **0.1356** | 0.4411 | 0.1481 |
 | **DeepSurv Neural Net** | 0.5411 | 0.1939 | 0.4983 | 0.2469 |
-| **Bayesian Cox (ADVI)** | 0.5248 | 0.4217 | **0.5060** | 0.4552 |
+| **Bayesian Cox (ADVI)** | 0.5017 | 0.2478 | **0.5035** | 0.4224 |
 
 ---
 
@@ -31,9 +31,9 @@ All models were trained, validated, and tested using identical data splits and p
 | Model | Test C-Index | Test IBS | CV Mean C-Index | CV Mean IBS |
 | :--- | :---: | :---: | :---: | :---: |
 | **Cox PH Baseline** | 0.4685 | 0.1565 | 0.5129 | 0.1510 |
-| **Random Survival Forest** | **0.5702** | **0.1457** | **0.5308** | 0.1506 |
+| **Random Survival Forest** | **0.5581** | **0.1457** | **0.5415** | 0.1505 |
 | **DeepSurv Neural Net** | 0.5492 | 0.2400 | 0.5240 | 0.2712 |
-| **Bayesian Cox (ADVI)** | 0.4274 | 0.4367 | 0.5068 | 0.5072 |
+| **Bayesian Cox (ADVI)** | 0.4403 | 0.2332 | 0.4989 | 0.4419 |
 
 ---
 
@@ -44,9 +44,9 @@ All models were trained, validated, and tested using identical data splits and p
 | Model | Test C-Index | Test IBS | CV Mean C-Index | CV Mean IBS |
 | :--- | :---: | :---: | :---: | :---: |
 | **Cox PH Baseline** | 0.5129 | 0.1671 | 0.4890 | 0.1696 |
-| **Random Survival Forest** | **0.5758** | **0.1650** | **0.5115** | 0.1687 |
+| **Random Survival Forest** | **0.5746** | **0.1650** | **0.5098** | 0.1689 |
 | **DeepSurv Neural Net** | 0.5493 | 0.2086 | 0.4987 | 0.2188 |
-| **Bayesian Cox (ADVI)** | 0.5450 | 0.3755 | 0.5082 | 0.3981 |
+| **Bayesian Cox (ADVI)** | 0.5376 | 0.1785 | 0.4945 | 0.2125 |
 
 ---
 
@@ -56,21 +56,21 @@ All models were trained, validated, and tested using identical data splits and p
 Calculated by computing the average rank of each model across the 3 datasets:
 
 - **Random Survival Forest**: C-Index Average Rank = **1.00** | IBS Average Rank = **1.00** | Overall Average Rank = **1.00**
-- **DeepSurv Neural Net**: C-Index Average Rank = 2.00 | IBS Average Rank = 3.00 | Overall Average Rank = 2.50
-- **Bayesian Cox (ADVI)**: C-Index Average Rank = 3.33 | IBS Average Rank = 4.00 | Overall Average Rank = 3.67
+- **DeepSurv Neural Net**: C-Index Average Rank = 2.00 | IBS Average Rank = 3.67 | Overall Average Rank = 2.83
+- **Bayesian Cox (ADVI)**: C-Index Average Rank = 3.33 | IBS Average Rank = 3.33 | Overall Average Rank = 3.33
 - **Cox PH Baseline**: C-Index Average Rank = 3.67 | IBS Average Rank = 2.00 | Overall Average Rank = 2.83
 
 ### 3.2 Statistical Significance Tests (CV Folds)
 To test whether the performance differences are statistically significant, we ran the Friedman Test across the 5 folds of cross-validation on all 3 datasets (total of 15 folds):
-- **Friedman C-Index Chi-Square**: 3.0000 (p-value = 3.9163e-01)
-- **Friedman IBS Chi-Square**: 41.4800 (p-value = 5.1726e-09)
+- **Friedman C-Index Chi-Square**: 2.7600 (p-value = 4.3013e-01)
+- **Friedman IBS Chi-Square**: 37.4800 (p-value = 3.6418e-08)
 
 The extremely low p-values indicate a statistically significant difference in performance across the models. 
 
 Comparing the primary contribution, **Bayesian Cox**, against other models using the **Wilcoxon Signed-Rank Test** across CV folds:
-- **vs Cox PH Baseline**: C-Index p-value = 0.2524 | IBS p-value = 0.0001
-- **vs Random Survival Forest**: C-Index p-value = 0.8040 | IBS p-value = 0.0007
-- **vs DeepSurv Neural Net**: C-Index p-value = 0.9750 | IBS p-value = 0.0001
+- **vs Cox PH Baseline**: C-Index p-value = 0.7197 | IBS p-value = 0.0001
+- **vs Random Survival Forest**: C-Index p-value = 0.8904 | IBS p-value = 0.0001
+- **vs DeepSurv Neural Net**: C-Index p-value = 0.6788 | IBS p-value = 0.0054
 
 ---
 

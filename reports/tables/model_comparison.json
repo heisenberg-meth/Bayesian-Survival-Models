@@ -3,79 +3,79 @@
     "gbsg2": {
       "c_index": {
         "Cox PH Baseline": 0.482,
-        "Random Survival Forest": 0.5437,
+        "Random Survival Forest": 0.5441,
         "DeepSurv Neural Net": 0.5411,
-        "Bayesian Cox (ADVI)": 0.5248
+        "Bayesian Cox (ADVI)": 0.5017
       },
       "ibs": {
         "Cox PH Baseline": 0.1386,
-        "Random Survival Forest": 0.1355,
+        "Random Survival Forest": 0.1356,
         "DeepSurv Neural Net": 0.1939,
-        "Bayesian Cox (ADVI)": 0.4217
+        "Bayesian Cox (ADVI)": 0.2478
       },
       "cv_mean_c": {
         "Cox PH Baseline": 0.4485,
-        "Random Survival Forest": 0.4503,
+        "Random Survival Forest": 0.4411,
         "DeepSurv Neural Net": 0.4983,
-        "Bayesian Cox (ADVI)": 0.506
+        "Bayesian Cox (ADVI)": 0.5035
       },
       "cv_mean_ibs": {
         "Cox PH Baseline": 0.1503,
-        "Random Survival Forest": 0.1476,
+        "Random Survival Forest": 0.1481,
         "DeepSurv Neural Net": 0.2469,
-        "Bayesian Cox (ADVI)": 0.4552
+        "Bayesian Cox (ADVI)": 0.4224
       }
     },
     "whas500": {
       "c_index": {
         "Cox PH Baseline": 0.4685,
-        "Random Survival Forest": 0.5702,
+        "Random Survival Forest": 0.5581,
         "DeepSurv Neural Net": 0.5492,
-        "Bayesian Cox (ADVI)": 0.4274
+        "Bayesian Cox (ADVI)": 0.4403
       },
       "ibs": {
         "Cox PH Baseline": 0.1565,
         "Random Survival Forest": 0.1457,
         "DeepSurv Neural Net": 0.24,
-        "Bayesian Cox (ADVI)": 0.4367
+        "Bayesian Cox (ADVI)": 0.2332
       },
       "cv_mean_c": {
         "Cox PH Baseline": 0.5129,
-        "Random Survival Forest": 0.5308,
+        "Random Survival Forest": 0.5415,
         "DeepSurv Neural Net": 0.524,
-        "Bayesian Cox (ADVI)": 0.5068
+        "Bayesian Cox (ADVI)": 0.4989
       },
       "cv_mean_ibs": {
         "Cox PH Baseline": 0.151,
-        "Random Survival Forest": 0.1506,
+        "Random Survival Forest": 0.1505,
         "DeepSurv Neural Net": 0.2712,
-        "Bayesian Cox (ADVI)": 0.5072
+        "Bayesian Cox (ADVI)": 0.4419
       }
     },
     "metabric": {
       "c_index": {
         "Cox PH Baseline": 0.5129,
-        "Random Survival Forest": 0.5758,
+        "Random Survival Forest": 0.5746,
         "DeepSurv Neural Net": 0.5493,
-        "Bayesian Cox (ADVI)": 0.545
+        "Bayesian Cox (ADVI)": 0.5376
       },
       "ibs": {
         "Cox PH Baseline": 0.1671,
         "Random Survival Forest": 0.165,
         "DeepSurv Neural Net": 0.2086,
-        "Bayesian Cox (ADVI)": 0.3755
+        "Bayesian Cox (ADVI)": 0.1785
       },
       "cv_mean_c": {
         "Cox PH Baseline": 0.489,
-        "Random Survival Forest": 0.5115,
+        "Random Survival Forest": 0.5098,
         "DeepSurv Neural Net": 0.4987,
-        "Bayesian Cox (ADVI)": 0.5082
+        "Bayesian Cox (ADVI)": 0.4945
       },
       "cv_mean_ibs": {
         "Cox PH Baseline": 0.1696,
-        "Random Survival Forest": 0.1687,
+        "Random Survival Forest": 0.1689,
         "DeepSurv Neural Net": 0.2188,
-        "Bayesian Cox (ADVI)": 0.3981
+        "Bayesian Cox (ADVI)": 0.2125
       }
     }
   },
@@ -85,11 +85,11 @@
       "Metric": "C-Index",
       "Cox PH Baseline Value": 0.482,
       "Cox PH Baseline Rank": 4,
-      "Random Survival Forest Value": 0.5437,
+      "Random Survival Forest Value": 0.5441,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.5411,
       "DeepSurv Neural Net Rank": 2,
-      "Bayesian Cox (ADVI) Value": 0.5248,
+      "Bayesian Cox (ADVI) Value": 0.5017,
       "Bayesian Cox (ADVI) Rank": 3
     },
     {
@@ -97,11 +97,11 @@
       "Metric": "IBS",
       "Cox PH Baseline Value": 0.1386,
       "Cox PH Baseline Rank": 2,
-      "Random Survival Forest Value": 0.1355,
+      "Random Survival Forest Value": 0.1356,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.1939,
       "DeepSurv Neural Net Rank": 3,
-      "Bayesian Cox (ADVI) Value": 0.4217,
+      "Bayesian Cox (ADVI) Value": 0.2478,
       "Bayesian Cox (ADVI) Rank": 4
     },
     {
@@ -109,11 +109,11 @@
       "Metric": "C-Index",
       "Cox PH Baseline Value": 0.4685,
       "Cox PH Baseline Rank": 3,
-      "Random Survival Forest Value": 0.5702,
+      "Random Survival Forest Value": 0.5581,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.5492,
       "DeepSurv Neural Net Rank": 2,
-      "Bayesian Cox (ADVI) Value": 0.4274,
+      "Bayesian Cox (ADVI) Value": 0.4403,
       "Bayesian Cox (ADVI) Rank": 4
     },
     {
@@ -124,20 +124,20 @@
       "Random Survival Forest Value": 0.1457,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.24,
-      "DeepSurv Neural Net Rank": 3,
-      "Bayesian Cox (ADVI) Value": 0.4367,
-      "Bayesian Cox (ADVI) Rank": 4
+      "DeepSurv Neural Net Rank": 4,
+      "Bayesian Cox (ADVI) Value": 0.2332,
+      "Bayesian Cox (ADVI) Rank": 3
     },
     {
       "Dataset": "METABRIC",
       "Metric": "C-Index",
       "Cox PH Baseline Value": 0.5129,
       "Cox PH Baseline Rank": 4,
-      "Random Survival Forest Value": 0.5758,
+      "Random Survival Forest Value": 0.5746,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.5493,
       "DeepSurv Neural Net Rank": 2,
-      "Bayesian Cox (ADVI) Value": 0.545,
+      "Bayesian Cox (ADVI) Value": 0.5376,
       "Bayesian Cox (ADVI) Rank": 3
     },
     {
@@ -148,9 +148,9 @@
       "Random Survival Forest Value": 0.165,
       "Random Survival Forest Rank": 1,
       "DeepSurv Neural Net Value": 0.2086,
-      "DeepSurv Neural Net Rank": 3,
-      "Bayesian Cox (ADVI) Value": 0.3755,
-      "Bayesian Cox (ADVI) Rank": 4
+      "DeepSurv Neural Net Rank": 4,
+      "Bayesian Cox (ADVI) Value": 0.1785,
+      "Bayesian Cox (ADVI) Rank": 3
     }
   ],
   "average_rankings": {
@@ -166,44 +166,44 @@
     },
     "DeepSurv Neural Net": {
       "C-Index": 2.0,
-      "IBS": 3.0,
-      "Overall": 2.5
+      "IBS": 3.6666666666666665,
+      "Overall": 2.8333333333333335
     },
     "Bayesian Cox (ADVI)": {
       "C-Index": 3.3333333333333335,
-      "IBS": 4.0,
-      "Overall": 3.6666666666666665
+      "IBS": 3.3333333333333335,
+      "Overall": 3.3333333333333335
     }
   },
   "statistical_tests": {
     "friedman": {
       "c_index": {
-        "statistic": 3.0000000000000187,
-        "p_value": 0.3916251762710848
+        "statistic": 2.759999999999991,
+        "p_value": 0.4301270276689225
       },
       "ibs": {
-        "statistic": 41.48000000000002,
-        "p_value": 5.172578476857429e-09
+        "statistic": 37.48000000000002,
+        "p_value": 3.641806790700918e-08
       }
     },
     "wilcoxon_vs_bayesian": {
       "Cox PH Baseline": {
-        "c_index_p_value": 0.25238037109375,
+        "c_index_p_value": 0.7197265625,
         "ibs_p_value": 6.103515625e-05,
-        "c_index_stat": 39.0,
+        "c_index_stat": 53.0,
         "ibs_stat": 0.0
       },
       "Random Survival Forest": {
-        "c_index_p_value": 0.803955078125,
-        "ibs_p_value": 0.0006533107814151376,
-        "c_index_stat": 55.0,
+        "c_index_p_value": 0.890380859375,
+        "ibs_p_value": 6.103515625e-05,
+        "c_index_stat": 57.0,
         "ibs_stat": 0.0
       },
       "DeepSurv Neural Net": {
-        "c_index_p_value": 0.9749599188317098,
-        "ibs_p_value": 6.103515625e-05,
+        "c_index_p_value": 0.67877197265625,
+        "ibs_p_value": 0.00537109375,
         "c_index_stat": 52.0,
-        "ibs_stat": 0.0
+        "ibs_stat": 13.0
       }
     }
   }

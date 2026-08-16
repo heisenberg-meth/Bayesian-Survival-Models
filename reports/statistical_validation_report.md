@@ -64,10 +64,10 @@ This report presents a rigorous statistical validation, significance testing, an
 ### 2.6. Computational Complexity Profiling
 | Model | Training Time (seconds) | Prediction Inference Time (seconds) |
 |---|---|---|
-| **Cox PH** | 0.0476 | 0.0006 |
-| **RSF** | 7.4820 | 0.0173 |
-| **DeepSurv** | 0.7550 | 0.0007 |
-| **Bayesian Cox** | 71.0335 | 0.0153 |
+| **Cox PH** | 0.0076 | 0.0005 |
+| **RSF** | 7.2043 | 0.0164 |
+| **DeepSurv** | 0.5583 | 0.0005 |
+| **Bayesian Cox** | 66.8035 | 0.0140 |
 
 ---
 
@@ -126,10 +126,10 @@ This report presents a rigorous statistical validation, significance testing, an
 ### 2.6. Computational Complexity Profiling
 | Model | Training Time (seconds) | Prediction Inference Time (seconds) |
 |---|---|---|
-| **Cox PH** | 0.0075 | 0.0006 |
-| **RSF** | 6.5004 | 0.0154 |
-| **DeepSurv** | 0.3761 | 0.0007 |
-| **Bayesian Cox** | 52.9377 | 0.0121 |
+| **Cox PH** | 0.0070 | 0.0005 |
+| **RSF** | 6.1694 | 0.0127 |
+| **DeepSurv** | 0.3476 | 0.0005 |
+| **Bayesian Cox** | 51.1363 | 0.0119 |
 
 ---
 
@@ -187,10 +187,10 @@ This report presents a rigorous statistical validation, significance testing, an
 ### 2.6. Computational Complexity Profiling
 | Model | Training Time (seconds) | Prediction Inference Time (seconds) |
 |---|---|---|
-| **Cox PH** | 0.0199 | 0.0007 |
-| **RSF** | 17.0140 | 0.0553 |
-| **DeepSurv** | 4.5833 | 0.0012 |
-| **Bayesian Cox** | 188.8509 | 0.0234 |
+| **Cox PH** | 0.0149 | 0.0005 |
+| **RSF** | 15.6797 | 0.0513 |
+| **DeepSurv** | 3.7103 | 0.0008 |
+| **Bayesian Cox** | 180.8473 | 0.0220 |
 
 ---
 

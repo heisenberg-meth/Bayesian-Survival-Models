@@ -58,7 +58,7 @@ def draw_benchmark_bar_chart(metrics_summary, filepath):
         font_legend = ImageFont.truetype(
             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 13
         )
-    except FileNotFoundError:
+    except OSError:
         font_title = None
         font_subtitle = None
         font_axis = None
