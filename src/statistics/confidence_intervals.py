@@ -19,6 +19,28 @@ class ConfidenceIntervalCalculator:
         return lower, upper
 
     @staticmethod
+    def nadeau_bengio_ci(
+        diffs: np.ndarray, n_train: int, n_test: int, alpha: float = 0.05
+    ) -> tuple[float, float]:
+        """Computes Nadeau-Bengio corrected confidence interval for repeated CV."""
+        from scipy.stats import t
+
+        n_folds = len(diffs)
+        mean_diff = np.mean(diffs)
+        var_diff = np.var(diffs, ddof=1)
+
+        correction = (1.0 / n_folds) + (n_test / n_train)
+        corrected_var = correction * var_diff
+
+        if corrected_var == 0:
+            return float(mean_diff), float(mean_diff)
+
+        t_crit = t.ppf(1 - alpha / 2, df=n_folds - 1)
+        margin = t_crit * np.sqrt(corrected_var)
+
+        return float(mean_diff - margin), float(mean_diff + margin)
+
+    @staticmethod
     def normal_ci(samples: np.ndarray, alpha: float = 0.05) -> tuple[float, float]:
         """Calculates normal approximation confidence interval."""
         if len(samples) < 2:

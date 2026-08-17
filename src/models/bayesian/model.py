@@ -163,6 +163,7 @@ class BayesianCoxModel(BaseSurvivalModel):
                     tune=self.tune,
                     chains=self.chains,
                     cores=1,
+                    target_accept=0.95,
                     random_seed=self.random_state,
                     progressbar=False,
                     return_inferencedata=True,

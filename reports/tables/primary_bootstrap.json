@@ -1,0 +1,198 @@
+[
+  {
+    "cohort": "GBSG2",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "GBSG2",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "GBSG2",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.003830974701885098,
+    "bootstrap_ci": [
+      -0.007372273570484924,
+      0.014090214188560608
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "GBSG2",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0,
+    "bootstrap_ci": [
+      0.0,
+      0.0
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "GBSG2",
+    "metric": "c_index",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "GBSG2",
+    "metric": "integrated_brier_score",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.004347233972923727,
+    "bootstrap_ci": [
+      -0.007191756398159753,
+      0.018509410181707934
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0,
+    "bootstrap_ci": [
+      0.0,
+      0.0
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0009618102822709595,
+    "bootstrap_ci": [
+      -0.011588924136595227,
+      0.012469766283457332
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0,
+    "bootstrap_ci": [
+      0.0,
+      0.0
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "c_index",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": -0.004246669418291386,
+    "bootstrap_ci": [
+      -0.01727340574789378,
+      0.01046887331139095
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "WHAS500",
+    "metric": "integrated_brier_score",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0,
+    "bootstrap_ci": [
+      0.0,
+      0.0
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Regularised Horseshoe",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "c_index",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.00029083787437558404,
+    "bootstrap_ci": [
+      -0.005341196793674717,
+      0.0064433388864270314
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "integrated_brier_score",
+    "model_a": "Normal",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "complete",
+    "bootstrap_seed": 42,
+    "bootstrap_effect": 0.0,
+    "bootstrap_ci": [
+      0.0,
+      0.0
+    ],
+    "n_bootstraps": 100
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "c_index",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "incomplete_no_confirmatory_inference"
+  },
+  {
+    "cohort": "METABRIC",
+    "metric": "integrated_brier_score",
+    "model_a": "Regularised Horseshoe",
+    "model_b": "Continuous Spike-and-Slab",
+    "status": "incomplete_no_confirmatory_inference"
+  }
+]

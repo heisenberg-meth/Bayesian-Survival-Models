@@ -11,6 +11,32 @@ class SurvivalHypothesisTests:
     """Hypothesis testing for survival group differences and model benchmark validation."""
 
     @staticmethod
+    def nadeau_bengio_test(
+        scores_a: np.ndarray, scores_b: np.ndarray, n_train: int, n_test: int
+    ) -> tuple[float, float]:
+        """
+        Performs Nadeau and Bengio (2003) corrected t-test for repeated k-fold CV.
+        """
+        from scipy.stats import t
+
+        diffs = np.array(scores_a) - np.array(scores_b)
+        n_folds = len(diffs)
+        mean_diff = np.mean(diffs)
+        var_diff = np.var(diffs, ddof=1)
+
+        # Correction factor for repeated cross-validation
+        correction = (1.0 / n_folds) + (n_test / n_train)
+        corrected_var = correction * var_diff
+
+        if corrected_var == 0:
+            return 0.0, 1.0
+
+        t_stat = mean_diff / np.sqrt(corrected_var)
+        p_val = 2.0 * (1.0 - t.cdf(abs(t_stat), df=n_folds - 1))
+
+        return float(t_stat), float(p_val)
+
+    @staticmethod
     def wilcoxon_signed_rank(
         scores_a: np.ndarray, scores_b: np.ndarray
     ) -> tuple[float, float]:

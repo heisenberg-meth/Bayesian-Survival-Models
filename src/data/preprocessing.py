@@ -45,7 +45,12 @@ class SurvivalDataPipeline:
         self.encoding_maps = {}
         self.feature_names = []
 
-    def run(self, raw_df: pd.DataFrame, output_dir: str) -> dict[str, Any]:
+    def run(
+        self,
+        raw_df: pd.DataFrame,
+        output_dir: str,
+        n_cv_splits: int = 5,
+    ) -> dict[str, Any]:
         """Runs the complete preprocessing workflow."""
 
         # Step 4.1: Data Validation
@@ -114,8 +119,13 @@ class SurvivalDataPipeline:
         test_processed["event"] = y_test_event.values
 
         # Step 4.11: Generate 5-Fold Stratified Cross-Validation Folds on Train set
+        if n_cv_splits < 2:
+            raise ValueError("n_cv_splits must be at least 2")
+
         cv_folds = self.splitter.create_cv_folds(
-            train_processed, event_col="event", n_splits=5
+            train_processed,
+            event_col="event",
+            n_splits=n_cv_splits,
         )
 
         # Step 4.12: Export Processed Datasets & Metadata
@@ -138,6 +148,7 @@ class SurvivalDataPipeline:
         metadata = {
             "dataset_name": self.dataset_name,
             "random_state": self.random_state,
+            "cv_n_splits": n_cv_splits,
             "target_time_col": "time",
             "target_event_col": "event",
             "num_features": len(self.feature_names),

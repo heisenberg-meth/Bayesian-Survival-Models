@@ -107,3 +107,31 @@ class StratifiedSurvivalSplitter:
             )
 
         return folds
+
+    @staticmethod
+    def select_fold(
+        df: pd.DataFrame,
+        folds: list[dict[str, list[int]]],
+        fold: int,
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Select one pre-generated CV fold.
+
+        ExperimentCell.fold is zero-based.
+        Persisted CV fold metadata is one-based.
+        """
+        if not isinstance(fold, int):
+            raise TypeError("fold must be an integer")
+
+        if fold < 0 or fold >= len(folds):
+            raise ValueError(f"fold must be between 0 and {len(folds) - 1}, got {fold}")
+
+        fold_info = folds[fold]
+
+        train_indices = fold_info["train_indices"]
+        val_indices = fold_info["val_indices"]
+
+        train_df = df.iloc[train_indices].copy().reset_index(drop=True)
+        val_df = df.iloc[val_indices].copy().reset_index(drop=True)
+
+        return train_df, val_df
