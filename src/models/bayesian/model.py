@@ -8,9 +8,6 @@ Provides posterior distributions of Hazard Ratios, epistemic parameter uncertain
 import numpy as np
 import pandas as pd
 import pymc as pm
-import pytensor
-
-pytensor.config.cxx = ""  # Ensure pure Python execution without C++ compiler errors
 
 from src.models.base import BaseSurvivalModel
 
@@ -26,6 +23,7 @@ class BayesianCoxModel(BaseSurvivalModel):
         draws: int = 2000,
         tune: int = 1000,
         chains: int = 4,
+        target_accept: float = 0.95,
         random_state: int = 42,
         coefficient_prior: str = "normal",
         prior_params: dict | None = None,
@@ -36,6 +34,7 @@ class BayesianCoxModel(BaseSurvivalModel):
         self.draws = draws
         self.tune = tune
         self.chains = chains
+        self.target_accept = target_accept
         self.random_state = random_state
         self.coefficient_prior = coefficient_prior.lower()
         self.prior_params = prior_params if prior_params is not None else {}
@@ -136,16 +135,41 @@ class BayesianCoxModel(BaseSurvivalModel):
             else:
                 raise ValueError(f"Unknown coefficient prior: {self.coefficient_prior}")
 
-            # Log-Normal Priors for Baseline Hazards
-            log_lambda = pm.Normal("log_lambda", mu=-2.0, sigma=2.0, shape=M)
+            # Baseline hazard prior centered on the observed event rate.
+            #
+            # The piecewise-exponential model uses:
+            #   mu = exposure * lambda_m * exp(X beta)
+            #
+            # Parameterising lambda on the log scale keeps positivity while
+            # centering the prior near the empirical event rate.
+            total_exposure = float(np.sum(obs_exposures))
+            total_events = float(np.sum(obs_events))
+
+            empirical_rate = max(
+                total_events / total_exposure,
+                np.finfo(float).tiny,
+            )
+
+            log_lambda_center = float(np.log(empirical_rate))
+
+            log_lambda = pm.Normal(
+                "log_lambda",
+                mu=log_lambda_center,
+                sigma=1.0,
+                shape=M,
+            )
 
             # Poisson Log-Linear Predictor
             eta = pm.math.dot(obs_X, beta)
             lambda_m = log_lambda[interval_idx]
-            mu = pm.math.exp(log_exposure + lambda_m + eta)
 
-            # Poisson Likelihood
-            pm.Poisson("obs", mu=mu, observed=obs_events)
+            log_mu = log_exposure + lambda_m + eta
+
+            pm.Poisson(
+                "obs",
+                mu=pm.math.exp(log_mu),
+                observed=obs_events,
+            )
 
             if self.inference_method == "advi":
                 approx = pm.fit(
@@ -162,8 +186,8 @@ class BayesianCoxModel(BaseSurvivalModel):
                     draws=self.draws,
                     tune=self.tune,
                     chains=self.chains,
-                    cores=1,
-                    target_accept=0.95,
+                    cores=min(self.chains, 4),
+                    target_accept=self.target_accept,
                     random_seed=self.random_state,
                     progressbar=False,
                     return_inferencedata=True,

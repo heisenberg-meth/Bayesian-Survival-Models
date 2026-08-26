@@ -10,17 +10,17 @@ DeepSurv optimizes the negative Cox partial log-likelihood with SELU activation 
 
 ## 1. Multi-Model Benchmark Comparison: Cox PH vs RSF vs DeepSurv
 
-| Dataset            | Metric                                  |    Cox PH Baseline    |  Random Survival Forest (RSF)  |     DeepSurv Neural Network     |       Winner       |
-| :----------------- | :-------------------------------------- | :-------------------: | :-----------------------------: | :-----------------------------: | :----------------: |
-| **GBSG2**    | Test$C$-Index ($\mu \pm \text{SE}$) | $0.4820 \pm 0.0103$ | **$0.5437 \pm 0.0103$** |      $0.5411 \pm 0.0103$      |   **RSF**   |
-|                    | Test IBS                                |      $0.1386$      |      **$0.1355$**      |           $0.1939$           |   **RSF**   |
-|                    | 5-Fold CV$C$-Index                    | $0.4485 \pm 0.0592$ |      $0.4503 \pm 0.0700$      | **$0.4983 \pm 0.0742$** | **DeepSurv** |
-| **WHAS500**  | Test$C$-Index ($\mu \pm \text{SE}$) | $0.4685 \pm 0.0142$ | **$0.5702 \pm 0.0141$** |      $0.5492 \pm 0.0141$      |   **RSF**   |
-|                    | Test IBS                                |      $0.1565$      |      **$0.1472$**      |           $0.2400$           |   **RSF**   |
-|                    | 5-Fold CV$C$-Index                    | $0.5129 \pm 0.0501$ | **$0.5308 \pm 0.0441$** |      $0.5240 \pm 0.0535$      |   **RSF**   |
-| **METABRIC** | Test$C$-Index ($\mu \pm \text{SE}$) | $0.5129 \pm 0.0032$ | **$0.5758 \pm 0.0032$** |      $0.5493 \pm 0.0032$      |   **RSF**   |
-|                    | Test IBS                                |      $0.1671$      |      **$0.1650$**      |           $0.2086$           |   **RSF**   |
-|                    | 5-Fold CV$C$-Index                    | $0.4890 \pm 0.0267$ | **$0.5115 \pm 0.0229$** |      $0.4987 \pm 0.0133$      |   **RSF**   |
+| Dataset            | Metric                                  |                     Cox PH Baseline                     |                 Random Survival Forest (RSF)                 | DeepSurv Neural Network | Winner |
+| :----------------- | :-------------------------------------- | :-----------------------------------------------------: | :----------------------------------------------------------: | :---------------------: | :----: |
+| **GBSG2**    | Test$C$-Index ($\mu \pm \text{SE}$) | $0.4820 \pm 0.0103$ | **$0.5437 \pm 0.0103$** |                    $0.5411 \pm 0.0103$                    |      **RSF**      |        |
+|                    | Test IBS                                |       $0.1386$      |      **$0.1355$**       |                          $0.1939$                          |      **RSF**      |        |
+|                    | 5-Fold CV$C$-Index                    |                  $0.4485 \pm 0.0592$                  | $0.4503 \pm 0.0700$      | **$0.4983 \pm 0.0742$** |   **DeepSurv**   |        |
+| **WHAS500**  | Test$C$-Index ($\mu \pm \text{SE}$) | $0.4685 \pm 0.0142$ | **$0.5702 \pm 0.0141$** |                    $0.5492 \pm 0.0141$                    |      **RSF**      |        |
+|                    | Test IBS                                |       $0.1565$      |      **$0.1472$**       |                          $0.2400$                          |      **RSF**      |        |
+|                    | 5-Fold CV$C$-Index                    | $0.5129 \pm 0.0501$ | **$0.5308 \pm 0.0441$** |                    $0.5240 \pm 0.0535$                    |      **RSF**      |        |
+| **METABRIC** | Test$C$-Index ($\mu \pm \text{SE}$) | $0.5129 \pm 0.0032$ | **$0.5758 \pm 0.0032$** |                    $0.5493 \pm 0.0032$                    |      **RSF**      |        |
+|                    | Test IBS                                |       $0.1671$      |      **$0.1650$**       |                          $0.2086$                          |      **RSF**      |        |
+|                    | 5-Fold CV$C$-Index                    | $0.4890 \pm 0.0267$ | **$0.5115 \pm 0.0229$** |                    $0.4987 \pm 0.0133$                    |      **RSF**      |        |
 
 ---
 

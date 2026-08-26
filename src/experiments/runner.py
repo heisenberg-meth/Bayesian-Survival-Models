@@ -17,6 +17,7 @@ from src.experiments.manifest import ExperimentCell
 from src.models.bayesian.diagnostics import MCMCDiagnostics
 from src.models.bayesian.model import BayesianCoxModel
 from src.training.checkpoints import CheckpointManager
+from src.utils.config import get_project_config
 
 DATASET_CONFIG: dict[str, dict[str, Any]] = {
     "GBSG2": {
@@ -166,14 +167,36 @@ class ExperimentRunner:
         y_time = train_fold["time"].to_numpy(dtype=float)
         y_event = train_fold["event"].to_numpy(dtype=int)
 
+        # Load canonical config
+        config_dir = Path(self.data_root).parent / "config"
+        cfg = get_project_config(str(config_dir))
+        bcfg = cfg.models.bayesian_cox
+
+        n_intervals = bcfg.get("n_intervals", 6)
+
+        mcmc_cfg = bcfg.get("mcmc", {})
+        target_accept = mcmc_cfg.get("target_accept", 0.95)
+
+        coefficient_prior = bcfg.get(
+            "coefficient_prior",
+            "normal",
+        )
+
+        prior_params = {
+            "mu": bcfg.get("beta_prior_mean", 0.0),
+            "sigma": bcfg.get("beta_prior_sd", 10.0),
+        }
+
         model = BayesianCoxModel(
             inference_method=cell.method,
             draws=cell.draws,
             tune=cell.tune,
             chains=cell.chains,
+            target_accept=target_accept,
             random_state=cell.seed,
-            coefficient_prior=self._prior_name(cell.prior),
-            n_intervals=6,
+            coefficient_prior=coefficient_prior,
+            prior_params=prior_params,
+            n_intervals=n_intervals,
         )
 
         model.fit(
@@ -195,6 +218,16 @@ class ExperimentRunner:
             "fold": cell.fold,
             "seed": cell.seed,
             "config": cell.to_dict(),
+            "resolved_model_config": {
+                "inference_method": cell.method,
+                "draws": cell.draws,
+                "tune": cell.tune,
+                "chains": cell.chains,
+                "target_accept": target_accept,
+                "n_intervals": n_intervals,
+                "coefficient_prior": coefficient_prior,
+                "prior_params": prior_params,
+            },
             "n_train": len(train_fold),
             "n_validation": len(val_fold),
             "n_events": int(np.sum(y_event)),
@@ -221,17 +254,3 @@ class ExperimentRunner:
         val_fold = df.iloc[val_indices].reset_index(drop=True)
 
         return train_fold, val_fold
-
-    @staticmethod
-    def _prior_name(prior: str) -> str:
-        """Map manifest prior names to model prior identifiers."""
-        mapping = {
-            "Normal": "normal",
-            "Regularised Horseshoe": "regularized_horseshoe",
-            "Continuous Spike-and-Slab": "continuous_spike_slab",
-        }
-
-        try:
-            return mapping[prior]
-        except KeyError as exc:
-            raise ValueError(f"Unsupported prior: {prior}") from exc

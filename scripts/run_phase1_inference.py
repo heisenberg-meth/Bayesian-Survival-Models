@@ -1,9 +1,16 @@
 import hashlib
 import json
 import os
+import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.statistics.confidence_intervals import ConfidenceIntervalCalculator
 from src.statistics.hypothesis_tests import SurvivalHypothesisTests

@@ -26,25 +26,28 @@ By quantifying uncertainty through 95% credible intervals, this model offers for
 The following are the top features by estimated hazard ratio mean from the ADVI approximation using a Student-t prior ($\nu=3, \sigma=1$):
 
 ### 2.1 GBSG2 Breast Cancer Dataset
-| Feature | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
-| :--- | :---: | :---: | :---: | :---: |
-| **log_estrec** | $1.2214$ | $0.2849$ | $3.2705$ | $0.5125$ |
-| **estrec** | $1.1957$ | $0.2559$ | $3.3394$ | $0.4650$ |
-| **log_progrec** | $1.1871$ | $0.2408$ | $3.8157$ | $0.4575$ |
+
+| Feature               | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
+| :-------------------- | :---------------: | :----------------: | :----------------: | :----------: |
+| **log_estrec**  |    $1.2214$    |     $0.2849$     |     $3.2705$     |  $0.5125$  |
+| **estrec**      |    $1.1957$    |     $0.2559$     |     $3.3394$     |  $0.4650$  |
+| **log_progrec** |    $1.1871$    |     $0.2408$     |     $3.8157$     |  $0.4575$  |
 
 ### 2.2 WHAS500 Post-MI Mortality Dataset
-| Feature | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
-| :--- | :---: | :---: | :---: | :---: |
-| **hr** (heart rate) | $1.2482$ | $0.3033$ | $3.1250$ | $0.5475$ |
-| **sysbp** (systolic BP) | $1.2030$ | $0.2979$ | $3.0684$ | $0.5125$ |
-| **bmi** (BMI) | $1.1672$ | $0.2898$ | $2.8286$ | $0.4750$ |
+
+| Feature                       | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
+| :---------------------------- | :---------------: | :----------------: | :----------------: | :----------: |
+| **hr** (heart rate)     |    $1.2482$    |     $0.3033$     |     $3.1250$     |  $0.5475$  |
+| **sysbp** (systolic BP) |    $1.2030$    |     $0.2979$     |     $3.0684$     |  $0.5125$  |
+| **bmi** (BMI)           |    $1.1672$    |     $0.2898$     |     $2.8286$     |  $0.4750$  |
 
 ### 2.3 METABRIC Breast Cancer Dataset
-| Feature | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
-| :--- | :---: | :---: | :---: | :---: |
-| **tumour_stage** | $1.1785$ | $0.2573$ | $3.2606$ | $0.4550$ |
-| **age_x_stage** | $1.1626$ | $0.3172$ | $3.1280$ | $0.4850$ |
-| **age** | $1.1199$ | $0.3373$ | $3.1349$ | $0.4350$ |
+
+| Feature                | exp(coef) HR Mean | 95% Credible Lower | 95% Credible Upper | Prob(HR > 1) |
+| :--------------------- | :---------------: | :----------------: | :----------------: | :----------: |
+| **tumour_stage** |    $1.1785$    |     $0.2573$     |     $3.2606$     |  $0.4550$  |
+| **age_x_stage**  |    $1.1626$    |     $0.3172$     |     $3.1280$     |  $0.4850$  |
+| **age**          |    $1.1199$    |     $0.3373$     |     $3.1349$     |  $0.4350$  |
 
 ---
 
@@ -52,19 +55,20 @@ The following are the top features by estimated hazard ratio mean from the ADVI 
 
 The Bayesian Cox model was validated alongside frequentist Cox PH, Random Survival Forest (RSF), and DeepSurv.
 
-| Dataset | Metric | Cox PH Baseline | Random Survival Forest | DeepSurv Neural Net | Bayesian Cox (PyMC) |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **GBSG2** | Test C-Index | $0.4820$ | **$0.5437$** | $0.5411$ | $0.5248$ |
-| | Test IBS | **$0.1386$** | $0.1355$ | $0.1939$ | $0.4217$ |
-| | CV Mean C-Index | $0.4485$ | $0.4503$ | $0.4983$ | **$0.5060$** |
-| **WHAS500** | Test C-Index | $0.4685$ | **$0.5702$** | $0.5492$ | $0.4274$ |
-| | Test IBS | **$0.1565$** | $0.1472$ | $0.2400$ | $0.4367$ |
-| | CV Mean C-Index | $0.5129$ | **$0.5308$** | $0.5240$ | $0.5068$ |
-| **METABRIC** | Test C-Index | $0.5129$ | **$0.5758$** | $0.5493$ | $0.5450$ |
-| | Test IBS | **$0.1671$** | $0.1650$ | $0.2086$ | $0.3755$ |
-| | CV Mean C-Index | $0.4890$ | **$0.5115$** | $0.4987$ | $0.5082$ |
+| Dataset            | Metric          |          Cox PH Baseline          | Random Survival Forest |        DeepSurv Neural Net        | Bayesian Cox (PyMC) |
+| :----------------- | :-------------- | :-------------------------------: | :--------------------: | :-------------------------------: | :-----------------: |
+| **GBSG2**    | Test C-Index    | $0.4820$ | **$0.5437$** |       $0.5411$       |            $0.5248$            |                    |
+|                    | Test IBS        |       **$0.1386$**       |       $0.1355$       |            $0.1939$            |     $0.4217$     |
+|                    | CV Mean C-Index |            $0.4485$            |       $0.4503$       | $0.4983$ | **$0.5060$** |                    |
+| **WHAS500**  | Test C-Index    | $0.4685$ | **$0.5702$** |       $0.5492$       |            $0.4274$            |                    |
+|                    | Test IBS        |       **$0.1565$**       |       $0.1472$       |            $0.2400$            |     $0.4367$     |
+|                    | CV Mean C-Index | $0.5129$ | **$0.5308$** |       $0.5240$       |            $0.5068$            |                    |
+| **METABRIC** | Test C-Index    | $0.5129$ | **$0.5758$** |       $0.5493$       |            $0.5450$            |                    |
+|                    | Test IBS        |       **$0.1671$**       |       $0.1650$       |            $0.2086$            |     $0.3755$     |
+|                    | CV Mean C-Index | $0.4890$ | **$0.5115$** |       $0.4987$       |            $0.5082$            |                    |
 
 ### Performance Observations:
+
 * **Discrimination (C-Index)**: The Bayesian Cox model significantly outperforms the frequentist Cox PH baseline on **GBSG2** ($0.5248$ vs $0.4820$) and **METABRIC** ($0.5450$ vs $0.5129$). It achieves performance parity with DeepSurv on **METABRIC** ($0.5450$ vs $0.5493$).
 * **Regularization benefit**: The heavy-tailed Student-t prior on coefficients helps guard against overfitting, leading to superior generalization compared to classical Cox PH.
 

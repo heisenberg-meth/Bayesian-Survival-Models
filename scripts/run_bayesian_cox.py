@@ -362,6 +362,7 @@ def main():
             draws=args.draws,
             tune=args.tune,
             chains=args.chains,
+            target_accept=args.target_accept,
             random_state=42,
             coefficient_prior=args.prior,
             prior_params=prior_params,
@@ -442,6 +443,7 @@ def main():
                 draws=args.draws // 2 if args.method == "advi" else 150,
                 tune=args.tune // 2 if args.method == "mcmc" else 150,
                 chains=1,  # Speed up CV folds
+                target_accept=args.target_accept,
                 random_state=42,
                 coefficient_prior=args.prior,
                 prior_params=prior_params,
@@ -509,6 +511,7 @@ def main():
                 "draws": args.draws,
                 "tune": args.tune,
                 "chains": args.chains,
+                "target_accept": args.target_accept,
                 "advi_iterations": args.advi_iterations,
                 "n_intervals": args.intervals,
             },

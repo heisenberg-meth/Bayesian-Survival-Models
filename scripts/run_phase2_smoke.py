@@ -13,9 +13,9 @@ def main():
         fold=0,
         seed=42,
         method="mcmc",
-        draws=200,
-        tune=200,
-        chains=2,
+        draws=500,
+        tune=500,
+        chains=4,
     )
 
     checkpoint_root = Path("outputs/checkpoints")
