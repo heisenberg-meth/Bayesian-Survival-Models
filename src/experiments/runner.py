@@ -17,7 +17,6 @@ from src.experiments.manifest import ExperimentCell
 from src.models.bayesian.diagnostics import MCMCDiagnostics
 from src.models.bayesian.model import BayesianCoxModel
 from src.training.checkpoints import CheckpointManager
-from src.utils.config import get_project_config
 
 DATASET_CONFIG: dict[str, dict[str, Any]] = {
     "GBSG2": {
@@ -161,30 +160,15 @@ class ExperimentRunner:
         )
 
         X_train = train_fold.drop(
-            columns=["time", "event"],
+            columns=["time", "event", "subject_id"],
         )
 
         y_time = train_fold["time"].to_numpy(dtype=float)
         y_event = train_fold["event"].to_numpy(dtype=int)
 
-        # Load canonical config
-        config_dir = Path(self.data_root).parent / "config"
-        cfg = get_project_config(str(config_dir))
-        bcfg = cfg.models.bayesian_cox
-
-        n_intervals = bcfg.get("n_intervals", 6)
-
-        mcmc_cfg = bcfg.get("mcmc", {})
-        target_accept = mcmc_cfg.get("target_accept", 0.95)
-
-        coefficient_prior = bcfg.get(
-            "coefficient_prior",
-            "normal",
-        )
-
         prior_params = {
-            "mu": bcfg.get("beta_prior_mean", 0.0),
-            "sigma": bcfg.get("beta_prior_sd", 10.0),
+            "mu": cell.beta_prior_mean,
+            "sigma": cell.beta_prior_sd,
         }
 
         model = BayesianCoxModel(
@@ -192,17 +176,39 @@ class ExperimentRunner:
             draws=cell.draws,
             tune=cell.tune,
             chains=cell.chains,
-            target_accept=target_accept,
+            target_accept=cell.target_accept,
             random_state=cell.seed,
-            coefficient_prior=coefficient_prior,
+            coefficient_prior=cell.coefficient_prior,
             prior_params=prior_params,
-            n_intervals=n_intervals,
+            n_intervals=cell.n_intervals,
         )
 
         model.fit(
             X_train,
             y_time,
             y_event,
+        )
+
+        X_val = val_fold.drop(columns=["time", "event", "subject_id"])
+        y_val_time = val_fold["time"].to_numpy(dtype=float)
+        y_val_event = val_fold["event"].to_numpy(dtype=int)
+
+        val_risk = model.predict_risk(X_val)
+
+        # We need evaluate_survival_model from src.evaluation.metrics
+        from src.evaluation.metrics import evaluate_survival_model
+
+        eval_times = np.percentile(y_val_time, [25, 50, 75])
+
+        def surv_fn(times):
+            return model.predict_survival(X_val, times)
+
+        metrics = evaluate_survival_model(
+            y_time=y_val_time,
+            y_event=y_val_event,
+            risk_scores=val_risk,
+            surv_prob_fn=surv_fn,
+            eval_times=eval_times,
         )
 
         diagnostics = MCMCDiagnostics.compute_all(
@@ -223,17 +229,20 @@ class ExperimentRunner:
                 "draws": cell.draws,
                 "tune": cell.tune,
                 "chains": cell.chains,
-                "target_accept": target_accept,
-                "n_intervals": n_intervals,
-                "coefficient_prior": coefficient_prior,
+                "target_accept": cell.target_accept,
+                "n_intervals": cell.n_intervals,
+                "coefficient_prior": cell.coefficient_prior,
                 "prior_params": prior_params,
             },
             "n_train": len(train_fold),
             "n_validation": len(val_fold),
             "n_events": int(np.sum(y_event)),
-            "n_validation_events": int(val_fold["event"].sum()),
+            "n_validation_events": int(np.sum(y_val_event)),
             "diagnostics": diagnostics,
             "status": diagnostics["status"],
+            "metrics": metrics,
+            "predictions": val_risk.tolist(),
+            "subject_ids": val_fold["subject_id"].tolist(),
         }
 
     @staticmethod

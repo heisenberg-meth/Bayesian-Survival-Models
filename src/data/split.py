@@ -71,11 +71,11 @@ class StratifiedSurvivalSplitter:
         return train_df, val_df, test_df
 
     def create_cv_folds(
-        self, df: pd.DataFrame, event_col: str, n_splits: int = 5
+        self, df: pd.DataFrame, event_col: str, n_splits: int = 25
     ) -> list[dict[str, list[int]]]:
         """
-        Generates 5-fold stratified cross-validation fold index dictionary.
-        Returns a list of dicts: [{"train_indices": [...], "val_indices": [...]}, ...]
+        Generates 25-fold stratified cross-validation fold index dictionary.
+        Returns a list of dicts: [{"fold": 1, "train_indices": [...], "val_indices": [...]}, ...]
         """
         np.random.seed(self.random_state)
 

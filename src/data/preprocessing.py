@@ -49,7 +49,7 @@ class SurvivalDataPipeline:
         self,
         raw_df: pd.DataFrame,
         output_dir: str,
-        n_cv_splits: int = 5,
+        n_cv_splits: int = 25,
     ) -> dict[str, Any]:
         """Runs the complete preprocessing workflow."""
 
@@ -72,6 +72,11 @@ class SurvivalDataPipeline:
         rename_map = {self.time_col: "time", self.event_col: "event"}
         clean_df = clean_df.rename(columns=rename_map)
 
+        if "subject_id" not in clean_df.columns:
+            clean_df["subject_id"] = [
+                f"{self.dataset_name}_subj_{i}" for i in range(len(clean_df))
+            ]
+
         time_target = "time"
         event_target = "event"
 
@@ -87,18 +92,21 @@ class SurvivalDataPipeline:
             test_ratio=0.15,
         )
 
-        # Separate targets from features
-        X_train_raw = train_raw.drop(columns=[time_target, event_target])
+        # Separate targets and IDs from features
+        X_train_raw = train_raw.drop(columns=[time_target, event_target, "subject_id"])
         y_train_time = train_raw[time_target]
         y_train_event = train_raw[event_target]
+        train_subj = train_raw["subject_id"]
 
-        X_val_raw = val_raw.drop(columns=[time_target, event_target])
+        X_val_raw = val_raw.drop(columns=[time_target, event_target, "subject_id"])
         y_val_time = val_raw[time_target]
         y_val_event = val_raw[event_target]
+        val_subj = val_raw["subject_id"]
 
-        X_test_raw = test_raw.drop(columns=[time_target, event_target])
+        X_test_raw = test_raw.drop(columns=[time_target, event_target, "subject_id"])
         y_test_time = test_raw[time_target]
         y_test_event = test_raw[event_target]
+        test_subj = test_raw["subject_id"]
 
         # Step 4.3 & 4.4 & 4.5: Fit Imputation, Encoding, and Scaling on Train ONLY
         X_train_proc, X_val_proc, X_test_proc = self._fit_transform_features(
@@ -109,14 +117,17 @@ class SurvivalDataPipeline:
         train_processed = X_train_proc.copy()
         train_processed["time"] = y_train_time.values
         train_processed["event"] = y_train_event.values
+        train_processed["subject_id"] = train_subj.values
 
         val_processed = X_val_proc.copy()
         val_processed["time"] = y_val_time.values
         val_processed["event"] = y_val_event.values
+        val_processed["subject_id"] = val_subj.values
 
         test_processed = X_test_proc.copy()
         test_processed["time"] = y_test_time.values
         test_processed["event"] = y_test_event.values
+        test_processed["subject_id"] = test_subj.values
 
         # Step 4.11: Generate 5-Fold Stratified Cross-Validation Folds on Train set
         if n_cv_splits < 2:

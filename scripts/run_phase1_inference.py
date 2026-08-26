@@ -248,12 +248,16 @@ def main():
                                 boot_idx = np.concatenate([idx_1, idx_0])
 
                                 boot_sample = merged.loc[boot_idx]
+                                y_t = boot_sample["time_a"].values
+                                y_e = boot_sample["event_a"].values
 
-                                c_idx_a = float(
-                                    np.mean(boot_sample["prediction_a"].values)
+                                from src.evaluation.metrics import concordance_index
+
+                                c_idx_a, _ = concordance_index(
+                                    y_t, y_e, boot_sample["prediction_a"].values
                                 )
-                                c_idx_b = float(
-                                    np.mean(boot_sample["prediction_b"].values)
+                                c_idx_b, _ = concordance_index(
+                                    y_t, y_e, boot_sample["prediction_b"].values
                                 )
                                 boot_diffs.append(c_idx_a - c_idx_b)
 
@@ -281,18 +285,17 @@ def main():
                                 }
                             )
                         else:
-                            # mock integrated_brier_score bootstrap for now
-                            # as evaluating IBS needs S(t) which we didn't mock properly
+                            # Cannot compute bootstrap IBS without serializing survival probability matrices
                             bootstrap_results.append(
                                 {
                                     "cohort": cohort,
                                     "metric": metric,
                                     "model_a": model_a,
                                     "model_b": model_b,
-                                    "status": "complete",
+                                    "status": "incomplete_missing_survival_matrix",
                                     "bootstrap_seed": seed,
-                                    "bootstrap_effect": 0.0,
-                                    "bootstrap_ci": [0.0, 0.0],
+                                    "bootstrap_effect": "unavailable",
+                                    "bootstrap_ci": ["unavailable", "unavailable"],
                                     "n_bootstraps": 100,
                                 }
                             )

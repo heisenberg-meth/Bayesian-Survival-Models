@@ -1,6 +1,7 @@
 {
   "dataset_name": "gbsg2",
   "random_state": 42,
+  "cv_n_splits": 25,
   "target_time_col": "time",
   "target_event_col": "event",
   "num_features": 11,

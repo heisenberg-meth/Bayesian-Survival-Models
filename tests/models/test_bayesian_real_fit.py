@@ -37,7 +37,7 @@ class TestBayesianRealFit(unittest.TestCase):
         train_path = os.path.join(self.temp_dir.name, "processed", "gbsg2", "train.csv")
         train_df = pd.read_csv(train_path)
 
-        X_train = train_df.drop(columns=["time", "event"])
+        X_train = train_df.drop(columns=["time", "event", "subject_id"])
         y_train_time = train_df["time"].values
         y_train_event = train_df["event"].values
 

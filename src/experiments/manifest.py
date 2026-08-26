@@ -30,6 +30,12 @@ class ExperimentCell:
     draws: int = 1000
     tune: int = 1000
     chains: int = 4
+    target_accept: float = 0.95
+    n_intervals: int = 6
+    coefficient_prior: str = "normal"
+    beta_prior_mean: float = 0.0
+    beta_prior_sd: float = 10.0
+    baseline_hazard_prior: str = "gamma"
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serialisable representation."""
@@ -81,9 +87,7 @@ def build_manifest(cells: list[ExperimentCell]) -> dict[str, Any]:
         separators=(",", ":"),
     )
 
-    manifest_hash = hashlib.sha256(
-        manifest_json.encode("utf-8")
-    ).hexdigest()
+    manifest_hash = hashlib.sha256(manifest_json.encode("utf-8")).hexdigest()
 
     return {
         **manifest_payload,
