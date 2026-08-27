@@ -334,6 +334,7 @@ def test_runner_resume_does_not_reexecute_completed_cell(tmp_path):
     assert checkpoint["status"] == "complete"
     assert checkpoint["completed_at"] is not None
 
+
 def test_failed_cell_can_be_retried(tmp_path):
     manager = CheckpointManager(str(tmp_path / "checkpoints"))
     runner = ExperimentRunner(manager)
