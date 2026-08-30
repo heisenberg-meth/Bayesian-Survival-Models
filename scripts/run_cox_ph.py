@@ -225,11 +225,11 @@ def main():
         pd.read_csv(os.path.join(dataset_dir, "val.csv"))
         test_df = pd.read_csv(os.path.join(dataset_dir, "test.csv"))
 
-        X_train = train_df.drop(columns=["time", "event"])
+        X_train = train_df.drop(columns=["time", "event", "subject_id"], errors="ignore")
         y_train_time = train_df["time"].values
         y_train_event = train_df["event"].values
 
-        X_test = test_df.drop(columns=["time", "event"])
+        X_test = test_df.drop(columns=["time", "event", "subject_id"], errors="ignore")
         y_test_time = test_df["time"].values
         y_test_event = test_df["event"].values
 
@@ -272,7 +272,7 @@ def main():
 
         # 4. 5-Fold Stratified Cross-Validation
         def model_trainer(df_tr, df_v):
-            X_tr = df_tr.drop(columns=["time", "event"])
+            X_tr = df_tr.drop(columns=["time", "event", "subject_id"], errors="ignore")
             y_tr_t = df_tr["time"].values
             y_tr_e = df_tr["event"].values
             m = CoxPHModel(l2_reg=cfg_l2_reg)
