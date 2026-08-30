@@ -41,7 +41,7 @@ def load_dataset(dataset_name: str):
     val_df = pd.read_csv(os.path.join(dataset_dir, "val.csv"))
     test_df = pd.read_csv(os.path.join(dataset_dir, "test.csv"))
 
-    X_train = train_df.drop(columns=["time", "event"])
+    X_train = train_df.drop(columns=["time", "event", "subject_id"])
     y_train_time = train_df["time"].values
     y_train_event = train_df["event"].values
 
@@ -49,7 +49,7 @@ def load_dataset(dataset_name: str):
     y_val_time = val_df["time"].values
     y_val_event = val_df["event"].values
 
-    X_test = test_df.drop(columns=["time", "event"])
+    X_test = test_df.drop(columns=["time", "event", "subject_id"])
     y_test_time = test_df["time"].values
     y_test_event = test_df["event"].values
 

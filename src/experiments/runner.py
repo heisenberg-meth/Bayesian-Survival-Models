@@ -35,7 +35,7 @@ DATASET_CONFIG: dict[str, dict[str, Any]] = {
         "name": "metabric",
         "time_col": "duration",
         "event_col": "event",
-        "categorical_cols": [],
+        "categorical_cols": ["PAM50Subtype"],
     },
 }
 
@@ -170,7 +170,7 @@ class ExperimentRunner:
             "mu": cell.beta_prior_mean,
             "sigma": cell.beta_prior_sd,
         }
-
+        baseline_hazard_params = cell.baseline_hazard_params or {"alpha": 1.0}
         model = BayesianCoxModel(
             inference_method=cell.method,
             draws=cell.draws,
@@ -180,6 +180,8 @@ class ExperimentRunner:
             random_state=cell.seed,
             coefficient_prior=cell.coefficient_prior,
             prior_params=prior_params,
+            baseline_hazard_prior=cell.baseline_hazard_prior,
+            baseline_hazard_params=baseline_hazard_params,
             n_intervals=cell.n_intervals,
         )
 
@@ -243,6 +245,10 @@ class ExperimentRunner:
             "metrics": metrics,
             "predictions": val_risk.tolist(),
             "subject_ids": val_fold["subject_id"].tolist(),
+            "time": y_val_time.tolist(),
+            "event": y_val_event.tolist(),
+            "eval_times": eval_times.tolist(),
+            "survival": surv_fn(eval_times).tolist(),
         }
 
     @staticmethod

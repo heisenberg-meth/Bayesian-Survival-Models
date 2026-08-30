@@ -32,14 +32,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.0018303399497011784,
-    "standard_error": 0.0169576874651765,
+    "effect": -0.003972028023258498,
+    "standard_error": 0.01727567214249769,
     "confidence_interval": [
-      -0.0927032369734363,
-      0.09636391687283866
+      -0.1002782658127819,
+      0.09233420976626491
     ],
-    "test_statistic": 0.039960785494767136,
-    "p_value": 0.9684549588593261,
+    "test_statistic": -0.0851228654769567,
+    "p_value": 0.9328698377443772,
     "holm_p_value": 1.0
   },
   {
@@ -49,14 +49,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": -0.0028327147600176223,
-    "standard_error": 0.007168229194462984,
+    "effect": -0.0038740704920047354,
+    "standard_error": 0.010050269245256944,
     "confidence_interval": [
-      -0.04279325462425396,
-      0.037127825104218706
+      -0.05990104367132505,
+      0.05215290268731558
     ],
-    "test_statistic": -0.1463052285721306,
-    "p_value": 0.8849024119349611,
+    "test_statistic": -0.14271141313493904,
+    "p_value": 0.8877094706709152,
     "holm_p_value": 1.0
   },
   {
@@ -92,14 +92,14 @@
     "model_b": "Regularised Horseshoe",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.030826885891550148,
-    "standard_error": 0.017642230434781477,
+    "effect": 0.006940667302080947,
+    "standard_error": 0.016108436601820278,
     "confidence_interval": [
-      -0.06721481611267206,
-      0.12886858789577235
+      -0.08257740961612996,
+      0.09645874422029184
     ],
-    "test_statistic": 0.6489439100955376,
-    "p_value": 0.5225366399230831,
+    "test_statistic": 0.16002168226414795,
+    "p_value": 0.8742031916011572,
     "holm_p_value": 1.0
   },
   {
@@ -109,14 +109,14 @@
     "model_b": "Regularised Horseshoe",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.0044084133023986295,
-    "standard_error": 0.008369911177045383,
+    "effect": -0.004671245590758417,
+    "standard_error": 0.009973249214933002,
     "confidence_interval": [
-      -0.04210499895889273,
-      0.05092182556368998
+      -0.06009475517243767,
+      0.05075226399092083
     ],
-    "test_statistic": 0.19561062995703254,
-    "p_value": 0.8465616437888903,
+    "test_statistic": -0.17395103862142364,
+    "p_value": 0.8633628912431928,
     "holm_p_value": 1.0
   },
   {
@@ -126,14 +126,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.004645072745240064,
-    "standard_error": 0.015643083992643893,
+    "effect": 0.009280008695834324,
+    "standard_error": 0.018996255870789725,
     "confidence_interval": [
-      -0.08228693876562805,
-      0.09157708425610818
+      -0.09628630641181614,
+      0.11484632380348479
     ],
-    "test_statistic": 0.11028111268723997,
-    "p_value": 0.9131034507645479,
+    "test_statistic": 0.18143094773836574,
+    "p_value": 0.8575528988537648,
     "holm_p_value": 1.0
   },
   {
@@ -143,14 +143,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.006966849705007112,
-    "standard_error": 0.008277819475984303,
+    "effect": -0.007034725158499226,
+    "standard_error": 0.00992815841892882,
     "confidence_interval": [
-      -0.03903478899421285,
-      0.052968488404227076
+      -0.06220765540434464,
+      0.04813820508734619
     ],
-    "test_statistic": 0.3125730189582702,
-    "p_value": 0.7573048942495253,
+    "test_statistic": -0.26315367103722564,
+    "p_value": 0.7946781925218076,
     "holm_p_value": 1.0
   },
   {
@@ -160,14 +160,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": -0.026181813146310084,
-    "standard_error": 0.01673499385961193,
+    "effect": 0.002339341393753376,
+    "standard_error": 0.013885234755793058,
     "confidence_interval": [
-      -0.11918180467753305,
-      0.06681817838491287
+      -0.07482392054291649,
+      0.07950260333042324
     ],
-    "test_statistic": -0.5810388324104441,
-    "p_value": 0.5666313878058187,
+    "test_statistic": 0.06257075214999458,
+    "p_value": 0.9506265192702512,
     "holm_p_value": 1.0
   },
   {
@@ -177,14 +177,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.0025584364026084833,
-    "standard_error": 0.007457865986917556,
+    "effect": -0.002363479567740808,
+    "standard_error": 0.009529168452115443,
     "confidence_interval": [
-      -0.038886542869132464,
-      0.044003415674349435
+      -0.055319136007215816,
+      0.0505921768717342
     ],
-    "test_statistic": 0.1274063421950074,
-    "p_value": 0.8996802950153526,
+    "test_statistic": -0.09211446724058074,
+    "p_value": 0.9273716804850638,
     "holm_p_value": 1.0
   },
   {
@@ -220,14 +220,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.008452179987761124,
-    "standard_error": 0.016257563821138275,
+    "effect": 0.01639954499341174,
+    "standard_error": 0.01804523842812041,
     "confidence_interval": [
-      -0.08192019528271152,
-      0.09882455525823378
+      -0.08391013713441592,
+      0.1167092271212394
     ],
-    "test_statistic": 0.19302847874864856,
-    "p_value": 0.8485608821866304,
+    "test_statistic": 0.33742502822533366,
+    "p_value": 0.7387298666983564,
     "holm_p_value": 1.0
   },
   {
@@ -237,14 +237,14 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "n_paired_folds": 25,
-    "effect": 0.004563521288034559,
-    "standard_error": 0.00889911551915137,
+    "effect": -0.007660880701701215,
+    "standard_error": 0.009464762728458925,
     "confidence_interval": [
-      -0.04490478873184431,
-      0.05403183130791343
+      -0.060273504496548794,
+      0.04495174309314637
     ],
-    "test_statistic": 0.19039754983642032,
-    "p_value": 0.8505989529991302,
+    "test_statistic": -0.30052256512995684,
+    "p_value": 0.7663664765097584,
     "holm_p_value": 1.0
   },
   {

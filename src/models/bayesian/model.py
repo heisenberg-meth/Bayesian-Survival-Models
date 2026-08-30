@@ -27,6 +27,8 @@ class BayesianCoxModel(BaseSurvivalModel):
         random_state: int = 42,
         coefficient_prior: str = "normal",
         prior_params: dict | None = None,
+        baseline_hazard_prior: str = "gamma",
+        baseline_hazard_params: dict | None = None,
     ):
         self.n_intervals = n_intervals
         self.inference_method = inference_method.lower()
@@ -38,6 +40,10 @@ class BayesianCoxModel(BaseSurvivalModel):
         self.random_state = random_state
         self.coefficient_prior = coefficient_prior.lower()
         self.prior_params = prior_params if prior_params is not None else {}
+        self.baseline_hazard_prior = baseline_hazard_prior.lower()
+        self.baseline_hazard_params = (
+            baseline_hazard_params if baseline_hazard_params is not None else {}
+        )
 
         self.feature_names = []
         self.cutoffs = np.array([])
@@ -110,17 +116,26 @@ class BayesianCoxModel(BaseSurvivalModel):
         log_exposure = np.log(obs_exposures)
 
         with pm.Model() as model:
-            # Priors for Regression Coefficients (Normal, Student-t, or Laplace/Lasso)
+            # Priors for regression coefficients.
+            #
+            # All prior families expose the same final latent coefficient
+            # vector `beta` so that the likelihood and posterior extraction
+            # remain unchanged.
+
+            prior_mu = self.prior_params.get("mu", 0.0)
+            prior_sigma = self.prior_params.get("sigma", 1.0)
+
             if self.coefficient_prior == "normal":
-                prior_mu = self.prior_params.get("mu", 0.0)
-                prior_sigma = self.prior_params.get("sigma", 1.0)
                 beta = pm.Normal(
-                    "beta", mu=prior_mu, sigma=prior_sigma, shape=n_features
+                    "beta",
+                    mu=prior_mu,
+                    sigma=prior_sigma,
+                    shape=n_features,
                 )
+
             elif self.coefficient_prior == "student-t":
                 prior_nu = self.prior_params.get("nu", 3.0)
-                prior_mu = self.prior_params.get("mu", 0.0)
-                prior_sigma = self.prior_params.get("sigma", 1.0)
+
                 beta = pm.StudentT(
                     "beta",
                     nu=prior_nu,
@@ -128,10 +143,106 @@ class BayesianCoxModel(BaseSurvivalModel):
                     sigma=prior_sigma,
                     shape=n_features,
                 )
+
             elif self.coefficient_prior == "laplace":
-                prior_mu = self.prior_params.get("mu", 0.0)
                 prior_b = self.prior_params.get("b", 1.0)
-                beta = pm.Laplace("beta", mu=prior_mu, b=prior_b, shape=n_features)
+
+                beta = pm.Laplace(
+                    "beta",
+                    mu=prior_mu,
+                    b=prior_b,
+                    shape=n_features,
+                )
+
+            elif self.coefficient_prior == "regularized_horseshoe":
+                # Regularised horseshoe:
+                # beta_j = tau * lambda_j * c / sqrt(c^2 + tau^2*lambda_j^2)
+                #          * z_j
+                #
+                # tau      : global shrinkage
+                # lambda_j : local shrinkage
+                # c        : slab scale
+                # z_j      : standard normal coefficient.
+
+                tau_scale = self.prior_params.get("tau_scale", 0.1)
+                slab_scale = self.prior_params.get("slab_scale", 2.0)
+                slab_df = self.prior_params.get("slab_df", 4.0)
+
+                tau = pm.HalfNormal(
+                    "tau",
+                    sigma=tau_scale,
+                )
+
+                lambda_local = pm.HalfStudentT(
+                    "lambda_local",
+                    nu=4.0,
+                    sigma=1.0,
+                    shape=n_features,
+                )
+
+                c2 = pm.InverseGamma(
+                    "slab_scale_squared",
+                    alpha=slab_df / 2.0,
+                    beta=(slab_df * slab_scale**2) / 2.0,
+                )
+
+                shrinkage = tau * lambda_local
+
+                regularized_shrinkage = shrinkage * pm.math.sqrt(
+                    c2 / (c2 + shrinkage**2)
+                )
+
+                z = pm.Normal(
+                    "z",
+                    mu=0.0,
+                    sigma=1.0,
+                    shape=n_features,
+                )
+
+                beta = pm.Deterministic(
+                    "beta",
+                    prior_mu + prior_sigma * regularized_shrinkage * z,
+                )
+
+            elif self.coefficient_prior == "continuous_spike_slab":
+                # Continuous spike-and-slab prior.
+                #
+                # pi_j is a continuous inclusion probability. The coefficient
+                # scale smoothly interpolates between a narrow spike and a
+                # wider slab without using discrete Bernoulli indicators.
+
+                spike_sd = self.prior_params.get("spike_sd", 0.1)
+                slab_sd = self.prior_params.get(
+                    "slab_sd",
+                    prior_sigma,
+                )
+                inclusion_alpha = self.prior_params.get(
+                    "inclusion_alpha",
+                    1.0,
+                )
+                inclusion_beta = self.prior_params.get(
+                    "inclusion_beta",
+                    1.0,
+                )
+
+                inclusion_prob = pm.Beta(
+                    "inclusion_prob",
+                    alpha=inclusion_alpha,
+                    beta=inclusion_beta,
+                    shape=n_features,
+                )
+
+                coefficient_sd = pm.math.sqrt(
+                    inclusion_prob * slab_sd**2 + (1.0 - inclusion_prob) * spike_sd**2
+                )
+
+                beta = pm.Normal(
+                    "beta",
+                    mu=prior_mu,
+                    sigma=coefficient_sd,
+                    shape=n_features,
+                )
+
             else:
                 raise ValueError(f"Unknown coefficient prior: {self.coefficient_prior}")
 
@@ -152,24 +263,76 @@ class BayesianCoxModel(BaseSurvivalModel):
 
             log_lambda_center = float(np.log(empirical_rate))
 
-            log_lambda = pm.Normal(
-                "log_lambda",
-                mu=log_lambda_center,
-                sigma=1.0,
-                shape=M,
-            )
+            baseline_prior = self.baseline_hazard_prior
 
-            # Poisson Log-Linear Predictor
-            eta = pm.math.dot(obs_X, beta)
-            lambda_m = log_lambda[interval_idx]
+            if baseline_prior == "spline":
+                from src.models.bayesian.splines import SplineBasis
 
-            log_mu = log_exposure + lambda_m + eta
+                df = self.baseline_hazard_params.get("df", 8)
+                spline = SplineBasis(df=df)
+                spline.fit(y_time)
+                self.spline_basis_ = spline
 
-            pm.Poisson(
-                "obs",
-                mu=pm.math.exp(log_mu),
-                observed=obs_events,
-            )
+                B_exact = spline.transform(y_time)
+                n_grid = self.baseline_hazard_params.get("n_grid", 200)
+                B_grid, weights, mask = spline.get_integration_matrix(
+                    y_time, n_grid=n_grid
+                )
+
+                gamma = pm.Normal(
+                    "gamma",
+                    mu=log_lambda_center,
+                    sigma=self.baseline_hazard_params.get("sigma", 1.0),
+                    shape=df,
+                )
+
+                log_lambda_exact = pm.math.dot(B_exact, gamma)
+                lambda_grid = pm.math.exp(pm.math.dot(B_grid, gamma))
+                H0_t = pm.math.dot(mask, lambda_grid * weights)
+
+                eta = pm.math.dot(X_mat, beta)
+
+                log_lik = pm.math.sum(
+                    y_event * (log_lambda_exact + eta) - H0_t * pm.math.exp(eta)
+                )
+                pm.Potential("spline_likelihood", log_lik)
+
+            else:
+                if baseline_prior == "gamma":
+                    alpha = self.baseline_hazard_params.get("alpha", 1.0)
+                    rate = alpha / empirical_rate
+
+                    lambda_m = pm.Gamma(
+                        "lambda",
+                        alpha=alpha,
+                        beta=rate,
+                        shape=M,
+                    )
+
+                elif baseline_prior == "lognormal":
+                    log_lambda = pm.Normal(
+                        "log_lambda",
+                        mu=log_lambda_center,
+                        sigma=1.0,
+                        shape=M,
+                    )
+                    lambda_m = pm.math.exp(log_lambda)
+
+                else:
+                    raise ValueError(
+                        f"Unknown baseline hazard prior: {self.baseline_hazard_prior}"
+                    )
+
+                eta = pm.math.dot(obs_X, beta)
+                lambda_obs = lambda_m[interval_idx]
+
+                log_mu = log_exposure + pm.math.log(lambda_obs) + eta
+
+                pm.Poisson(
+                    "obs",
+                    mu=pm.math.exp(log_mu),
+                    observed=obs_events,
+                )
 
             if self.inference_method == "advi":
                 approx = pm.fit(
@@ -198,10 +361,20 @@ class BayesianCoxModel(BaseSurvivalModel):
         # Extract posterior samples
         posterior = self.idata.posterior
         beta_raw = posterior["beta"].values  # (chains, draws, p)
-        log_lambda_raw = posterior["log_lambda"].values  # (chains, draws, M)
+
+        if self.baseline_hazard_prior == "spline":
+            self.gamma_samples = posterior["gamma"].values.reshape(
+                -1, self.spline_basis_.df
+            )
+            self.lambda_samples = None
+        elif self.baseline_hazard_prior == "gamma":
+            lambda_raw = posterior["lambda"].values
+            self.lambda_samples = lambda_raw.reshape(-1, M)
+        else:
+            log_lambda_raw = posterior["log_lambda"].values
+            self.lambda_samples = np.exp(log_lambda_raw.reshape(-1, M))
 
         self.beta_samples = beta_raw.reshape(-1, n_features)
-        self.lambda_samples = np.exp(log_lambda_raw.reshape(-1, M))
 
         # Build Summary DataFrame for Hazard Ratios
         summary_records = []
@@ -249,36 +422,51 @@ class BayesianCoxModel(BaseSurvivalModel):
         Computes Posterior Mean Survival Probability Matrix along with 95% Credible Interval Bounds.
         Returns: (surv_mean, surv_lower_95, surv_upper_95)
         """
-        if self.beta_samples is None or len(self.cutoffs) == 0:
+        if self.beta_samples is None:
             raise ValueError("Model must be fitted before calling predict_survival().")
+
+        if self.baseline_hazard_prior != "spline" and len(self.cutoffs) == 0:
+            raise ValueError("Piecewise model must have cutoffs fitted.")
 
         X_mat = X[self.feature_names].values.astype(float)
         n_samples = len(X_mat)
         m_times = len(eval_times)
         S_draws = len(self.beta_samples)
 
-        M = len(self.cutoffs) - 1
-        durations = np.diff(self.cutoffs)
-
         H0_draws = np.zeros((S_draws, m_times), dtype=float)
 
-        for s in range(S_draws):
-            lambdas = self.lambda_samples[s]
-            cum_h_endpoints = np.cumsum(lambdas * durations)
-            cum_h_endpoints = np.insert(cum_h_endpoints, 0, 0.0)
+        if self.baseline_hazard_prior == "spline":
+            n_grid = self.baseline_hazard_params.get("n_grid", 200)
+            B_grid, weights, mask = self.spline_basis_.get_integration_matrix(
+                eval_times, n_grid=n_grid
+            )
 
-            for j, t in enumerate(eval_times):
-                idx = np.searchsorted(self.cutoffs, t, side="right") - 1
-                if idx < 0:
-                    H0_draws[s, j] = 0.0
-                elif idx >= M:
-                    H0_draws[s, j] = cum_h_endpoints[M] + lambdas[-1] * (
-                        t - self.cutoffs[-1]
-                    )
-                else:
-                    H0_draws[s, j] = cum_h_endpoints[idx] + lambdas[idx] * (
-                        t - self.cutoffs[idx]
-                    )
+            for s in range(S_draws):
+                gamma_s = self.gamma_samples[s]
+                lambda_grid = np.exp(np.dot(B_grid, gamma_s))
+                H0_draws[s] = np.dot(mask, lambda_grid * weights)
+
+        else:
+            M = len(self.cutoffs) - 1
+            durations = np.diff(self.cutoffs)
+
+            for s in range(S_draws):
+                lambdas = self.lambda_samples[s]
+                cum_h_endpoints = np.cumsum(lambdas * durations)
+                cum_h_endpoints = np.insert(cum_h_endpoints, 0, 0.0)
+
+                for j, t in enumerate(eval_times):
+                    idx = np.searchsorted(self.cutoffs, t, side="right") - 1
+                    if idx < 0:
+                        H0_draws[s, j] = 0.0
+                    elif idx >= M:
+                        H0_draws[s, j] = cum_h_endpoints[M] + lambdas[-1] * (
+                            t - self.cutoffs[-1]
+                        )
+                    else:
+                        H0_draws[s, j] = cum_h_endpoints[idx] + lambdas[idx] * (
+                            t - self.cutoffs[idx]
+                        )
 
         risk_draws = np.dot(self.beta_samples, X_mat.T)  # (S_draws, N_samples)
         exp_risk_draws = np.exp(risk_draws)

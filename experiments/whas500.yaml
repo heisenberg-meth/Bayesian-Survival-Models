@@ -22,6 +22,8 @@ model:
     beta_prior_mean: 0.0
     beta_prior_sd: 5.0
     baseline_hazard_prior: "gamma"
+    baseline_hazard_params:
+      alpha: 1.0
   sampler:
     draws: 2000
     tune: 1000

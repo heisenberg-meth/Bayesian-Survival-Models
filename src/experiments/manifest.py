@@ -36,6 +36,7 @@ class ExperimentCell:
     beta_prior_mean: float = 0.0
     beta_prior_sd: float = 10.0
     baseline_hazard_prior: str = "gamma"
+    baseline_hazard_params: dict | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serialisable representation."""

@@ -34,6 +34,7 @@ def resolve_bayesian_config(
         "beta_prior_mean": float(priors.get("beta_prior_mean", 0.0)),
         "beta_prior_sd": float(priors.get("beta_prior_sd", 10.0)),
         "baseline_hazard_prior": priors.get("baseline_hazard_prior", "gamma"),
+        "baseline_hazard_params": priors.get("baseline_hazard_params", {}),
         "draws": int(sampler.get("draws", 2000)),
         "tune": int(sampler.get("tune", 1000)),
         "chains": int(sampler.get("chains", 4)),

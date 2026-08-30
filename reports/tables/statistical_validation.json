@@ -51,18 +51,18 @@
       },
       "Bayesian Cox": {
         "c_index": {
-          "mean": 0.5282197477312236,
-          "std": 0.0529797786886669,
-          "se": 0.005324668102617435,
-          "ci_lower": 0.4280317683156011,
-          "ci_upper": 0.6275939404417074
+          "mean": 0.5310429828845636,
+          "std": 0.053005107673686214,
+          "se": 0.005327213761394089,
+          "ci_lower": 0.432604984202829,
+          "ci_upper": 0.6292811789050027
         },
         "ibs": {
-          "mean": 0.42395392146252503,
-          "std": 0.03828554855033635,
-          "se": 0.0038478424071030533,
-          "ci_lower": 0.35441066772525254,
-          "ci_upper": 0.5001093802545413
+          "mean": 0.13464093179146827,
+          "std": 0.010434537813262408,
+          "se": 0.0010487105087080887,
+          "ci_lower": 0.11444839167830886,
+          "ci_upper": 0.15688612038395383
         }
       }
     },
@@ -78,8 +78,8 @@
         "c_index_p_holm": 1.2807174328615996e-12,
         "c_index_p_fdr_bh": 7.684304597169598e-13,
         "ibs_p_bonferroni": 4.3196294963517644e-14,
-        "ibs_p_holm": 7.199382493919608e-15,
-        "ibs_p_fdr_bh": 7.199382493919608e-15
+        "ibs_p_holm": 2.1598147481758822e-14,
+        "ibs_p_fdr_bh": 1.0799073740879411e-14
       },
       {
         "model_a": "Cox PH",
@@ -93,21 +93,21 @@
         "c_index_p_fdr_bh": 1.6464567788100176e-16,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 7.793119690191818e-18
       },
       {
         "model_a": "Cox PH",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": -0.044375421975128546,
-        "c_index_raw_p": 5.261691099391917e-07,
-        "ibs_mean_diff": -0.2865740205674782,
-        "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 3.1570146596351506e-06,
-        "c_index_p_holm": 1.0523382198783834e-06,
-        "c_index_p_fdr_bh": 6.314029319270301e-07,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "c_index_mean_diff": -0.04719865712846841,
+        "c_index_raw_p": 1.4626626483153182e-07,
+        "ibs_mean_diff": 0.0027389691035786244,
+        "ibs_raw_p": 0.00018336434663245005,
+        "c_index_p_bonferroni": 8.775975889891909e-07,
+        "c_index_p_holm": 2.9253252966306364e-07,
+        "c_index_p_fdr_bh": 1.755195177978382e-07,
+        "ibs_p_bonferroni": 0.0011001860797947003,
+        "ibs_p_holm": 0.0003667286932649001,
+        "ibs_p_fdr_bh": 0.00022003721595894007
       },
       {
         "model_a": "RSF",
@@ -117,151 +117,151 @@
         "ibs_mean_diff": -0.03382628700159354,
         "ibs_raw_p": 3.896559845095909e-18,
         "c_index_p_bonferroni": 4.075885907719971e-09,
-        "c_index_p_holm": 2.0379429538599856e-09,
+        "c_index_p_holm": 2.475509201939183e-09,
         "c_index_p_fdr_bh": 1.0189714769299928e-09,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 7.793119690191818e-18
       },
       {
         "model_a": "RSF",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.005409025916455369,
-        "c_index_raw_p": 0.5047497647349051,
-        "ibs_mean_diff": -0.28982612323244605,
-        "ibs_raw_p": 3.896559845095909e-18,
+        "c_index_mean_diff": 0.0025857907631155136,
+        "c_index_raw_p": 0.7832655420427076,
+        "ibs_mean_diff": -0.0005131335613892585,
+        "ibs_raw_p": 0.4555970482246179,
         "c_index_p_bonferroni": 1.0,
-        "c_index_p_holm": 0.5047497647349051,
-        "c_index_p_fdr_bh": 0.5047497647349051,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "c_index_p_holm": 0.7832655420427076,
+        "c_index_p_fdr_bh": 0.7832655420427076,
+        "ibs_p_bonferroni": 1.0,
+        "ibs_p_holm": 0.4555970482246179,
+        "ibs_p_fdr_bh": 0.4555970482246179
       },
       {
         "model_a": "DeepSurv",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.05077310173613753,
-        "c_index_raw_p": 1.1419186889976034e-10,
-        "ibs_mean_diff": -0.25599983623085254,
+        "c_index_mean_diff": 0.04794986658279768,
+        "c_index_raw_p": 6.188773004847958e-10,
+        "ibs_mean_diff": 0.03331315344020428,
         "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 6.85151213398562e-10,
-        "c_index_p_holm": 4.5676747559904134e-10,
-        "c_index_p_fdr_bh": 2.2838373779952067e-10,
+        "c_index_p_bonferroni": 3.7132638029087744e-09,
+        "c_index_p_holm": 2.475509201939183e-09,
+        "c_index_p_fdr_bh": 1.0189714769299928e-09,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 7.793119690191818e-18
       }
     ],
     "bayesian_parameters": [
       {
         "feature": "log_estrec",
-        "coef (beta_mean)": -0.008866867457632125,
-        "exp(coef) HR Mean": 1.2214035738341065,
-        "exp(coef) HR Median": 1.0319267120565967,
-        "HR SD": 0.9235797565113734,
-        "95% Credible Lower": 0.284897575626264,
-        "95% Credible Upper": 3.2704708353654777,
+        "coef (beta_mean)": -0.008711103625585115,
+        "exp(coef) HR Mean": 1.2216465449867642,
+        "exp(coef) HR Median": 1.0320917124541444,
+        "HR SD": 0.9238928076408041,
+        "95% Credible Lower": 0.28490564855520334,
+        "95% Credible Upper": 3.2713794432113867,
         "Prob(HR > 1)": 0.5125
       },
       {
         "feature": "estrec",
-        "coef (beta_mean)": -0.03317138117326653,
-        "exp(coef) HR Mean": 1.1957140754245363,
-        "exp(coef) HR Median": 0.9446258435178463,
-        "HR SD": 0.8431020574879103,
-        "95% Credible Lower": 0.25589816151300654,
-        "95% Credible Upper": 3.3394125484194856,
+        "coef (beta_mean)": -0.03220637500145871,
+        "exp(coef) HR Mean": 1.196832875007783,
+        "exp(coef) HR Median": 0.9455394505878076,
+        "HR SD": 0.8438217423921491,
+        "95% Credible Lower": 0.25616940774577,
+        "95% Credible Upper": 3.3423426473556535,
         "Prob(HR > 1)": 0.465
       },
       {
         "feature": "log_progrec",
-        "coef (beta_mean)": -0.05509940786660696,
-        "exp(coef) HR Mean": 1.1871253915296485,
-        "exp(coef) HR Median": 0.9438144584207145,
-        "HR SD": 0.9013070836823377,
-        "95% Credible Lower": 0.24079466719932363,
-        "95% Credible Upper": 3.8157129554725158,
+        "coef (beta_mean)": -0.054957403604428606,
+        "exp(coef) HR Mean": 1.188050754888188,
+        "exp(coef) HR Median": 0.9439448975218707,
+        "HR SD": 0.9035387624544164,
+        "95% Credible Lower": 0.2403686973267027,
+        "95% Credible Upper": 3.8236993660107053,
         "Prob(HR > 1)": 0.4575
       },
       {
         "feature": "age",
-        "coef (beta_mean)": -0.04360648995802482,
-        "exp(coef) HR Mean": 1.142067681337234,
-        "exp(coef) HR Median": 0.9260603584723912,
-        "HR SD": 0.7863828396694781,
-        "95% Credible Lower": 0.33817932235135223,
-        "95% Credible Upper": 3.23050122492451,
-        "Prob(HR > 1)": 0.445
+        "coef (beta_mean)": -0.042792632380664594,
+        "exp(coef) HR Mean": 1.1430074749676007,
+        "exp(coef) HR Median": 0.9268136084722927,
+        "HR SD": 0.7870538584942236,
+        "95% Credible Lower": 0.3384462192776095,
+        "95% Credible Upper": 3.233225756584023,
+        "Prob(HR > 1)": 0.4475
       },
       {
         "feature": "tsize",
-        "coef (beta_mean)": -0.06151140287893979,
-        "exp(coef) HR Mean": 1.139659821577227,
-        "exp(coef) HR Median": 0.903612679979688,
-        "HR SD": 0.7948474375368715,
-        "95% Credible Lower": 0.26010030503969395,
-        "95% Credible Upper": 3.0607279363973907,
+        "coef (beta_mean)": -0.06091867697130185,
+        "exp(coef) HR Mean": 1.1403797913135987,
+        "exp(coef) HR Median": 0.9041448287821571,
+        "HR SD": 0.7954470854771929,
+        "95% Credible Lower": 0.26022105303837545,
+        "95% Credible Upper": 3.0629043291898146,
         "Prob(HR > 1)": 0.435
       },
       {
         "feature": "age_x_horTh",
-        "coef (beta_mean)": -0.06870860010803792,
-        "exp(coef) HR Mean": 1.138086550679565,
-        "exp(coef) HR Median": 0.9337921474456915,
-        "HR SD": 0.7858583099685481,
-        "95% Credible Lower": 0.2737257382716938,
-        "95% Credible Upper": 3.1190020782896104,
+        "coef (beta_mean)": -0.06788056992853747,
+        "exp(coef) HR Mean": 1.1390745354036407,
+        "exp(coef) HR Median": 0.9345656952216362,
+        "HR SD": 0.7866324298729673,
+        "95% Credible Lower": 0.27391880435215177,
+        "95% Credible Upper": 3.1219631786953674,
         "Prob(HR > 1)": 0.4475
       },
       {
         "feature": "progrec",
-        "coef (beta_mean)": -0.07605938756056611,
-        "exp(coef) HR Mean": 1.124262942469785,
-        "exp(coef) HR Median": 0.9329197241218483,
-        "HR SD": 0.7411243625583186,
-        "95% Credible Lower": 0.2912575657094155,
-        "95% Credible Upper": 3.1114572768207336,
+        "coef (beta_mean)": -0.0761378535017458,
+        "exp(coef) HR Mean": 1.1242141671120212,
+        "exp(coef) HR Median": 0.9328470944460707,
+        "HR SD": 0.7411688040296097,
+        "95% Credible Lower": 0.29120362569407077,
+        "95% Credible Upper": 3.1115607196981845,
         "Prob(HR > 1)": 0.4575
       },
       {
         "feature": "log_pnode",
-        "coef (beta_mean)": -0.08732662910299531,
-        "exp(coef) HR Mean": 1.1043243789748585,
-        "exp(coef) HR Median": 0.9010080710384699,
-        "HR SD": 0.7359250976012163,
-        "95% Credible Lower": 0.24662432020842903,
-        "95% Credible Upper": 3.1584986260638024,
+        "coef (beta_mean)": -0.08728096171565629,
+        "exp(coef) HR Mean": 1.1043944229223885,
+        "exp(coef) HR Median": 0.9010484914606729,
+        "HR SD": 0.7360129604050282,
+        "95% Credible Lower": 0.24662012647424883,
+        "95% Credible Upper": 3.1588295039182843,
         "Prob(HR > 1)": 0.43
       },
       {
         "feature": "pnode",
-        "coef (beta_mean)": -0.13729737867865632,
-        "exp(coef) HR Mean": 1.058411313199879,
-        "exp(coef) HR Median": 0.9155070100076274,
-        "HR SD": 0.6921294357259846,
-        "95% Credible Lower": 0.20683889495170021,
-        "95% Credible Upper": 2.726113210011917,
+        "coef (beta_mean)": -0.13716962282567569,
+        "exp(coef) HR Mean": 1.0585697634981366,
+        "exp(coef) HR Median": 0.9156265752700594,
+        "HR SD": 0.6922778032987656,
+        "95% Credible Lower": 0.20684810914325685,
+        "95% Credible Upper": 2.7266413446796687,
         "Prob(HR > 1)": 0.4425
       },
       {
         "feature": "horTh_yes",
-        "coef (beta_mean)": -0.1695924896978331,
-        "exp(coef) HR Mean": 1.0507103300258926,
-        "exp(coef) HR Median": 0.8445091188410314,
-        "HR SD": 0.8137274695646805,
-        "95% Credible Lower": 0.23608043128404663,
-        "95% Credible Upper": 3.30160251345743,
-        "Prob(HR > 1)": 0.3975
+        "coef (beta_mean)": -0.16106884875732674,
+        "exp(coef) HR Mean": 1.0581208569212528,
+        "exp(coef) HR Median": 0.8517364752029923,
+        "HR SD": 0.8157991689014065,
+        "95% Credible Lower": 0.2391253893577978,
+        "95% Credible Upper": 3.3145983030273705,
+        "Prob(HR > 1)": 0.4075
       },
       {
         "feature": "menostat_Pre",
-        "coef (beta_mean)": -0.20279337892109178,
-        "exp(coef) HR Mean": 1.0362769954076925,
-        "exp(coef) HR Median": 0.8464424532016668,
-        "HR SD": 0.7565223001294451,
-        "95% Credible Lower": 0.2094412250938816,
-        "95% Credible Upper": 2.8799046751518245,
-        "Prob(HR > 1)": 0.4125
+        "coef (beta_mean)": -0.18957905234305564,
+        "exp(coef) HR Mean": 1.0476383920306234,
+        "exp(coef) HR Median": 0.8575476988260757,
+        "HR SD": 0.7605465175821209,
+        "95% Credible Lower": 0.2136704300121445,
+        "95% Credible Upper": 2.8999461299906413,
+        "Prob(HR > 1)": 0.415
       }
     ],
     "stability_summary": {
@@ -284,10 +284,10 @@
         "ibs_std": 0.011712839631330647
       },
       "Bayesian Cox": {
-        "c_index_mean": 0.5089897260273973,
-        "c_index_std": 0.011587250028916526,
-        "ibs_mean": 0.42210628852037946,
-        "ibs_std": 0.0010456399184144843
+        "c_index_mean": 0.5111301369863014,
+        "c_index_std": 0.01250019546979212,
+        "ibs_mean": 0.13575000184120822,
+        "ibs_std": 0.00035837508068391834
       }
     },
     "sensitivity_results": {
@@ -335,35 +335,35 @@
       },
       "Bayesian Cox": {
         "50%": {
-          "c_index": 0.495291095890411,
-          "ibs": 0.42152873541254104
+          "c_index": 0.4974315068493151,
+          "ibs": 0.13697087699110364
         },
         "75%": {
-          "c_index": 0.5244006849315068,
-          "ibs": 0.42173925307036003
+          "c_index": 0.5235445205479452,
+          "ibs": 0.13512026370130048
         },
         "100%": {
-          "c_index": 0.5282197477312236,
-          "ibs": 0.42395392146252503
+          "c_index": 0.5310429828845636,
+          "ibs": 0.13464093179146827
         }
       }
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.007603883743286133,
-        "pred_time_sec": 0.0005121231079101562
+        "train_time_sec": 0.008535146713256836,
+        "pred_time_sec": 0.0008270740509033203
       },
       "RSF": {
-        "train_time_sec": 7.204334259033203,
-        "pred_time_sec": 0.016405344009399414
+        "train_time_sec": 7.916975736618042,
+        "pred_time_sec": 0.017665863037109375
       },
       "DeepSurv": {
-        "train_time_sec": 0.5582942962646484,
-        "pred_time_sec": 0.0005223751068115234
+        "train_time_sec": 0.7218225002288818,
+        "pred_time_sec": 0.0008780956268310547
       },
       "Bayesian Cox": {
-        "train_time_sec": 66.80347657203674,
-        "pred_time_sec": 0.013967514038085938
+        "train_time_sec": 41.99963855743408,
+        "pred_time_sec": 0.01517343521118164
       }
     }
   },
@@ -419,18 +419,18 @@
       },
       "Bayesian Cox": {
         "c_index": {
-          "mean": 0.42823745074169667,
-          "std": 0.055555862812538555,
-          "se": 0.005583574298595425,
-          "ci_lower": 0.31897261860982873,
-          "ci_upper": 0.5615319634976617
+          "mean": 0.4289983299818499,
+          "std": 0.055310671978276174,
+          "se": 0.00555893169255656,
+          "ci_lower": 0.315452009572137,
+          "ci_upper": 0.5549851050579929
         },
         "ibs": {
-          "mean": 0.43299304670261274,
-          "std": 0.04566027784629764,
-          "se": 0.004589030589077159,
-          "ci_lower": 0.34233063723659235,
-          "ci_upper": 0.5172524103204464
+          "mean": 0.1543598422299828,
+          "std": 0.018742245569650907,
+          "se": 0.0018836665540373592,
+          "ci_lower": 0.11794861426545528,
+          "ci_upper": 0.1880055602487424
         }
       }
     },
@@ -446,8 +446,8 @@
         "c_index_p_holm": 8.488074984293387e-17,
         "c_index_p_fdr_bh": 8.488074984293387e-17,
         "ibs_p_bonferroni": 2.4096934112776198e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.81938682255524e-18
+        "ibs_p_holm": 2.4096934112776198e-17,
+        "ibs_p_fdr_bh": 7.903806722319588e-18
       },
       {
         "model_a": "Cox PH",
@@ -460,22 +460,22 @@
         "c_index_p_holm": 2.2095255387434757e-09,
         "c_index_p_fdr_bh": 1.1047627693717379e-09,
         "ibs_p_bonferroni": 3.161522688927835e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 5.2692044815463916e-18
+        "ibs_p_holm": 2.4096934112776198e-17,
+        "ibs_p_fdr_bh": 7.903806722319588e-18
       },
       {
         "model_a": "Cox PH",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.04463911320488692,
+        "c_index_mean_diff": 0.043878233964733795,
         "c_index_raw_p": 1.4756685909598026e-05,
-        "ibs_mean_diff": -0.27056887328458956,
-        "ibs_raw_p": 3.896559845095909e-18,
+        "ibs_mean_diff": 0.00806433118804021,
+        "ibs_raw_p": 7.331432633879973e-14,
         "c_index_p_bonferroni": 8.854011545758815e-05,
         "c_index_p_holm": 1.4756685909598026e-05,
         "c_index_p_fdr_bh": 1.4756685909598026e-05,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.81938682255524e-18
+        "ibs_p_bonferroni": 4.3988595803279833e-13,
+        "ibs_p_holm": 1.4662865267759945e-13,
+        "ibs_p_fdr_bh": 8.797719160655967e-14
       },
       {
         "model_a": "RSF",
@@ -488,158 +488,158 @@
         "c_index_p_holm": 2.3265643408772993e-06,
         "c_index_p_fdr_bh": 1.3959386045263796e-06,
         "ibs_p_bonferroni": 2.4096934112776198e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.81938682255524e-18
+        "ibs_p_holm": 2.4096934112776198e-17,
+        "ibs_p_fdr_bh": 7.903806722319588e-18
       },
       {
         "model_a": "RSF",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.14062132864200813,
-        "c_index_raw_p": 4.8816168731894246e-17,
-        "ibs_mean_diff": -0.28257661760156294,
-        "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 2.928970123913655e-16,
-        "c_index_p_holm": 2.440808436594712e-16,
-        "c_index_p_fdr_bh": 1.4644850619568275e-16,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.81938682255524e-18
+        "c_index_mean_diff": 0.139860449401855,
+        "c_index_raw_p": 4.4713463414559033e-17,
+        "ibs_mean_diff": -0.003943413128933187,
+        "ibs_raw_p": 2.160219772158601e-07,
+        "c_index_p_bonferroni": 2.682807804873542e-16,
+        "c_index_p_holm": 2.235673170727952e-16,
+        "c_index_p_fdr_bh": 1.341403902436771e-16,
+        "ibs_p_bonferroni": 1.2961318632951605e-06,
+        "ibs_p_holm": 2.160219772158601e-07,
+        "ibs_p_fdr_bh": 2.160219772158601e-07
       },
       {
         "model_a": "DeepSurv",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.10477173107351695,
-        "c_index_raw_p": 5.312355559705196e-16,
-        "ibs_mean_diff": -0.2007213489462385,
-        "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 3.1874133358231176e-15,
-        "c_index_p_holm": 2.1249422238820786e-15,
-        "c_index_p_fdr_bh": 1.0624711119410393e-15,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
-        "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.81938682255524e-18
+        "c_index_mean_diff": 0.10401085183336381,
+        "c_index_raw_p": 4.1167803303556016e-16,
+        "ibs_mean_diff": 0.07791185552639134,
+        "ibs_raw_p": 4.0161556854627e-18,
+        "c_index_p_bonferroni": 2.470068198213361e-15,
+        "c_index_p_holm": 1.6467121321422406e-15,
+        "c_index_p_fdr_bh": 8.233560660711203e-16,
+        "ibs_p_bonferroni": 2.4096934112776198e-17,
+        "ibs_p_holm": 2.4096934112776198e-17,
+        "ibs_p_fdr_bh": 7.903806722319588e-18
       }
     ],
     "bayesian_parameters": [
       {
         "feature": "hr",
-        "coef (beta_mean)": 0.04879518104962827,
-        "exp(coef) HR Mean": 1.2481768027698792,
-        "exp(coef) HR Median": 1.081816008704066,
-        "HR SD": 0.8079731647590147,
-        "95% Credible Lower": 0.30331806160608726,
-        "95% Credible Upper": 3.125036359816357,
+        "coef (beta_mean)": 0.052411217817456245,
+        "exp(coef) HR Mean": 1.2529148158350052,
+        "exp(coef) HR Median": 1.0857511482103832,
+        "HR SD": 0.8115287357618585,
+        "95% Credible Lower": 0.3042282783719695,
+        "95% Credible Upper": 3.1380645822397253,
         "Prob(HR > 1)": 0.5475
       },
       {
         "feature": "sysbp",
-        "coef (beta_mean)": 0.022931644217916505,
-        "exp(coef) HR Mean": 1.2030393904564354,
-        "exp(coef) HR Median": 1.0215844504663476,
-        "HR SD": 0.7261256173165824,
-        "95% Credible Lower": 0.29787425721156113,
-        "95% Credible Upper": 3.068444101704746,
-        "Prob(HR > 1)": 0.5125
+        "coef (beta_mean)": 0.014870464540225191,
+        "exp(coef) HR Mean": 1.1935041659687458,
+        "exp(coef) HR Median": 1.0133818626628859,
+        "HR SD": 0.7206306959301906,
+        "95% Credible Lower": 0.2953648933764459,
+        "95% Credible Upper": 3.044888603473058,
+        "Prob(HR > 1)": 0.51
       },
       {
         "feature": "bmi",
-        "coef (beta_mean)": -0.009974384828979763,
-        "exp(coef) HR Mean": 1.1672113089269485,
-        "exp(coef) HR Median": 0.9876901614408302,
-        "HR SD": 0.6828716754172075,
-        "95% Credible Lower": 0.2897996591365113,
-        "95% Credible Upper": 2.828636320455054,
-        "Prob(HR > 1)": 0.475
-      },
-      {
-        "feature": "age",
-        "coef (beta_mean)": -0.03908878328967864,
-        "exp(coef) HR Mean": 1.1472474405164563,
-        "exp(coef) HR Median": 0.9652231830523442,
-        "HR SD": 0.7432555916969131,
-        "95% Credible Lower": 0.2986188532524927,
-        "95% Credible Upper": 2.9671610084381483,
-        "Prob(HR > 1)": 0.47
-      },
-      {
-        "feature": "diasbp",
-        "coef (beta_mean)": -0.02829204061916031,
-        "exp(coef) HR Mean": 1.1391321676021269,
-        "exp(coef) HR Median": 0.9780340964658603,
-        "HR SD": 0.7054318762698363,
-        "95% Credible Lower": 0.32357533039953257,
-        "95% Credible Upper": 2.7480350285524824,
+        "coef (beta_mean)": -0.00774932528991116,
+        "exp(coef) HR Mean": 1.1699935194193074,
+        "exp(coef) HR Median": 0.9898891202471253,
+        "HR SD": 0.6848447954698146,
+        "95% Credible Lower": 0.29027226073769247,
+        "95% Credible Upper": 2.8363803254928643,
         "Prob(HR > 1)": 0.4775
       },
       {
+        "feature": "diasbp",
+        "coef (beta_mean)": -0.024901150481527044,
+        "exp(coef) HR Mean": 1.143156554138972,
+        "exp(coef) HR Median": 0.9813586838671178,
+        "HR SD": 0.7082925221115427,
+        "95% Credible Lower": 0.324521711867747,
+        "95% Credible Upper": 2.758594705500107,
+        "Prob(HR > 1)": 0.48
+      },
+      {
+        "feature": "age",
+        "coef (beta_mean)": -0.04315601084450204,
+        "exp(coef) HR Mean": 1.142856949298385,
+        "exp(coef) HR Median": 0.961307713983538,
+        "HR SD": 0.7409783710351272,
+        "95% Credible Lower": 0.2971775502714007,
+        "95% Credible Upper": 2.9573132892267164,
+        "Prob(HR > 1)": 0.47
+      },
+      {
         "feature": "age_x_gender",
-        "coef (beta_mean)": -0.0686200891928377,
-        "exp(coef) HR Mean": 1.1063386686958865,
-        "exp(coef) HR Median": 0.9217437905842377,
-        "HR SD": 0.6992732796734009,
-        "95% Credible Lower": 0.2916676601642929,
-        "95% Credible Upper": 2.994095453721182,
-        "Prob(HR > 1)": 0.425
+        "coef (beta_mean)": -0.06691023250016716,
+        "exp(coef) HR Mean": 1.1088487913097156,
+        "exp(coef) HR Median": 0.9233017556938055,
+        "HR SD": 0.7021701340551367,
+        "95% Credible Lower": 0.2916112815453569,
+        "95% Credible Upper": 3.0049413606978876,
+        "Prob(HR > 1)": 0.4275
       },
       {
         "feature": "age_x_chf",
-        "coef (beta_mean)": -0.08279413972565759,
-        "exp(coef) HR Mean": 1.1031863015116432,
-        "exp(coef) HR Median": 0.8925014972861969,
-        "HR SD": 0.72911236019551,
-        "95% Credible Lower": 0.2856944781641868,
-        "95% Credible Upper": 2.892595964370514,
-        "Prob(HR > 1)": 0.43
+        "coef (beta_mean)": -0.07789143127909381,
+        "exp(coef) HR Mean": 1.1086289862154217,
+        "exp(coef) HR Median": 0.8968864840773947,
+        "HR SD": 0.7327535674653884,
+        "95% Credible Lower": 0.2870812594229026,
+        "95% Credible Upper": 2.9069840968564726,
+        "Prob(HR > 1)": 0.4325
       },
       {
         "feature": "chf_1",
-        "coef (beta_mean)": -0.2058529209446539,
-        "exp(coef) HR Mean": 1.0246042947822247,
-        "exp(coef) HR Median": 0.7854945478072872,
-        "HR SD": 0.8700152218549885,
-        "95% Credible Lower": 0.23690926618898317,
-        "95% Credible Upper": 3.067121287299161,
-        "Prob(HR > 1)": 0.365
+        "coef (beta_mean)": -0.17342671108782365,
+        "exp(coef) HR Mean": 1.0549978046091362,
+        "exp(coef) HR Median": 0.8115760679630679,
+        "HR SD": 0.8871256944046019,
+        "95% Credible Lower": 0.24674886276554528,
+        "95% Credible Upper": 3.14017670172116,
+        "Prob(HR > 1)": 0.38
       },
       {
         "feature": "gender_1",
-        "coef (beta_mean)": -0.20952080335255338,
-        "exp(coef) HR Mean": 1.0001349238095347,
-        "exp(coef) HR Median": 0.7871580172232344,
-        "HR SD": 0.7775740102888816,
-        "95% Credible Lower": 0.2568422314994345,
-        "95% Credible Upper": 3.209333653820298,
-        "Prob(HR > 1)": 0.345
-      },
-      {
-        "feature": "cvd_1",
-        "coef (beta_mean)": -0.22024627290906273,
-        "exp(coef) HR Mean": 0.9983479370512828,
-        "exp(coef) HR Median": 0.8079018204545886,
-        "HR SD": 0.7460852062341196,
-        "95% Credible Lower": 0.24138745378258802,
-        "95% Credible Upper": 2.975999166437615,
+        "coef (beta_mean)": -0.1761685348693428,
+        "exp(coef) HR Mean": 1.0278964203529228,
+        "exp(coef) HR Median": 0.8141919431089253,
+        "HR SD": 0.7841926047797938,
+        "95% Credible Lower": 0.26983699489506013,
+        "95% Credible Upper": 3.2552452744399782,
         "Prob(HR > 1)": 0.365
       },
       {
+        "feature": "cvd_1",
+        "coef (beta_mean)": -0.18843369890962536,
+        "exp(coef) HR Mean": 1.0260299471484955,
+        "exp(coef) HR Median": 0.8339574685323901,
+        "HR SD": 0.7571461861982067,
+        "95% Credible Lower": 0.25226092396481237,
+        "95% Credible Upper": 3.0313996570300628,
+        "Prob(HR > 1)": 0.3975
+      },
+      {
         "feature": "afb_1",
-        "coef (beta_mean)": -0.2841423368096474,
-        "exp(coef) HR Mean": 0.9378260967392588,
-        "exp(coef) HR Median": 0.7211498778148802,
-        "HR SD": 0.713996612414468,
-        "95% Credible Lower": 0.20917967785978195,
-        "95% Credible Upper": 2.8924888374355846,
-        "Prob(HR > 1)": 0.3125
+        "coef (beta_mean)": -0.26201050971223416,
+        "exp(coef) HR Mean": 0.9550917208430961,
+        "exp(coef) HR Median": 0.7375646998777549,
+        "HR SD": 0.7191367165653861,
+        "95% Credible Lower": 0.2162763431459777,
+        "95% Credible Upper": 2.922500428995887,
+        "Prob(HR > 1)": 0.32
       },
       {
         "feature": "sho_1",
-        "coef (beta_mean)": -0.27169742107743744,
-        "exp(coef) HR Mean": 0.9285530250540346,
-        "exp(coef) HR Median": 0.7543690051221907,
-        "HR SD": 0.626081403930225,
-        "95% Credible Lower": 0.230638593726912,
-        "95% Credible Upper": 2.59277256084563,
-        "Prob(HR > 1)": 0.3575
+        "coef (beta_mean)": -0.2511905244736416,
+        "exp(coef) HR Mean": 0.9468509739853598,
+        "exp(coef) HR Median": 0.7700182809311591,
+        "HR SD": 0.6366087116737051,
+        "95% Credible Lower": 0.236131259455465,
+        "95% Credible Upper": 2.6382917802505874,
+        "Prob(HR > 1)": 0.365
       }
     ],
     "stability_summary": {
@@ -662,10 +662,10 @@
         "ibs_std": 0.010828232384349218
       },
       "Bayesian Cox": {
-        "c_index_mean": 0.43951612903225806,
-        "c_index_std": 0.023046274461669694,
-        "ibs_mean": 0.4350100767324007,
-        "ibs_std": 0.0011759405309810429
+        "c_index_mean": 0.4384408602150538,
+        "c_index_std": 0.026846751448916965,
+        "ibs_mean": 0.14787522253241656,
+        "ibs_std": 0.0012029509301864588
       }
     },
     "sensitivity_results": {
@@ -713,35 +713,35 @@
       },
       "Bayesian Cox": {
         "50%": {
-          "c_index": 0.4,
-          "ibs": 0.4377873172843979
+          "c_index": 0.3967741935483871,
+          "ibs": 0.15178447779380158
         },
         "75%": {
-          "c_index": 0.4290322580645161,
-          "ibs": 0.43636475195579555
+          "c_index": 0.432258064516129,
+          "ibs": 0.1489218585102556
         },
         "100%": {
-          "c_index": 0.42823745074169667,
-          "ibs": 0.43299304670261274
+          "c_index": 0.4289983299818499,
+          "ibs": 0.1543598422299828
         }
       }
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.0069887638092041016,
-        "pred_time_sec": 0.0004956722259521484
+        "train_time_sec": 0.008448123931884766,
+        "pred_time_sec": 0.0006165504455566406
       },
       "RSF": {
-        "train_time_sec": 6.169372081756592,
-        "pred_time_sec": 0.01272130012512207
+        "train_time_sec": 6.868490695953369,
+        "pred_time_sec": 0.016011476516723633
       },
       "DeepSurv": {
-        "train_time_sec": 0.3476133346557617,
-        "pred_time_sec": 0.0005354881286621094
+        "train_time_sec": 0.4513075351715088,
+        "pred_time_sec": 0.0006875991821289062
       },
       "Bayesian Cox": {
-        "train_time_sec": 51.13629078865051,
-        "pred_time_sec": 0.011858701705932617
+        "train_time_sec": 1.800025463104248,
+        "pred_time_sec": 0.012443304061889648
       }
     }
   },
@@ -797,18 +797,18 @@
       },
       "Bayesian Cox": {
         "c_index": {
-          "mean": 0.5434129895205432,
-          "std": 0.025473373736109133,
-          "se": 0.002560170388702051,
-          "ci_lower": 0.4956177316270634,
-          "ci_upper": 0.5914248423681477
+          "mean": 0.5414980049050763,
+          "std": 0.02544604003905105,
+          "se": 0.00255742324878463,
+          "ci_lower": 0.4953954271472854,
+          "ci_upper": 0.590671451718398
         },
         "ibs": {
-          "mean": 0.37057798757943755,
-          "std": 0.01939183016137513,
-          "se": 0.0019489522619266157,
-          "ci_lower": 0.3329983573662804,
-          "ci_upper": 0.4072554976433711
+          "mean": 0.17144142991601424,
+          "std": 0.0075751612796515645,
+          "se": 0.0007613323542737186,
+          "ci_lower": 0.1589909736823259,
+          "ci_upper": 0.18462945850991933
         }
       }
     },
@@ -825,7 +825,7 @@
         "c_index_p_fdr_bh": 2.4836243452286512e-17,
         "ibs_p_bonferroni": 2.888221093888439e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.813701823147399e-18
+        "ibs_p_fdr_bh": 5.776442187776878e-18
       },
       {
         "model_a": "Cox PH",
@@ -839,21 +839,21 @@
         "c_index_p_fdr_bh": 5.93712598709078e-08,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 5.776442187776878e-18
       },
       {
         "model_a": "Cox PH",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": -0.034285341241067406,
-        "c_index_raw_p": 3.7734621019025376e-12,
-        "ibs_mean_diff": -0.20257668800959017,
-        "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 2.2640772611415227e-11,
-        "c_index_p_holm": 1.509384840761015e-11,
-        "c_index_p_fdr_bh": 7.546924203805075e-12,
-        "ibs_p_bonferroni": 2.3379359070575454e-17,
+        "c_index_mean_diff": -0.03237035662560051,
+        "c_index_raw_p": 1.9248847768375145e-11,
+        "ibs_mean_diff": -0.003440130346166752,
+        "ibs_raw_p": 8.777880718979924e-18,
+        "c_index_p_bonferroni": 1.1549308661025087e-10,
+        "c_index_p_holm": 5.7746543305125436e-11,
+        "c_index_p_fdr_bh": 2.8873271652562718e-11,
+        "ibs_p_bonferroni": 5.2667284313879547e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 8.777880718979924e-18
       },
       {
         "model_a": "RSF",
@@ -867,147 +867,147 @@
         "c_index_p_fdr_bh": 4.6397816455216826e-17,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 5.776442187776878e-18
       },
       {
         "model_a": "RSF",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": 0.03354654853297081,
-        "c_index_raw_p": 9.00091927939511e-12,
-        "ibs_mean_diff": -0.20496280781453324,
+        "c_index_mean_diff": 0.0354615331484377,
+        "c_index_raw_p": 1.4466417063919293e-12,
+        "ibs_mean_diff": -0.005826250151109796,
         "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 5.4005515676370664e-11,
-        "c_index_p_holm": 2.7002757838185332e-11,
-        "c_index_p_fdr_bh": 1.3501378919092666e-11,
+        "c_index_p_bonferroni": 8.679850238351577e-12,
+        "c_index_p_holm": 5.786566825567717e-12,
+        "c_index_p_fdr_bh": 2.893283412783859e-12,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 5.776442187776878e-18
       },
       {
         "model_a": "DeepSurv",
         "model_b": "Bayesian Cox",
-        "c_index_mean_diff": -0.014524878799506506,
-        "c_index_raw_p": 0.00030999311351297457,
-        "ibs_mean_diff": -0.1699135385839384,
+        "c_index_mean_diff": -0.01260989418403962,
+        "c_index_raw_p": 0.001754765772842015,
+        "ibs_mean_diff": 0.029223019079485005,
         "ibs_raw_p": 3.896559845095909e-18,
-        "c_index_p_bonferroni": 0.0018599586810778474,
-        "c_index_p_holm": 0.00030999311351297457,
-        "c_index_p_fdr_bh": 0.00030999311351297457,
+        "c_index_p_bonferroni": 0.01052859463705209,
+        "c_index_p_holm": 0.001754765772842015,
+        "c_index_p_fdr_bh": 0.0017547657728420151,
         "ibs_p_bonferroni": 2.3379359070575454e-17,
         "ibs_p_holm": 2.3379359070575454e-17,
-        "ibs_p_fdr_bh": 4.675871814115091e-18
+        "ibs_p_fdr_bh": 5.776442187776878e-18
       }
     ],
     "bayesian_parameters": [
       {
         "feature": "tumour_stage",
-        "coef (beta_mean)": -0.042970702172007,
-        "exp(coef) HR Mean": 1.1784529823160352,
-        "exp(coef) HR Median": 0.9356674818129096,
-        "HR SD": 0.8200448704806501,
-        "95% Credible Lower": 0.25726352510327816,
-        "95% Credible Upper": 3.2605882925832814,
+        "coef (beta_mean)": -0.04269236674694163,
+        "exp(coef) HR Mean": 1.178837559460339,
+        "exp(coef) HR Median": 0.9359253724942251,
+        "HR SD": 0.8204229756233361,
+        "95% Credible Lower": 0.25729557670994163,
+        "95% Credible Upper": 3.2619632144014776,
         "Prob(HR > 1)": 0.455
       },
       {
         "feature": "age_x_stage",
-        "coef (beta_mean)": -0.029894006434825728,
-        "exp(coef) HR Mean": 1.162608215439256,
-        "exp(coef) HR Median": 0.976779607108933,
-        "HR SD": 0.7375886542266964,
-        "95% Credible Lower": 0.31716633794519766,
-        "95% Credible Upper": 3.1279819809491105,
+        "coef (beta_mean)": -0.029925489932944176,
+        "exp(coef) HR Mean": 1.1626028373605608,
+        "exp(coef) HR Median": 0.9767493271698555,
+        "HR SD": 0.7376471928057833,
+        "95% Credible Lower": 0.31712957188695745,
+        "95% Credible Upper": 3.128159922663242,
         "Prob(HR > 1)": 0.485
       },
       {
         "feature": "age",
-        "coef (beta_mean)": -0.05881849098760626,
-        "exp(coef) HR Mean": 1.119902943746932,
-        "exp(coef) HR Median": 0.912448753731937,
-        "HR SD": 0.7592621759743045,
-        "95% Credible Lower": 0.3373225159305604,
-        "95% Credible Upper": 3.1349402199107446,
+        "coef (beta_mean)": -0.059272306199534046,
+        "exp(coef) HR Mean": 1.1194257634303486,
+        "exp(coef) HR Median": 0.9120324249880596,
+        "HR SD": 0.7590135599892701,
+        "95% Credible Lower": 0.33714236790030194,
+        "95% Credible Upper": 3.133812270363813,
         "Prob(HR > 1)": 0.435
       },
       {
         "feature": "lymph_nodes_positive",
-        "coef (beta_mean)": -0.081455631462978,
-        "exp(coef) HR Mean": 1.1129217658017974,
-        "exp(coef) HR Median": 0.886116612608475,
-        "HR SD": 0.7668684814148661,
-        "95% Credible Lower": 0.25820829017571617,
-        "95% Credible Upper": 2.9656551677600196,
-        "Prob(HR > 1)": 0.43
+        "coef (beta_mean)": -0.0807196655333171,
+        "exp(coef) HR Mean": 1.1137511415747758,
+        "exp(coef) HR Median": 0.8867681779788965,
+        "HR SD": 0.7674621083591583,
+        "95% Credible Lower": 0.2583906260986973,
+        "95% Credible Upper": 2.9679205098719112,
+        "Prob(HR > 1)": 0.4325
       },
       {
         "feature": "log_lymph_nodes",
-        "coef (beta_mean)": -0.10944925210628426,
-        "exp(coef) HR Mean": 1.0786298100234744,
-        "exp(coef) HR Median": 0.9402628266229696,
-        "HR SD": 0.6866699269541789,
-        "95% Credible Lower": 0.22008723048074186,
-        "95% Credible Upper": 2.7280514390068658,
+        "coef (beta_mean)": -0.1092798143418302,
+        "exp(coef) HR Mean": 1.078843060811262,
+        "exp(coef) HR Median": 0.9404256680971481,
+        "HR SD": 0.6868652375969277,
+        "95% Credible Lower": 0.2201004042859397,
+        "95% Credible Upper": 2.728750727375152,
         "Prob(HR > 1)": 0.46
       },
       {
         "feature": "PAM50Subtype_Her2",
-        "coef (beta_mean)": -0.19768704428064773,
-        "exp(coef) HR Mean": 1.032443513003433,
-        "exp(coef) HR Median": 0.8560209159543539,
-        "HR SD": 0.8332141778162432,
-        "95% Credible Lower": 0.2221907505106509,
-        "95% Credible Upper": 2.867240603794963,
-        "Prob(HR > 1)": 0.3925
+        "coef (beta_mean)": -0.16918043538542402,
+        "exp(coef) HR Mean": 1.057064604183993,
+        "exp(coef) HR Median": 0.8803768212998473,
+        "HR SD": 0.8402864300167237,
+        "95% Credible Lower": 0.23183083893512796,
+        "95% Credible Upper": 2.9109640641702432,
+        "Prob(HR > 1)": 0.4075
       },
       {
         "feature": "hormone_therapy_1",
-        "coef (beta_mean)": -0.2176972921751821,
-        "exp(coef) HR Mean": 1.0183571163104075,
-        "exp(coef) HR Median": 0.802134986538569,
-        "HR SD": 0.7921129107108682,
-        "95% Credible Lower": 0.19910470036503267,
-        "95% Credible Upper": 3.3353153677627083,
-        "Prob(HR > 1)": 0.365
+        "coef (beta_mean)": -0.18732895640047992,
+        "exp(coef) HR Mean": 1.0433898475492998,
+        "exp(coef) HR Median": 0.8268978362496298,
+        "HR SD": 0.7988484506495661,
+        "95% Credible Lower": 0.20897768519797202,
+        "95% Credible Upper": 3.375573969314772,
+        "Prob(HR > 1)": 0.3775
       },
       {
         "feature": "PAM50Subtype_Normal",
-        "coef (beta_mean)": -0.22706111671693271,
-        "exp(coef) HR Mean": 1.0018131715968692,
-        "exp(coef) HR Median": 0.8255300401278958,
-        "HR SD": 0.7144038073673271,
-        "95% Credible Lower": 0.21027383724312165,
-        "95% Credible Upper": 2.7382765034905763,
-        "Prob(HR > 1)": 0.4
+        "coef (beta_mean)": -0.18495796615935564,
+        "exp(coef) HR Mean": 1.0376259369288474,
+        "exp(coef) HR Median": 0.8605506613483782,
+        "HR SD": 0.7269848916030996,
+        "95% Credible Lower": 0.22396511097637709,
+        "95% Credible Upper": 2.801056269641941,
+        "Prob(HR > 1)": 0.415
       },
       {
         "feature": "chemotherapy_1",
-        "coef (beta_mean)": -0.21860517106672617,
-        "exp(coef) HR Mean": 0.9702080644204244,
-        "exp(coef) HR Median": 0.7900956826902344,
-        "HR SD": 0.6502124445188104,
-        "95% Credible Lower": 0.21491651000989181,
-        "95% Credible Upper": 2.7865200961958503,
-        "Prob(HR > 1)": 0.3475
+        "coef (beta_mean)": -0.18727474318533782,
+        "exp(coef) HR Mean": 0.9976515465195499,
+        "exp(coef) HR Median": 0.8153689078068894,
+        "HR SD": 0.6614043782488956,
+        "95% Credible Lower": 0.22446230342844323,
+        "95% Credible Upper": 2.8425182464615877,
+        "Prob(HR > 1)": 0.365
       },
       {
         "feature": "PAM50Subtype_LumB",
-        "coef (beta_mean)": -0.24968401131198953,
-        "exp(coef) HR Mean": 0.9587433542518968,
-        "exp(coef) HR Median": 0.7794967013400493,
-        "HR SD": 0.7168706260734499,
-        "95% Credible Lower": 0.22531629735625067,
-        "95% Credible Upper": 2.9403547584033554,
-        "Prob(HR > 1)": 0.355
+        "coef (beta_mean)": -0.20210599894413825,
+        "exp(coef) HR Mean": 0.9965350073578816,
+        "exp(coef) HR Median": 0.8174699183623928,
+        "HR SD": 0.7243604322538961,
+        "95% Credible Lower": 0.2426572401728944,
+        "95% Credible Upper": 2.997156808054576,
+        "Prob(HR > 1)": 0.3725
       },
       {
         "feature": "PAM50Subtype_LumA",
-        "coef (beta_mean)": -0.2803242269670033,
-        "exp(coef) HR Mean": 0.9238570001373617,
-        "exp(coef) HR Median": 0.7556965089434281,
-        "HR SD": 0.6436806826790711,
-        "95% Credible Lower": 0.2194319404485219,
-        "95% Credible Upper": 2.5477430114203643,
-        "Prob(HR > 1)": 0.305
+        "coef (beta_mean)": -0.23634415313374543,
+        "exp(coef) HR Mean": 0.9565471720307329,
+        "exp(coef) HR Median": 0.7896699484029174,
+        "HR SD": 0.6485163821388421,
+        "95% Credible Lower": 0.23595674928075278,
+        "95% Credible Upper": 2.5884024673405146,
+        "Prob(HR > 1)": 0.33
       }
     ],
     "stability_summary": {
@@ -1030,10 +1030,10 @@
         "ibs_std": 0.004774120221748281
       },
       "Bayesian Cox": {
-        "c_index_mean": 0.5429960049516093,
-        "c_index_std": 0.0022532797019890758,
-        "ibs_mean": 0.3756018237721725,
-        "ibs_std": 0.00048785143711441143
+        "c_index_mean": 0.5431366756695927,
+        "c_index_std": 0.0017557373735506685,
+        "ibs_mean": 0.17001247809281064,
+        "ibs_std": 0.0005355821703658985
       }
     },
     "sensitivity_results": {
@@ -1081,35 +1081,35 @@
       },
       "Bayesian Cox": {
         "50%": {
-          "c_index": 0.5411672856178258,
-          "ibs": 0.3735876882973913
+          "c_index": 0.5426865293720459,
+          "ibs": 0.17154075562275098
         },
         "75%": {
-          "c_index": 0.5419691087103309,
-          "ibs": 0.3738893204434966
+          "c_index": 0.543024139095206,
+          "ibs": 0.17123487610416407
         },
         "100%": {
-          "c_index": 0.5434129895205432,
-          "ibs": 0.37057798757943755
+          "c_index": 0.5414980049050763,
+          "ibs": 0.17144142991601424
         }
       }
     },
     "computational_complexity": {
       "Cox PH": {
-        "train_time_sec": 0.014862537384033203,
-        "pred_time_sec": 0.0005297660827636719
+        "train_time_sec": 0.018520832061767578,
+        "pred_time_sec": 0.0009598731994628906
       },
       "RSF": {
-        "train_time_sec": 15.679690599441528,
-        "pred_time_sec": 0.05131959915161133
+        "train_time_sec": 17.487946271896362,
+        "pred_time_sec": 0.05572938919067383
       },
       "DeepSurv": {
-        "train_time_sec": 3.7103092670440674,
-        "pred_time_sec": 0.0007634162902832031
+        "train_time_sec": 4.629979372024536,
+        "pred_time_sec": 0.0012056827545166016
       },
       "Bayesian Cox": {
-        "train_time_sec": 180.8472716808319,
-        "pred_time_sec": 0.021999359130859375
+        "train_time_sec": 1.838132619857788,
+        "pred_time_sec": 0.026524782180786133
       }
     }
   }

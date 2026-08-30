@@ -21,6 +21,10 @@ model:
     beta_prior_mean: 0.0
     beta_prior_sd: 2.5
     baseline_hazard_prior: "spline"
+    baseline_hazard_params:
+      df: 8
+      n_grid: 50
+      sigma: 1.0
   sampler:
     draws: 3000
     tune: 1500

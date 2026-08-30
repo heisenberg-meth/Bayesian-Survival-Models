@@ -20,10 +20,10 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.003830974701885098,
+    "bootstrap_effect": 0.006891782940247398,
     "bootstrap_ci": [
-      -0.007372273570484924,
-      0.014090214188560608
+      -0.014530634063879087,
+      0.030033212909941737
     ],
     "n_bootstraps": 100
   },
@@ -32,12 +32,12 @@
     "metric": "integrated_brier_score",
     "model_a": "Normal",
     "model_b": "Continuous Spike-and-Slab",
-    "status": "complete",
+    "status": "incomplete_missing_survival_matrix",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0,
+    "bootstrap_effect": "unavailable",
     "bootstrap_ci": [
-      0.0,
-      0.0
+      "unavailable",
+      "unavailable"
     ],
     "n_bootstraps": 100
   },
@@ -62,10 +62,10 @@
     "model_b": "Regularised Horseshoe",
     "status": "complete",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.004347233972923727,
+    "bootstrap_effect": -0.006705821773954326,
     "bootstrap_ci": [
-      -0.007191756398159753,
-      0.018509410181707934
+      -0.038117263574338575,
+      0.019287476688699182
     ],
     "n_bootstraps": 100
   },
@@ -74,12 +74,12 @@
     "metric": "integrated_brier_score",
     "model_a": "Normal",
     "model_b": "Regularised Horseshoe",
-    "status": "complete",
+    "status": "incomplete_missing_survival_matrix",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0,
+    "bootstrap_effect": "unavailable",
     "bootstrap_ci": [
-      0.0,
-      0.0
+      "unavailable",
+      "unavailable"
     ],
     "n_bootstraps": 100
   },
@@ -90,10 +90,10 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0009618102822709595,
+    "bootstrap_effect": -0.010433264279913802,
     "bootstrap_ci": [
-      -0.011588924136595227,
-      0.012469766283457332
+      -0.03964785563779873,
+      0.01715507460968917
     ],
     "n_bootstraps": 100
   },
@@ -102,12 +102,12 @@
     "metric": "integrated_brier_score",
     "model_a": "Normal",
     "model_b": "Continuous Spike-and-Slab",
-    "status": "complete",
+    "status": "incomplete_missing_survival_matrix",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0,
+    "bootstrap_effect": "unavailable",
     "bootstrap_ci": [
-      0.0,
-      0.0
+      "unavailable",
+      "unavailable"
     ],
     "n_bootstraps": 100
   },
@@ -118,10 +118,10 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "bootstrap_seed": 42,
-    "bootstrap_effect": -0.004246669418291386,
+    "bootstrap_effect": 0.008034827759721393,
     "bootstrap_ci": [
-      -0.01727340574789378,
-      0.01046887331139095
+      -0.017936075347687146,
+      0.03700611519333828
     ],
     "n_bootstraps": 100
   },
@@ -130,12 +130,12 @@
     "metric": "integrated_brier_score",
     "model_a": "Regularised Horseshoe",
     "model_b": "Continuous Spike-and-Slab",
-    "status": "complete",
+    "status": "incomplete_missing_survival_matrix",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0,
+    "bootstrap_effect": "unavailable",
     "bootstrap_ci": [
-      0.0,
-      0.0
+      "unavailable",
+      "unavailable"
     ],
     "n_bootstraps": 100
   },
@@ -160,10 +160,10 @@
     "model_b": "Continuous Spike-and-Slab",
     "status": "complete",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.00029083787437558404,
+    "bootstrap_effect": -0.015573141496247351,
     "bootstrap_ci": [
-      -0.005341196793674717,
-      0.0064433388864270314
+      -0.025581758982727024,
+      -0.004157136294151037
     ],
     "n_bootstraps": 100
   },
@@ -172,12 +172,12 @@
     "metric": "integrated_brier_score",
     "model_a": "Normal",
     "model_b": "Continuous Spike-and-Slab",
-    "status": "complete",
+    "status": "incomplete_missing_survival_matrix",
     "bootstrap_seed": 42,
-    "bootstrap_effect": 0.0,
+    "bootstrap_effect": "unavailable",
     "bootstrap_ci": [
-      0.0,
-      0.0
+      "unavailable",
+      "unavailable"
     ],
     "n_bootstraps": 100
   },
